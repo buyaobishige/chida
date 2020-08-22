@@ -1,0 +1,90 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "miniprogramRoot": "app/",
+  "compileType": "miniprogram",
+  "projectname": "%E4%B8%9C%E5%8C%97%E5%90%83%E5%A4%A7",
+  "libVersion": "2.11.1",
+  "appid": "wxf4c24973a4322578",
+  "qqLibVersion": "1.8.5",
+  "qqappid": "1110071558",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": true,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "babelSetting": {
+      "ignore": ["echarts.js"],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "bundle": true
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": [
+        {
+          "id": -1,
+          "name": "水果",
+          "pathName": "fruit/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 0,
+          "name": "价格",
+          "pathName": "fruit/price/price",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "档口",
+          "pathName": "detail/stall/stall",
+          "query": "stall=北苑基本餐",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

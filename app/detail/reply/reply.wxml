@@ -1,0 +1,168 @@
+<view class="remarkContainer">
+  <view class="remarkcard">
+    <view class="remarkTop">
+      <view class="bigLine1">
+        <view class="left">
+          <image src="{{targetRemark.avatarUrl}}" class="touxiang" />
+        </view>
+        <view class="right">
+          <view class="line1">
+            <text class="userName">{{targetRemark.user}}</text>
+          </view>
+          <view
+            class="line2"
+            style="float: left; color: #888; font-size: 12px;"
+          >
+            <view class="date">{{targetRemark.formattedDate}}</view>
+            <view
+              wx:if="{{targetRemark.special && (targetRemark.special === 1||targetRemark.special === 1 || targetRemark.special === 1)}}"
+              class="cu-capsule"
+            >
+              <view class="cu-tag bg-red">
+                <image
+                  class="badgeImg"
+                  src="/icon/dianzhu.png"
+                  mode="aspectFill"
+                />
+              </view>
+              <view class="cu-tag line-red">店主</view>
+            </view>
+            <view
+              wx:if="{{targetRemark.special&&(targetRemark.special[0]=='置顶'||targetRemark.special[1]=='置顶'||targetRemark.special[2]=='置顶')}}"
+              class="bindtop"
+            >
+              <view>置顶</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="bigLine2">
+        <view class="content">{{targetRemark.content}}</view>
+      </view>
+      <view class="bigLine3">
+        <view class="systemModelBox" style="width: 100%;">
+          <image class="systemModelIcon" src="/icon/cellphone.png"></image>
+          <view class="systemModel">
+            {{targetRemark.systemModel? targetRemark.systemModel: '未知设备'}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- <view style="margin-top:10rpx;background: #E0E3DA;height:3rpx;"></view> -->
+    <view class="contentList">
+      <view
+        wx:for="{{targetRemark.replyList}}"
+        wx:key="index"
+        class="remarkcardItem"
+      >
+        <view class="bigLine1">
+          <view class="left">
+            <image src="{{item.ravatarUrl}}" class="touxiang" />
+          </view>
+          <view class="right">
+            <view class="line1">
+              <text class="userName">{{item.ruser}}</text>
+            </view>
+            <view
+              class="line2"
+              style="float: left; color: #888; font-size: 12px;"
+            >
+              <!-- todo -->
+              <view class="date">{{item.formattedDate}}</view>
+              <view
+                class="cu-capsule"
+                wx:if="{{item.rspecial && (item.rspecial==1||item.rspecial==1||item.rspecial==1)}}"
+              >
+                <view class="cu-tag bg-red">
+                  <image
+                    class="badgeImg"
+                    src="/icon/dianzhu.png"
+                    mode="aspectFill"
+                  />
+                </view>
+                <view class="cu-tag line-red">店主</view>
+              </view>
+              <view
+                wx:if="{{item.rspecial&&(item.rspecial[0]=='置顶'||item.rspecial[1]=='置顶'||item.rspecial[2]=='置顶')}}"
+                class="bindtop"
+              >
+                <view>置顶</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="bigLine2">
+          <view class="content">{{item.rcontent}}</view>
+        </view>
+        <view class="bigLine3">
+          <view class="systemModelBox">
+            <image class="systemModelIcon" src="/icon/cellphone.png"></image>
+            <view class="systemModel"
+              >{{item.rsystemModel?item.rsystemModel:'未知设备'}}</view
+            >
+          </view>
+          <view class="btnBox">
+            <view
+              wx:if="{{openid==item.ropenid}}"
+              class="btn"
+              data-commentid="{{item.replyid}}"
+              bindtap="deleteComment"
+            >
+              <image src="/icon/delete.png" class="btnIcon"></image>
+            </view>
+            <view wx:else class="btn"></view>
+            <button
+              id="zan"
+              type="none"
+              open-type="getUserInfo"
+              data-replyid="{{item.replyid}}"
+              data-func="zan"
+              bindgetuserinfo="login"
+            >
+              <view class="btn zanBox">
+                <!-- todo -->
+                <image
+                  wx:if="{{item.rzanList && item.rzanList.length > 0}}"
+                  class="btnIcon"
+                  src="/icon/dianzanOK.png"
+                />
+                <image wx:else src="/icon/dianzan.png" class="btnIcon" />
+                <view class="zanNumber" wx:if="{{item.rzanList.length>0}}">
+                  {{item.rzanList.length}}
+                </view>
+              </view>
+            </button>
+            <view
+              class="btn replyIconBox"
+              data-ropenid="{{item.ropenid}}"
+              data-ruser="{{item.ruser}}"
+              bindtap="reply"
+            >
+              <!-- todo -->
+              <image src="/icon/at.svg" class="btnIcon" />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="inputBox">
+    <input
+      id="input"
+      value="{{inputValue}}"
+      placeholder="{{placeholder}}"
+      bindinput="valueChange"
+    />
+    <button wx:if="{{isLogin}}" class="fabu-input" bindtap="submit">
+      发布
+    </button>
+    <button
+      wx:else
+      class="fabu-input"
+      open-type="getUserInfo"
+      bindgetuserinfo="login"
+    >
+      免密授权登录
+    </button>
+  </view>
+</view>

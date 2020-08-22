@@ -1,0 +1,145 @@
+/* list */
+
+.commonhead {
+  color: var(--text-color);
+  text-align: left;
+}
+
+.grey .commonhead {
+  min-height: 37px;
+  margin: 0 auto;
+  padding: 23px 15px 5px 15px;
+
+  color: var(--dark-grey);
+  font-size: 13px;
+}
+
+.commonfoot {
+  min-height: 16px;
+  margin: 0 auto;
+  padding: 5px 15px 0 15px;
+
+  color: var(--dark-grey);
+  text-align: left;
+  font-size: 13px;
+}
+
+.list-wrapper {
+  position: relative;
+  margin: 0 auto;
+  background-color: var(--block-bgcolor);
+}
+
+.list-wrapper::after,
+.list-wrapper::before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  height: 1px;
+}
+
+.list-wrapper::after {
+  bottom: 0;
+  border-bottom: 1px solid var(--border-color);
+  transform: scaleY(0.4);
+  transform-origin: 0 100%;
+}
+
+.list-wrapper::before {
+  top: 0;
+  border-top: 1px solid var(--border-color);
+  transform: scaleY(0.4);
+  transform-origin: 0 0;
+}
+
+@media (min-width: 768px) {
+  .list-wrapper {
+    margin: 0 15px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .list-wrapper::after,
+  .list-wrapper::before {
+    border: none;
+  }
+
+  .commonfoot,
+  .grey .commonhead {
+    margin: 0 15px;
+  }
+}
+
+.list-wrapper .list {
+  display: flex;
+  position: relative;
+
+  width: auto;
+  padding: 0 15px;
+  background-color: var(--block-bgcolor);
+  border: none !important;
+  border-radius: 0;
+
+  color: var(--text-color) !important;
+  font-size: 17px;
+  font-weight: normal;
+  line-height: 1.45;
+  align-items: center;
+}
+
+.list-wrapper .list:empty {
+  padding: 0;
+}
+
+.list-wrapper .text {
+  padding: 10px 0;
+
+  color: var(--text-color);
+  text-align: left;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.list-wrapper .icon {
+  width: 30px;
+  height: 30px;
+  margin: 10px 10px 10px 0;
+}
+
+.list-wrapper .desc {
+  color: #999 !important;
+  text-align: right;
+}
+
+.list-wrapper .divline {
+  position: relative;
+}
+
+.list-wrapper .divline::after {
+  content: " ";
+  position: absolute;
+  left: 15px;
+  right: 0;
+  bottom: 0;
+
+  height: 1px;
+  border-bottom: 1px solid var(--border-color);
+  transform: scaleY(0.4);
+  transform-origin: 0 100%;
+}
+
+.list-wrapper .divline.icon {
+  width: 100%;
+  height: 0;
+  margin: 0;
+}
+
+.list-wrapper .divline.icon::after {
+  left: 55px;
+}
+
+.list-wrapper .divline:last-child::after {
+  display: none;
+}

@@ -1,0 +1,72 @@
+<!-- 顶部楔形 -->
+<view id="top">
+  <view class="user-wrapper">
+    <block wx:if="{{isLogin}}">
+      <view class="name">{{nickName}}</view>
+      <view class="desc">{{tip}}</view>
+    </block>
+    <button wx:else open-type="getUserInfo" bind:getuserinfo="login">
+      登录
+    </button>
+  </view>
+</view>
+<view id="slash" />
+<!-- 波浪效果 -->
+<view class="waves">
+  <view class="wave wave1" />
+  <view class="wave wave2" />
+  <view class="wave wave3" />
+</view>
+<view id="avator">
+  <image mode="widthFix" src="{{avatarUrl}}" />
+</view>
+<view style="height: 70rpx;" />
+<list config="{{list}}" bind:change="list" />
+<view class="commonhead" />
+<view class="list-wrapper">
+  <button
+    class="list"
+    hover-class="button-hover"
+    hover-stay-time="100"
+    open-type="share"
+    plain
+  >
+    <image class="icon" src="/tab/user/icon/share.svg" />
+    <view class="text">分享小程序</view>
+  </button>
+  <view class="icon divline" />
+  <button
+    class="list"
+    hover-class="button-hover"
+    hover-stay-time="100"
+    open-type="feedback"
+    plain
+  >
+    <image class="icon" src="/tab/user/icon/bug.svg" />
+    <view class="text">bug反馈</view>
+  </button>
+  <view class="icon divline" />
+  <button
+    wx:if="{{env === 'wx'}}"
+    class="list"
+    hover-class="button-hover"
+    hover-stay-time="100"
+    open-type="contact"
+    plain
+  >
+    <image class="icon" src="/tab/user/icon/contact.svg" />
+    <view class="text">联系客服</view>
+  </button>
+  <button
+    wx:else
+    class="list"
+    hover-class="button-hover"
+    hover-stay-time="100"
+    plain
+    catch:tap="contact"
+  >
+    <image class="icon" src="/tab/user/icon/contact.svg" />
+    <view class="text">联系客服</view>
+  </button>
+</view>
+<foot />

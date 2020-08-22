@@ -1,0 +1,80 @@
+#top {
+  height: 250rpx;
+  background-color: var(--accent-color);
+}
+
+.user-wrapper {
+  position: absolute;
+  top: 190rpx;
+  left: 45rpx;
+  text-align: left;
+}
+
+.user-wrapper button {
+  font-weight: 600;
+}
+
+.user-wrapper .name {
+  font-size: 40rpx;
+}
+
+#slash {
+  width: 0;
+  height: 0;
+  border-top: 50px solid var(--accent-color);
+  border-right: 750rpx solid transparent;
+}
+
+#avator {
+  position: absolute;
+  top: 140rpx;
+  left: 500rpx;
+}
+
+#avator image {
+  width: 200rpx;
+  border-radius: 50%;
+}
+
+.wave {
+  display: inline-block;
+  position: absolute;
+  top: 130rpx;
+  left: 490rpx;
+
+  width: 220rpx;
+  height: 220rpx;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.wave.wave1 {
+  animation: wave 9s infinite;
+}
+
+.wave.wave2 {
+  animation: wave 9s infinite;
+  animation-delay: 3s;
+}
+
+.wave.wave3 {
+  animation: wave 9s infinite;
+  animation-delay: 6s;
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
+}
+
+.button {
+  width: auto !important;
+  font-weight: 400;
+}

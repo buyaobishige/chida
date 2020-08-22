@@ -1,0 +1,5 @@
+<view wx:for="{{stallListData}}" wx:key="index">
+  <navigator url="/detail/stall/stall?stall={{item.name}}">
+    <text class="stall arrow">{{item.name}}</text>
+  </navigator>
+</view>

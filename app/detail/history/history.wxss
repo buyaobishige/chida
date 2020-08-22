@@ -1,0 +1,12 @@
+/* pages/views/history.wxss */
+@import "../../css/food-list.wxss";
+
+page {
+  background-color: var(--accent-color);
+}
+
+.tip {
+  padding: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+}

@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "backgroundColor": "#ffffff",
+  "backgroundColorTop": "#f1c40f",
+  "backgroundColorBottom": "#ffffff",
+  "usingComponents": {
+    "foot": "/components/foot/foot",
+    "list": "/components/list/list"
+  }
+}

@@ -1,0 +1,8 @@
+**/node_modules/**
+doc/**
+
+app/**/*.js
+app/**/*.js.map
+
+# echarts package
+!app/components/ec-canvas/echarts.js

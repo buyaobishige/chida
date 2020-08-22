@@ -1,0 +1,12 @@
+module.exports = {
+  /** 需要渲染为按钮 */
+  isButton: function (listItem) {
+    return listItem.inlay || listItem.button || listItem.slider;
+  },
+  /** 按钮操作 */
+  button: function (event) {
+    var listItem = event.currentTarget.dataset.item;
+
+    if (listItem.button) event.instance.callMethod(listItem.button, event);
+  },
+};

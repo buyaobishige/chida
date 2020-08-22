@@ -1,0 +1,78 @@
+{
+  "pages": [
+    "tab/index/index",
+    "stallList/stallList",
+    "detail/stall/stall",
+    "tab/card/card",
+    "tab/user/user",
+    "detail/favor/favor",
+    "detail/history/history",
+    "detail/search/search",
+    "detail/reply/reply",
+    "test/notice",
+    "test/scrolltext"
+  ],
+  "subPackages": [
+    {
+      "root": "fruit",
+      "pages": [
+        "index/index",
+        "price/price",
+        "input/input"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "tab/index/index": {
+      "network": "all",
+      "packages": [
+        "fruit"
+      ]
+    }
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#000",
+    "selectedColor": "#f1c40f",
+    "backgroundColor": "#fff",
+    "position": "bottom",
+    "list": [
+      {
+        "selectedIconPath": "icon/tab-page/home-selected.png",
+        "iconPath": "icon/tab-page/home.png",
+        "pagePath": "tab/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "icon/tab-page/recommand-selected.png",
+        "iconPath": "icon/tab-page/recommand.png",
+        "pagePath": "tab/card/card",
+        "text": "推荐"
+      },
+      {
+        "selectedIconPath": "icon/tab-page/user-selected.png",
+        "iconPath": "icon/tab-page/user.png",
+        "pagePath": "tab/user/user",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "navigationStyle": "default",
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "东北吃大",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#f1c40f",
+    "onReachBottomDistance": 20
+  },
+  "networkTimeout": {
+    "request": 5000,
+    "connectSocket": 8000,
+    "uploadFile": 8000,
+    "downloadFile": 25000
+  },
+  "debug": true,
+  "resizable": false,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

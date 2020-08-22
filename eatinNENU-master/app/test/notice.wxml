@@ -1,0 +1,2 @@
+<view style="width: 100vh; height: 200rpx;" />
+<view style="padding: 30rpx; text-align: justify;">{{date}}|{{content}}</view>

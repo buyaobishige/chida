@@ -1,0 +1,76 @@
+<wxs src="../utils/tool.wxs" module="tool" />
+<view style="height: 0;" id="topAnchor" />
+<view class="placeholder" />
+<view class="navbar">
+  <picker
+    class="toggle"
+    value="{{placeIndex}}"
+    range="{{placeValue}}"
+    bindchange="pickerChange"
+  >
+    <text>{{placeValue[placeIndex]}}</text>
+    <image class="arrow-icon" src="/icon/arrow-down.svg" />
+  </picker>
+  <view class="search">
+    <input
+      confirm-type="search"
+      focus="{{search}}"
+      placeholder="搜索菜品"
+      bindconfirm="confirm"
+    />
+    <icon type="search" size="20" color="#000" />
+  </view>
+</view>
+<block wx:if="{{foodList.length === 0}}">
+  <view wx:if="{{inited}}" class="empty-tip">无结果</view>
+  <view wx:else class="loading-wrapper">
+    <image class="loading-icon" src="/icon/loading.svg" />
+    加载中...
+  </view>
+</block>
+<view wx:else class="list-wrapper">
+  <view class="list-item" wx:for="{{foodList}}" wx:key="id" wx:for-item="food">
+    <view class="flag">
+      <image src="/icon/{{tool.getFlag(food.locate)}}.png" />
+      <view>{{tool.getCampus(food.locate)}}</view>
+    </view>
+    <button
+      wx:if="{{pick}}"
+      class="add"
+      size="mini"
+      type="primary"
+      data-id="{{food.id}}"
+      catch:tap="pick"
+    >
+      选择
+    </button>
+    <view class="price" wx:else>
+      <text>¥</text>
+      {{food.price}}
+    </view>
+    <image mode="aspectFill" class="food-image" src="{{food.src}}" />
+    <view class="detail">
+      <view class="food">{{food.name}}</view>
+      <view class="tag-wrapper">
+        <view class="tag" wx:for="{{food.tags}}" wx:key="index">{{item}}</view>
+      </view>
+      <view class="desc">{{food.desc}}</view>
+      <navigator url="/detail/stall/stall?stall={{food.stall}}">
+        <text class="stall arrow">{{food.stall}}</text>
+      </navigator>
+    </view>
+  </view>
+</view>
+<block wx:if="{{foodList.length >= 10}}">
+  <view wx:if="{{reachBottom}}" class="bottom-tip">我也是有底线的</view>
+  <view wx:else class="loading-wrapper">
+    <image class="loading-icon" src="/icon/loading.svg" />
+    加载中...
+  </view>
+</block>
+<image
+  id="backToTop"
+  class="{{backToTop? 'show': 'hide'}}"
+  src="/icon/backToTop.svg"
+  catch:tap="scrollTop"
+/>

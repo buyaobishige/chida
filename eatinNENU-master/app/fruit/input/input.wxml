@@ -1,0 +1,19 @@
+<view class="bg">
+  <form bindsubmit="loginForm">
+    <view class="cu-form-group">
+      <view class="title">选择水果店</view>
+      <picker bindchange="pickerChange" value="{{index}}" range="{{picker}}">
+        <view class="picker">{{picker[index]}}</view>
+      </picker>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">水果名称</view>
+      <input name="name" placeholder="请输入内容" />
+    </view>
+    <view class="cu-form-group">
+      <view class="title">水果价格</view>
+      <input name="price" placeholder="请输入每斤价格，如6.52" type="number" />
+    </view>
+    <button class="btn" formType="submit">提交</button>
+  </form>
+</view>

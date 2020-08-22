@@ -1,0 +1,44 @@
+<view class="popupCtn{{show? ' show': ''}}">
+  <view class="mask" catch:tap="closeDialog" />
+  <view class="popup">
+    <view class="popupHead">
+      <view class="popupHead-Side">
+        <!-- 关闭按钮 -->
+        <view
+          class="weui-icon-btn weui-icon-btn_close"
+          catch:tap="closeDialog"
+        />
+      </view>
+      <view class="popupHead-Main">
+        <text class="popupTitle">{{config.title}}</text>
+        <text class="popupSubtitle">{{config.subtitle}}</text>
+      </view>
+      <view class="popupHead-Side">
+        <!-- 更多按钮 -->
+        <view
+          wx:if="{{config.more}}"
+          class="weui-icon-btn weui-icon-btn_more"
+          catch:tap="more"
+        />
+      </view>
+    </view>
+    <view class="popupBody">
+      <view class="popupText">{{config.text}}</view>
+      <view wx:if="{{config.desc}}" class="popupDesc">{{config.desc}}</view>
+      <slot wx:if="{{show}}" />
+    </view>
+    <view class="popupFoot">
+      <button
+        wx:if="{{config.cancel !== false}}"
+        class="weui-btn"
+        type="default"
+        catch:tap="cancel"
+      >
+        {{config.cancel || '取消'}}
+      </button>
+      <button class="weui-btn" type="primary" catch:tap="confirm">
+        {{config.confirm || '确认'}}
+      </button>
+    </view>
+  </view>
+</view>

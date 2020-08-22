@@ -1,0 +1,234 @@
+.remarkContainer {
+  height: 100vh;
+  padding: 1.5% 3.5%;
+}
+
+.inputBox #input {
+  width: 100%;
+  height: 80rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx dotted grey;
+  border-radius: 15px;
+}
+
+.inputBox .fabu-input {
+  background-color: #fcb69f;
+  border-radius: 20px;
+  color: white;
+}
+
+.remarkcard .bigLine1 {
+  display: flex;
+  padding: 10rpx;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.remarkcard .bigLine1 .badgeImg {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.remarkcard .bigLine2 {
+  width: 100%;
+  margin-bottom: 10rpx;
+  padding: 0 2%;
+  text-align: left;
+}
+
+.remarkcard .bigLine2 .content {
+  /* text-indent: 2em; */
+  text-align: justify;
+}
+
+.remarkcard .bigLine3 .btnBox {
+  display: flex;
+
+  width: 40%;
+  height: 48rpx;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remarkcard .bigLine3 .btnIcon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.remarkcard .bigLine3 .replyIconBox {
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.remarkcard .bigLine3 .btn {
+  width: 33.3%;
+  height: 40rpx;
+}
+
+.remarkcard .bigLine3 .zanNumber {
+  display: flex;
+
+  height: 100%;
+  padding-top: 5rpx;
+
+  color: silver;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.remarkContainer .ratingArea .starGroup1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.remarkContainer .ratingArea .sortBox {
+  display: flex;
+
+  height: 42rpx;
+  margin-top: 10rpx;
+
+  color: #707070;
+  font-size: 26rpx;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.remarkContainer .ratingArea .sortBox .separator {
+  margin: 0 15rpx;
+}
+
+.remarkcard .bigLine3 .zanBox {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.remarkcard #zan {
+  width: 33%;
+  padding: 0;
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+}
+
+.remarkcard .bigLine3 {
+  display: flex;
+  height: 50rpx;
+  color: silver;
+  justify-content: flex-end;
+}
+
+.remarkcard .bigLine3 .systemModelBox {
+  display: flex;
+  width: 60%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.remarkcard .bigLine3 .systemModelIcon {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.remarkcard .bigLine3 .systemModel {
+  display: flex;
+  align-items: center;
+}
+
+.remarkcard .bigLine1 .touxiang {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 5px;
+  border-radius: 100%;
+}
+
+.remarkcard .bigLine1 .date {
+  margin-right: 12rpx;
+}
+
+.remarkcard .bigLine1 .userName {
+  margin-right: 12rpx;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.remarkcard .bigLine1 .right {
+  width: 70%;
+  margin-left: 15rpx;
+}
+
+.remarkcard .bigLine1 .line1 {
+  display: flex;
+  width: 100%;
+}
+
+.remarkcard .bigLine1 .line2 {
+  display: flex;
+  width: 100%;
+}
+
+.remarkcard .score {
+  width: 750rpx;
+  height: 100px;
+  margin: 0 -5%;
+  background-color: rgb(243, 243, 243);
+}
+
+.remarkcard #reply {
+  display: inline-block;
+
+  width: 100px;
+  height: 20px;
+  border: 1px gray solid;
+  border-radius: 13px;
+}
+
+.remarkcard .remarkcardItem {
+  margin: 10px 0 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.remarkcard .bigLine1 .line2 .bindtop {
+  width: 80rpx;
+  height: 34rpx;
+  background: rgb(164, 145, 235);
+  border-radius: 10rpx;
+
+  color: white;
+  font-weight: 600;
+}
+
+.remarkcard .cu-capsule {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 15rpx;
+  border: rgb(164, 145, 235) solid 0.5px;
+}
+
+.remarkcard .cu-tag {
+  display: flex;
+
+  width: 48rpx;
+  height: 34rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.remarkcard .bg-red {
+  background-color: rgb(164, 145, 235);
+}
+
+.contentList {
+  max-height: 65vh;
+  margin-bottom: 10rpx;
+  overflow: scroll;
+}
+
+.remarkcard .remarkTop {
+  margin-top: 0;
+}

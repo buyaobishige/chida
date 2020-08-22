@@ -1,0 +1,49 @@
+.placeholder {
+  width: 100%;
+  height: 4vh;
+  transition: all 0.3s;
+}
+
+.top-tabbar {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+
+  width: 100%;
+  height: 4vh;
+  /* background: #fcb69f; */
+  background: rgb(241,196,15);
+  flex-wrap: wrap;
+  align-items: flex-start;
+  transition: all 0.3s;
+}
+
+.top-tabbar .tab-item-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.tab-item-wrapper .tab-item {
+  color: white;
+}
+
+.tab-item-wrapper .tab-item.active {
+  font-weight: 600;
+}
+
+.top-tabbar .indicator {
+  position: relative;
+  height: 10rpx;
+  background: white;
+  justify-self: left;
+}
+
+.tab-page-wrapper {
+  height: 96vh;
+}
+
+.tab-page {
+  height: 100%;
+}

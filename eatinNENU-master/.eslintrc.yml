@@ -1,0 +1,174 @@
+root: true
+
+env:
+  es6: true
+
+globals:
+  wx: readonly
+  getApp: readonly
+  App: readonly
+  Page: readonly
+  Component: readonly
+
+extends:
+  - eslint:recommended
+  - plugin:prettier/recommended
+
+plugins:
+  - prettier
+
+rules:
+  comma-dangle:
+    - off
+
+  complexity:
+    - warn
+    - max: 25
+
+  curly:
+    - error
+    - multi
+
+  id-length:
+    - error
+    - min: 2
+      exceptions:
+        - a
+        - b
+        - h
+        - i
+        - j
+        - k
+
+  indent:
+    - off
+
+  function-call-argument-newline:
+    - error
+    - consistent
+
+  max-statements:
+    - warn
+    - 25
+
+  nonblock-statement-body-position:
+    - error
+    - any
+
+  no-param-reassign:
+    - error
+    - props: false
+
+  no-plusplus:
+    - error
+    - allowForLoopAfterthoughts: true
+
+  no-warning-comments:
+    - warn
+
+  object-curly-spacing:
+    - off
+
+  one-var:
+    - error
+    - never
+
+  padded-blocks:
+    - error
+    - never
+
+  prefer-destructuring:
+    - error
+    - object: true
+      array: false
+
+  quotes:
+    - off
+
+  radix:
+    - error
+    - as-needed
+
+overrides:
+  - files:
+      - ".lintstagedrc.js"
+
+    env:
+      node: true
+
+  - files:
+      - "*.wxs"
+
+    env:
+      es6: false
+      node: true
+
+    rules:
+      func-names:
+        - error
+        - "never"
+
+      func-style:
+        - error
+        - "declaration"
+
+      no-var:
+        - off
+
+      object-shorthand:
+        - error
+        - "never"
+
+      prefer-destructuring:
+        - off
+
+      prefer-template:
+        - off
+
+  - files:
+      - "*.ts"
+
+    extends:
+      - plugin:@typescript-eslint/eslint-recommended
+      - plugin:@typescript-eslint/recommended
+      # - plugin:@typescript-eslint/recommended-requiring-type-checking
+      - prettier/@typescript-eslint
+
+    plugins:
+      - "@typescript-eslint"
+
+    parserOptions:
+      parser: "@typescript-eslint/parser"
+      # project:
+      #   - "./tsconfig.json"
+
+    rules:
+      "@typescript-eslint/explicit-function-return-type":
+        - warn
+        - allowTypedFunctionExpressions: true
+
+      "@typescript-eslint/naming-convention":
+        - warn
+        - selector: default
+          format:
+            - camelCase
+          leadingUnderscore: allow
+          trailingUnderscore: allow
+
+        - selector: variable
+          format:
+            - camelCase
+            - UPPER_CASE
+          leadingUnderscore: allow
+          trailingUnderscore: allow
+
+        - selector: typeLike
+          format:
+            - PascalCase
+
+      "@typescript-eslint/no-explicit-any":
+        - warn
+        - ignoreRestArgs: false
+
+      # "@typescript-eslint/no-unsafe-member-access":
+      #   - warn

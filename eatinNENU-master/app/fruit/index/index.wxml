@@ -1,0 +1,55 @@
+<swiper
+  wx:if="{{currentIndex === 0}}"
+  class="carousel"
+  autoplay
+  circular
+  duration="500"
+  indicator-dots
+  interval="5000"
+>
+  <swiper-item wx:for="{{swiperList}}" wx:key="url">
+    <image
+      wx:if="{{item.type ==='image'}}"
+      src="{{item.url}}"
+      mode="aspectFill"
+      style="width: 750rpx;"
+    />
+    <video
+      wx:elif="{{item.type === 'video'}}"
+      src="{{item.url}}"
+      autoplay
+      loop
+      muted
+      show-play-btn="{{false}}"
+      controls="{{false}}"
+      objectFit="cover"
+    />
+  </swiper-item>
+</swiper>
+<view class="location">
+  <picker
+    value="{{currentIndex}}"
+    range="{{pickerValue}}"
+    bindchange="pickerChange"
+  >
+    <image src="/fruit/icon/location.png" />
+    <text>{{pickerValue[currentIndex]}}</text>
+  </picker>
+</view>
+<view class="card-wrapper">
+  <view wx:for="{{fruit}}" class="card" hover-class="hover">
+    <navigator class="nav" url="/fruit/price/price">
+      降价
+      <text class="bignum">¥0</text>
+      <text class="smallnum">.93</text>
+      <image src="{{item.src}}" class="icon" mode="aspectFill" />
+      <view class="text">{{item.name}}</view>
+      <view class="price">
+        <text class="bignum">¥{{item.price}}</text>
+        <text class="smallnum">{{item.decimal}}</text>
+        (/500g)
+      </view>
+      <image class="icon-heart" src="/fruit/icon/heart.svg" />
+    </navigator>
+  </view>
+</view>

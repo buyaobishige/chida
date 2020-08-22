@@ -1,0 +1,146 @@
+/** 初始距离 */
+var INIT_COORDINATE = 10;
+/** 判定距离 */
+var JUDGE_DISTANCE = 100;
+
+/** 起始坐标 */
+var startCoordinate = INIT_COORDINATE;
+/** 当前坐标 */
+var currentCoordinate = INIT_COORDINATE;
+
+/** 移动卡片 */
+function moveCard(options, ownerInstance) {
+  var cardInstance = ownerInstance.selectComponent(".card0");
+  var cardsInstance = ownerInstance.selectAllComponents(".card");
+  var likeIconInstance = ownerInstance.selectComponent(".card0 .like-icon");
+  var dislikeIconInstance = ownerInstance.selectComponent(
+    ".card0 .dislike-icon"
+  );
+
+  // 设置图标不透明度
+  likeIconInstance.setStyle({ opacity: options.likeOpacity });
+  dislikeIconInstance.setStyle({ opacity: options.dislikeOpacity });
+
+  // 设置其他卡片位置
+  cardsInstance.forEach(function (item, index) {
+    if (index !== 0)
+      item.setStyle({
+        transform: "translateZ(" + 12 * (options.translateZ - index) + "px)",
+        transition: options.animation === false ? "none" : "all 0.3s ease-out",
+      });
+  });
+
+  // 设置卡片动画
+  cardInstance.setStyle({
+    left: options.position,
+    transform: options.transform,
+    transition: options.animation === false ? "none" : "all 0.3s ease-out",
+  });
+}
+
+/** 不喜欢 */
+function dislike(event, ownerInstance) {
+  moveCard(
+    {
+      likeOpacity: 0,
+      dislikeOpacity: 1,
+      position: "-200vw",
+      transform: "rotate(-60deg)",
+      translateZ: 1,
+    },
+    ownerInstance
+  );
+
+  // 调用 dislike 方法
+  event.instance.callMethod("dislike");
+}
+
+/** 喜欢 */
+function like(event, ownerInstance) {
+  moveCard(
+    {
+      likeOpacity: 1,
+      dislikeOpacity: 0,
+      position: "150vw",
+      transform: "rotate(60deg)",
+      translateZ: 1,
+    },
+    ownerInstance
+  );
+
+  // 调用 like 方法
+  event.instance.callMethod("like");
+}
+
+module.exports = {
+  /** 滑动开始 */
+  onSwipeStart: function (event) {
+    // 写入开始滑动的坐标
+    startCoordinate = event.touches[0].pageX;
+    event.instance.setStyle({
+      transition: "none",
+    });
+  },
+  /** 滑动卡片 */
+  onSwiping: function (event, ownerInstance) {
+    var distance;
+    var translateZ;
+
+    currentCoordinate = event.touches[0].pageX;
+    distance = currentCoordinate - startCoordinate;
+    translateZ = Math.abs(distance / 500);
+
+    moveCard(
+      {
+        likeOpacity: distance > 0 ? distance / 120 : 0,
+        dislikeOpacity: distance < 0 ? -distance / 120 : 0,
+        position: distance - INIT_COORDINATE + "px",
+        transform: "rotate(" + distance / 10 + "deg)",
+        translateZ: translateZ,
+        animation: false,
+      },
+      ownerInstance
+    );
+
+    event.instance.callMethod("onChange", event);
+  },
+  dislike: dislike,
+  like: like,
+  /** 稍后 */
+  later: function (event, ownerInstance) {
+    moveCard(
+      {
+        likeOpacity: 0,
+        dislikeOpacity: 0,
+        position: "150vw",
+        transform: "rotate(60deg)",
+        translateZ: 1,
+      },
+      ownerInstance
+    );
+
+    // 调用 later 方法
+    event.instance.callMethod("later");
+  },
+  /** 判断卡片状态 */
+  judgeCard: function (event, ownerInstance) {
+    var distance = currentCoordinate - startCoordinate;
+
+    // 喜欢
+    if (distance > JUDGE_DISTANCE) like(event, ownerInstance);
+    // 不喜欢
+    else if (distance < -JUDGE_DISTANCE) dislike(event, ownerInstance);
+    // 归位
+    else
+      moveCard(
+        {
+          likeOpacity: 0,
+          dislikeOpacity: 0,
+          position: "0",
+          transform: "none",
+          translateZ: 0,
+        },
+        ownerInstance
+      );
+  },
+};

@@ -1,0 +1,50 @@
+<wxs src="./card.wxs" module="card" />
+<view class="page1" slot="page1">
+  <view wx:if="{{locked}}" class="model" />
+  <view class="title" style="padding-top: {{statusBarHeight + 5}}px;"
+    >挑选你心仪的菜品</view
+  >
+  <view class="card-wrapper">
+    <view
+      wx:for="{{cards}}"
+      wx:key="id"
+      class="card card{{index}}"
+      style="left: 0; z-index: {{5 - index}};"
+      catch:touchstart="{{card.onSwipeStart}}"
+      catch:touchmove="{{card.onSwiping}}"
+      catch:touchend="{{card.judgeCard}}"
+    >
+      <image class="pic" mode="aspectFill" src="{{item.src}}">
+        <view class="name">{{item.name}}</view>
+      </image>
+      <view class="detail">
+        <view class="tag-wrapper">
+          <view
+            wx:for="{{item.tags}}"
+            wx:for-item="tag"
+            wx:key="index"
+            class="tag"
+            >{{tag}}</view
+          >
+        </view>
+        <view class="desc">{{item.desc}}</view>
+        <navigator url="/detail/stall/stall?stall={{item.stall}}">
+          <text class="stall arrow">{{item.stall}}</text>
+        </navigator>
+      </view>
+      <image class="like-icon" src="./icon/like.svg" />
+      <image class="dislike-icon" src="./icon/dislike.svg" />
+    </view>
+  </view>
+  <view class="action-wrapper">
+    <view
+      wx:for="{{['dislike','later','like']}}"
+      wx:key="*this"
+      class="icon-wrapper"
+      hover-class="hover"
+      catch:tap="{{card[item]}}"
+    >
+      <image class="icon {{item}}" src="./icon/{{item}}.svg" />
+    </view>
+  </view>
+</view>

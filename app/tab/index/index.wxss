@@ -1,0 +1,312 @@
+page {
+  background-color: var(--accent-color);
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.navbar.placeholder {
+  width: 100%;
+  height: 44px;
+  transition: height 0.3s;
+}
+
+.navbar.unfold {
+  height: 110px;
+}
+
+.navbar-wrapper {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+
+  box-sizing: content-box;
+  width: 100%;
+  padding-top: 20px;
+  background-color: var(--accent-color);
+
+  color: #000;
+}
+
+.navbar .title {
+  display: flex;
+
+  height: 44px;
+  padding-left: 15px;
+  padding-right: 105px;
+  align-items: center;
+}
+
+.navbar .toggle {
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar .arrow-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  transition: all 0.3s;
+}
+
+.navbar.unfold .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.navbar .search {
+  position: relative;
+
+  margin-left: 15px;
+  padding-left: 32px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 14px;
+
+  color: #666;
+  text-align: left;
+  font-size: 15px;
+  line-height: 2;
+  flex-grow: 1;
+}
+
+.navbar .search icon {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+}
+
+.navbar .tags {
+  height: 0;
+  opacity: 0;
+  transition: all 0.15s;
+}
+
+.navbar.unfold .tags {
+  height: auto;
+  opacity: 1;
+}
+
+/* 标签 */
+.navbar .tag-wrapper {
+  padding: 0 15px;
+  overflow-x: scroll;
+}
+
+.tag-wrapper + .tag-wrapper {
+  margin-top: 15rpx;
+}
+
+.navbar .tag-wrapper .tag-ctn {
+  width: auto;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.navbar .tag-wrapper .tag {
+  display: inline-block;
+
+  min-width: 40px;
+  margin: 0 4px;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+
+  text-align: center;
+  font-size: 16px;
+}
+
+/* 轮播图 */
+.swiper {
+  height: 180px;
+}
+
+.swiper image {
+  width: calc(100% - 30px);
+  height: calc(100% - 24px);
+  margin: 12px 15px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.27);
+  overflow: hidden;
+}
+
+/* 网格 */
+.grid-wrapper {
+  display: flex;
+
+  padding: 0 15px 15px;
+
+  font-size: 12px;
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+
+.grid-wrapper .grid {
+  width: 20%;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.grid-wrapper .grid.hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+@media (min-width: 480px) {
+  .grid-wrapper .grid {
+    width: 16.66%;
+  }
+}
+
+@media (min-width: 720px) {
+  .grid-wrapper .grid {
+    width: 12.5%;
+  }
+}
+
+.grid-wrapper .icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+}
+
+/* 骰子 */
+.dice-ctn {
+  padding: 15px 20px;
+  background-color: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.dice-ctn .title {
+  text-align: left;
+  font-size: 18px;
+}
+
+.dice-ctn .dice-wrapper {
+  position: relative;
+  height: 640rpx;
+}
+
+.dice-ctn .dice-wrapper .selection {
+  position: absolute;
+  top: calc(50% - 80rpx);
+  left: calc(50% - 80rpx);
+
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.selection1 {
+  transform: translate(-120rpx, -208rpx);
+}
+
+.selection2 {
+  transform: translateX(-240rpx);
+}
+
+.selection3 {
+  transform: translate(-120rpx, 208rpx);
+}
+
+.selection4 {
+  transform: translate(120rpx, 208rpx);
+}
+
+.selection5 {
+  transform: translateX(240rpx);
+}
+
+.selection6 {
+  transform: translate(120rpx, -208rpx);
+}
+
+.dice-ctn .selection image {
+  width: 100%;
+  height: 100%;
+}
+
+.dice-ctn .selection .add {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 10rpx 10rpx 110rpx 110rpx;
+}
+
+.dice-ctn .selection .add image {
+  width: 100%;
+  height: 100%;
+}
+
+.dice-ctn .selection image.shinning {
+  transform: scale(1.1);
+}
+
+.dice-ctn .selection.final {
+  box-shadow: rgb(255, 255, 255) 0 0 2px, rgb(255, 255, 255) 0 0 4px, var(--accent-color) 0 0 6px, var(--accent-color) 0 0 8px, var(--accent-color) 0 0 14px, var(--accent-color) 0 0 16px, var(--accent-color) 0 0 20px;
+}
+
+.dice-ctn .selection.dice {
+  background:
+    linear-gradient(#c75a4d, #c75a4d) left top,
+    linear-gradient(#c75a4d, #c75a4d) left top,
+    linear-gradient(#c75a4d, #c75a4d) right top,
+    linear-gradient(#c75a4d, #c75a4d) right top,
+    linear-gradient(#c75a4d, #c75a4d) left bottom,
+    linear-gradient(#c75a4d, #c75a4d) left bottom,
+    linear-gradient(#c75a4d, #c75a4d) right bottom,
+    linear-gradient(#c75a4d, #c75a4d) right bottom;
+  border-radius: none;
+  background-repeat: no-repeat;
+  background-size: 1px 24px, 24px 1px;
+}
+
+.dice-ctn .selection.dice image {
+  width: 100%;
+  height: 100%;
+}
+
+.dice-ctn .action-wrapper {
+  display: flex;
+  padding: 12px 15px;
+  justify-content: space-between;
+}
+
+.dice-ctn .action-wrapper .action {
+  min-width: 80px;
+  padding: 2px 10px;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #f0f1f2;
+
+  line-height: 2;
+}
+
+.dice-ctn .action-wrapper .action.hover {
+  background-color: rgba(​241, 196, 15, 0.5);
+}
+
+/* 弹出框 */
+.popup-wrapper {
+  display: flex;
+}
+
+.popup-wrapper image {
+  width: 280rpx;
+  height: 280rpx;
+  border-radius: 50rpx;
+}
+
+.popup-wrapper .info {
+  padding-left: 15px;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.popup-wrapper .info text {
+  font-weight: bold;
+}

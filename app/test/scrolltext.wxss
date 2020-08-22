@@ -1,0 +1,29 @@
+.row {
+  display: flex;
+  padding: 10rpx 0;
+}
+
+.row .item {
+  display: inline-block;
+  margin-right: 120rpx;
+}
+
+.row1 {
+  margin-left: 50rpx;
+  padding: 0 700rpx;
+  animation: move 20s infinite linear;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0rpx);
+  }
+
+  100% {
+    transform: translateX(-2000rpx);
+  }
+}
+
+.row3 {
+  margin-left: 25rpx;
+}
