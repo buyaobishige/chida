@@ -1,3 +1,3 @@
 <?php
-$appid = "wxf4c24973a4322578";
-$secret = "5be0103f9a10d11448b8a41c74c839ba";
+$appid = "wx20eaced770a14a30";
+$secret = "126f7f5f380d482e109c4fa94e4ac639";

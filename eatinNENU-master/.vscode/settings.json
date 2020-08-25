@@ -1,6 +1,0 @@
-{
-  "javascript.format.enable": false,
-  "javascript.suggestionActions.enabled": false,
-  "javascript.validate.enable": false,
-  "typescript.tsdk": "node_modules\\typescript\\lib"
-}

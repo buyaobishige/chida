@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "水果"
+  "navigationBarTitleText": "水果",
+  "usingComponents": {
+    "ec-canvas": "../ec-canvas/ec-canvas"
+  }
 }

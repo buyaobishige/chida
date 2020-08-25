@@ -1,0 +1,64 @@
+<meta charset="utf8" />
+<div class="wrapBox">
+  <div class="wrap">
+    <div class="maxWid">
+      <div class="maxWid">请输入每日一字！</div>
+      <input class="maxWid" id="inp" name="char" minlength="1" maxlength="1" type="text" />
+      <div class="wrap"> <button onclick="callServer()" type="submit">确定</button></div>
+      <div class="maxWid" id="msg"></div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+<script>
+  axios({ url: "./char.php?mode=0" }).then(res => { console.log(res); document.getElementById("msg").innerHTML = "已经发了" + res.data + "个字啦！"; })
+  function callServer() {
+    if (document.getElementById("inp").value == "") { alert("不能为空！") } else {
+      axios.get('./char.php', {
+        params: {
+          char: document.getElementById("inp").value,
+          mode: 1
+        },
+      }).then(res => {
+        console.log(res);//处理成功的函数 相当于success
+        document.getElementById("msg").innerHTML = res.data
+      }).catch(function (error) {
+        console.log(error)//错误处理 相当于error
+      })
+    }
+  }
+
+</script>
+<style>
+  .wrapBox {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #inp {
+    margin: 15px 0;
+    height: 120px;
+    width: 100%;
+  }
+
+  .maxWid {
+    width: 100%;
+  }
+
+  * {
+    font-size: 70px;
+  }
+
+  html {
+    background-image: linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
+  }
+</style>

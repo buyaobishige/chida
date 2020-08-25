@@ -2,7 +2,23 @@ import * as echarts from "../ec-canvas/echarts";
 
 const dataX: any[] = [];
 const dataY: any[] = [];
-const minDays = 30;
+
+interface CoreDataSetItem {
+  timeStamp: number,
+  price: number,
+}
+
+
+const config = {
+  // 是否补全没有价格数据的时间点
+  fillBlank: { fillBlank: false, minDays: 30 }
+}
+
+const privateData = {
+  maxVal: 0,
+  minVal: 0,
+}
+let databaseSet: CoreDataSetItem[] = [];
 
 const initChart = (
   canvas: any,
@@ -42,62 +58,144 @@ const initChart = (
   for (let i = 0; i < 1000; i++) data.push(randomData());
 
   const option = {
-    xAxis: { data: dataX },
-    yAxis: { type: "value" },
-    series: [
-      {
-        data: dataY,
-        type: "line",
-      },
-    ],
+    xAxis: { type: 'category', data: dataX },
+    yAxis: {
+      type: "value"
+    },
+    tooltip: {
+      trigger: 'axis',
+      formatter: "{b}\n价格:{c}元",
+      // axisPointer:{
+      //   axis:"x"
+      // },
+
+    },
+    series:
+    {
+      data: dataY,
+      type: "line",
+      animation: false,
+      symbolSize: 0,
+      markLine: {
+        symbol: "none",
+        silent: true,
+        data: [{
+          yAxis: privateData.minVal
+        }, {
+          yAxis: privateData.maxVal
+        }]
+      }
+    }
   };
 
   chart.setOption(option);
-
   return chart;
 };
 
+
+
+
+
+
+
+
+
+
 Page({
   data: {
-    currentPrice: 0,
-    highestPrice: 0,
-    lowestPrice: 0,
+    config,
+    privateData,
+    // TODO: 自动生成fruitName
+    fruitName: "pitch",
     latest: "",
+    currentPrice: 0,
+    // TODO: 自动生成market
+    market: "东师果园",
     ec: {
       onInit: initChart,
     },
   },
+  //判断两个时间戳是否在同一天
+  isAtSameDay(a: number, b: number) {
+    return new Date(a).toDateString() === new Date(b).toDateString();
+  },
   onLoad() {
-    const databaseSetX = [1579340101916, 1580538771338, 1581640771338];
-    const databaseSetY = [5, 5.6, 3];
-    // 如果 x 轴不足天数，则补
-    if (databaseSetX.length < minDays)
-      for (let i = minDays - databaseSetX.length + 1; i > 0; i--) {
-        dataX.push(
-          `${
-            new Date(databaseSetX[0] - 3600 * 24 * i * 1000).getMonth() + 1
-          }月${new Date(databaseSetX[0] - 3600 * 24 * i * 1000).getDate()}号`
-        );
-        dataY.push(0);
-      }
+    wx.request({
+      url: "https://lin.innenu.com/server/fruitToolkit/getCurrentFruitInfo.php",
+      method: "GET",
+      data: {
+        market: this.data.market
+      },
+      success: res => {
+        //处理原始数据
+        let raw = res.data as any[];
+        //处理时间戳在同一天的数据，只保留最近的
+        raw.forEach((item: any, index: number) => {
+          if (index < raw.length - 1) {
+            // console.log(this.isAtSameDay(Number(item.timeStamp), Number(raw[index + 1].timeStamp)))
+            if (this.isAtSameDay(Number(item.timeStamp), Number(raw[index + 1].timeStamp))) {
+              if (item.timeStamp > raw[index + 1].timeStamp) { raw[index + 1].duplicated = true }
+              if (item.timeStamp < raw[index + 1].timeStamp) { item.duplicated = true }
+            }
+          }
+        });
+        raw.forEach((item: any, index: number) => {
+          JSON.parse(item.databaseSet).forEach(element => {
+            if (element.name === this.data.fruitName && !item.duplicated) {
+              databaseSet.push({
+                timeStamp: Number(item.timeStamp),
+                price: element.price
+              })
+            }
+          });
+        })
 
-    dataX.push(
-      ...databaseSetX.map(
-        (val) => `${new Date(val).getMonth() + 1}月${new Date(val).getDate()}号`
-      )
-    );
-    dataY.push(...databaseSetY);
-    const tmpY = [];
-    tmpY.push(...dataY);
-    const sortedY = tmpY.sort((element1, element2) => {
-      return element2 - element1;
-    });
-    this.setData({
-      currentPrice: dataY[dataY.length - 1],
-      highestPrice: sortedY[0],
-      // 非 0 历史最低价格
-      lowestPrice: sortedY[sortedY.indexOf(0) - 1],
-      latest: dataX[dataX.length - 1],
-    });
+        //end
+
+
+
+        // 找出最大最小值，用于划markline
+        privateData.maxVal = databaseSet[0].price;
+        privateData.minVal = databaseSet[0].price;
+        databaseSet.forEach(item => {
+          if (item.price >= privateData.maxVal) { privateData.maxVal = item.price }
+          if (item.price < privateData.minVal) { privateData.minVal = item.price }
+        })
+
+        // 如果 x 轴不足天数，则补
+        if (databaseSet.length < config.fillBlank.minDays && config.fillBlank.fillBlank)
+          for (let i = config.fillBlank.minDays - databaseSet.length + 1; i > 0; i--) {
+            dataX.push(
+              `${
+              new Date(databaseSet[0].timeStamp - 3600 * 24 * i * 1000).getMonth() + 1
+              }月${new Date(databaseSet[0].timeStamp - 3600 * 24 * i * 1000).getDate()}号`
+            );
+            dataY.push(null);
+          }
+        //填入dataX和dataY
+        dataX.push(
+          ...databaseSet.map(
+            (val) => `${new Date(val.timeStamp).getMonth() + 1}月${new Date(val.timeStamp).getDate()}号`
+          )
+        );
+        dataY.push(...databaseSet.map(val => {
+          return val.price
+        }));
+
+        const tmpY = [];
+        tmpY.push(...dataY);
+        const sortedY = tmpY.sort((element1, element2) => {
+          return element2 - element1;
+        });
+        this.setData({
+          latest: dataX[dataX.length - 1],
+          currentPrice: dataY[dataY.length - 1],
+          privateData,
+          config
+        });
+
+
+      }
+    })
   },
 });

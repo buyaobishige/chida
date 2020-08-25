@@ -49,3 +49,40 @@
   margin-top: 20px;
   background-color: white;
 }
+.priceTable{
+  margin-top: 20rpx;
+}
+.priceTable .line {
+  display: flex;
+  justify-content: space-around;
+  min-height: 100rpx;
+  padding: 1rpx 30rpx;
+  width: 100%;
+  background: white;
+  align-items: center;
+}
+
+.priceTable .line .part1 {
+  display: flex;
+  width: 33.3%;
+  align-items: center;
+}
+
+.priceTable .line .part2 {
+  width: 33.3%;
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.priceTable .line .part3 {
+  width: 33.3%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border-bottom: rgb(243, 243, 243) 1px solid;
+}
+.delIcon{
+  width:50rpx;
+  height:50rpx;
+}

@@ -1,6 +1,6 @@
 <!-- index.wxml -->
+<navigator url="../input/input">input</navigator>
 <view class="container">
-  hello
   <ec-canvas
     id="mychart-dom-line"
     style="width: 750rpx; height: 300rpx !important;"
@@ -8,7 +8,7 @@
     ec="{{ ec }}"
   />
 </view>
-<view>历史最高价是：{{highestPrice}}</view>
+<view>历史最高价是：{{privateData.maxVal}}</view>
 <view>当前的价格是：{{currentPrice}}</view>
-<view>历史最低价是：{{lowestPrice}}</view>
+<view>历史最低价是：{{privateData.minVal}}</view>
 <view>最近一次更新是在：{{latest}}</view>

@@ -1,3 +1,12 @@
+const privateData = {
+  //设置多次点击后跳转的链接
+  urlSet: {
+    0: "../input/input?market=东师果园",
+    1: "../price/price"
+  },
+  // 中间变量，用于多次点击判定，可忽略
+  count: {},
+}
 Page({
   data: {
     /** 选择器当前选中项 */
@@ -74,7 +83,23 @@ Page({
     ],
   },
 
-  pickerChange(event: WXEvent.PickerChange) {
+  pickerChange(event: any) {
     this.setData({ currentIndex: Number(event.detail.value) });
   },
+
+  tappingSwiperItem(e) {
+    const sequence = e.currentTarget.dataset.sequence;
+    if (!privateData.count[sequence]) {
+      privateData.count[sequence] = 1;
+      setTimeout(() => {
+        privateData.count[sequence] = 0;
+      }, 2000);
+    } else {
+      privateData.count[sequence] += 1;
+      if (privateData.count[sequence] >= 4) {
+        wx.navigateTo({ url: privateData.urlSet[sequence] })
+      }
+    }
+    console.log(privateData.count)
+  }
 });

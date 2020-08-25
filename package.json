@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/nenuyouth/eatinNENU",
   "dependencies": {
+    "babel": "^6.23.0",
     "miniprogram-api-typings": "2.11.0",
     "typescript": "3.9.3"
   },
