@@ -5,11 +5,7 @@ interface CoreDataSetItem {
   price: number,
 }
 let coreDataSet: CoreDataSetItem[];
-// = [
-//   { name: "apple", price: 20 },
-//   { name: "peach", price: 15 },
-//   { name: "peach", price: 15 }
-// ]
+
 Page({
   onLoad(opt) {
     wx.request({
@@ -18,8 +14,12 @@ Page({
       data: {
         market: opt.market
       },
-      success: res => {
-        coreDataSet = JSON.parse(res.data[0].databaseSet);
+      success: (res: any) => {
+         if (res.data.length > 0) {
+          coreDataSet = JSON.parse(res.data[0].databaseSet);
+        } else {
+          coreDataSet = []
+        }
         this.setData({ coreDataSet, market: opt.market })
       }
     })
@@ -27,8 +27,6 @@ Page({
 
   data: {
     market: "",
-    // pickerIndex: 0,
-    // picker: ["北苑", "南苑", "东师水果"],
     coreDataSet
   },
 
@@ -44,7 +42,7 @@ Page({
     if (price.length === 0) tip("价格不能为空");
     else if (name.length < 2 || name.length > 20) tip("请输入2-20个字符");
     else {
-      console.log(data.detail.value);
+      // console.log(data.detail.value);
       tip("提交成功", 1500, "success");
     }
   },
@@ -80,30 +78,40 @@ Page({
     })
   },
   submitChange() {
-    //TODO : 水果不能重名
-    wx.showModal({
-      content: "确定提交？",
-      success: (res) => {
-        if (res.confirm) {
-          wx.request({
-            url: "https://lin.innenu.com/server/fruitToolkit/addCurrentFruitInfo.php",
-            method: "GET",
-            data: {
-              market: this.data.market,
-              timeStamp: (new Date()).getTime(),
-              databaseSet: JSON.stringify(coreDataSet)
-            },
-            success: res => {
-              wx.showToast({
-                title: res.data as string
-              })
-            }
-          })
+    let isDuplicated = false;
+    coreDataSet.forEach((element, index) => {
+      if (index < coreDataSet.length - 1) {
+        if (element.name === coreDataSet[index + 1].name) {
+          isDuplicated = true;
         }
       }
-    })
+    });
+    if (isDuplicated) {
+      wx.showToast({ title: '名称不得重复！', icon: 'none' })
+    } else {
+      wx.showModal({
+        content: "确定提交？",
+        success: (res) => {
+          if (res.confirm) {
+            wx.request({
+              url: "https://lin.innenu.com/server/fruitToolkit/addCurrentFruitInfo.php",
+              method: "GET",
+              data: {
+                market: this.data.market,
+                timeStamp: (new Date()).getTime(),
+                databaseSet: JSON.stringify(coreDataSet)
+              },
+              success: res => {
+                wx.showToast({
+                  title: res.data as string
+                })
+              }
+            })
+          }
+        }
+      })
+    }
 
   }
 });
 
-console.log(JSON.stringify(coreDataSet))

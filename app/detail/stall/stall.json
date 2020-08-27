@@ -1,5 +1,7 @@
 {
   "usingComponents": {
     "top-tab": "/components/top-tab/tab"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle":"dark"
 }

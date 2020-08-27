@@ -1,7 +1,7 @@
 import * as echarts from "../ec-canvas/echarts";
 
-const dataX: any[] = [];
-const dataY: any[] = [];
+let dataX: any[] = [];
+let dataY: any[] = [];
 
 interface CoreDataSetItem {
   timeStamp: number,
@@ -17,6 +17,8 @@ const config = {
 const privateData = {
   maxVal: 0,
   minVal: 0,
+  firstLoading: true,
+  option: null
 }
 let databaseSet: CoreDataSetItem[] = [];
 
@@ -57,38 +59,45 @@ const initChart = (
 
   for (let i = 0; i < 1000; i++) data.push(randomData());
 
-  const option = {
-    xAxis: { type: 'category', data: dataX },
-    yAxis: {
-      type: "value"
-    },
-    tooltip: {
-      trigger: 'axis',
-      formatter: "{b}\n价格:{c}元",
-      // axisPointer:{
-      //   axis:"x"
-      // },
 
-    },
-    series:
-    {
-      data: dataY,
-      type: "line",
-      animation: false,
-      symbolSize: 0,
-      markLine: {
-        symbol: "none",
-        silent: true,
-        data: [{
-          yAxis: privateData.minVal
-        }, {
-          yAxis: privateData.maxVal
-        }]
-      }
-    }
-  };
 
-  chart.setOption(option);
+  if (privateData.firstLoading) {
+
+    setTimeout(() => {
+      privateData.option = {
+        xAxis: { type: 'category', data: dataX },
+        yAxis: {
+          type: "value"
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: "{b}\n价格:{c}元",
+          // axisPointer:{
+          //   axis:"x"
+          // },
+
+        },
+        series:
+        {
+          data: dataY,
+          type: "line",
+          animation: false,
+          symbolSize: 0,
+          markLine: {
+            symbol: "none",
+            data: [{
+              yAxis: privateData.minVal
+            }, {
+              yAxis: privateData.maxVal
+            }]
+          }
+        }
+      };
+      chart.setOption(privateData.option); privateData.firstLoading = false
+    }, 1200)
+  } else {
+    chart.setOption(privateData.option)
+  }
   return chart;
 };
 
@@ -106,7 +115,7 @@ Page({
     config,
     privateData,
     // TODO: 自动生成fruitName
-    fruitName: "pitch",
+    fruitName: "apple",
     latest: "",
     currentPrice: 0,
     // TODO: 自动生成market
@@ -119,7 +128,11 @@ Page({
   isAtSameDay(a: number, b: number) {
     return new Date(a).toDateString() === new Date(b).toDateString();
   },
+
   onLoad() {
+    databaseSet = []
+    dataX = [];
+    dataY = [];
     wx.request({
       url: "https://lin.innenu.com/server/fruitToolkit/getCurrentFruitInfo.php",
       method: "GET",
@@ -172,7 +185,9 @@ Page({
             );
             dataY.push(null);
           }
+
         //填入dataX和dataY
+        databaseSet.reverse();
         dataX.push(
           ...databaseSet.map(
             (val) => `${new Date(val.timeStamp).getMonth() + 1}月${new Date(val.timeStamp).getDate()}号`
@@ -181,12 +196,12 @@ Page({
         dataY.push(...databaseSet.map(val => {
           return val.price
         }));
-
-        const tmpY = [];
-        tmpY.push(...dataY);
-        const sortedY = tmpY.sort((element1, element2) => {
-          return element2 - element1;
-        });
+        // const tmpY = [];
+        // tmpY.push(...dataY);
+        // const sortedY = tmpY.sort((element1, element2) => {
+        //   return element2 - element1;
+        // });
+        privateData.finishLoading = true;
         this.setData({
           latest: dataX[dataX.length - 1],
           currentPrice: dataY[dataY.length - 1],

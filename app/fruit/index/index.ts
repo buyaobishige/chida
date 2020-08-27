@@ -2,7 +2,8 @@ const privateData = {
   //设置多次点击后跳转的链接
   urlSet: {
     0: "../input/input?market=东师果园",
-    1: "../price/price"
+    1: "../input/input?market=南苑",
+    2: "../input/input?market=北苑"
   },
   // 中间变量，用于多次点击判定，可忽略
   count: {},
@@ -26,6 +27,12 @@ Page({
         type: "image",
         url:
           "http://img5.imgtn.bdimg.com/it/u=1381931952,4060895415&fm=26&gp=0.jpg",
+      },
+      {
+        id: 2,
+        type: "image",
+        url:
+          "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3006593522,635038461&fm=26&gp=0.jpg",
       },
     ],
 

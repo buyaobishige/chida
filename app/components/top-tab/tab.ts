@@ -1,6 +1,6 @@
 import { AppOption } from "../../app";
 const { globalData } = getApp<AppOption>();
-let currentSwipe: number;
+let currentSwipe: number=0;
 
 Component({
   properties: {
@@ -11,12 +11,12 @@ Component({
     /** 是否立即更改还是等动画完成之后再进行更改 */
     immediate: {
       type: Boolean,
-      value: true,
+      value: false,
     },
   },
   data: {
     curNavItem: [],
-    barleft: 0,
+    barleft: 1,
     current: 0,
   },
   methods: {

@@ -82,7 +82,7 @@ Page({
   onLoad(options) {
     if (options.stall) {
       this.privateData.stall = options.stall;
-      this.setData({ openid: globalData.openid,orientation:options.stall||"general" });
+      this.setData({ openid: globalData.openid, orientation: options.stall || "general" });
       wx.request({
         url: "https://lin.innenu.com/test/stall.php",
         method: "POST",
@@ -95,6 +95,10 @@ Page({
         },
       });
     }
+  },
+  onPullDownRefresh() {
+    this.refreshInfo();
+    wx.stopPullDownRefresh();
   },
 
   /** 刷新评论列表 */

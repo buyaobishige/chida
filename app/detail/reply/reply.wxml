@@ -132,15 +132,14 @@
                 </view>
               </view>
             </button>
-            <view
+            <!-- <view
               class="btn replyIconBox"
               data-ropenid="{{item.ropenid}}"
               data-ruser="{{item.ruser}}"
               bindtap="reply"
             >
-              <!-- todo -->
               <image src="/icon/at.svg" class="btnIcon" />
-            </view>
+            </view> -->
           </view>
         </view>
       </view>

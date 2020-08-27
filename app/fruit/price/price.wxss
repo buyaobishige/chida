@@ -7,3 +7,6 @@ ec-canvas {
   width: 100%;
   height: 45vh;
 }
+.adContainer {
+  width: 100%;
+}

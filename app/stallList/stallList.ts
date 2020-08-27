@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    stallListData: []
+    stallListData: [],
+    navList: ["菜馆", "水果"],
   },
 
   /**
