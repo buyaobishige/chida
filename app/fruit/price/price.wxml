@@ -1,9 +1,7 @@
 <!-- index.wxml -->
-<navigator url="../input/input">input</navigator>
-<view class="container">
+<view class="canvas-container">
   <ec-canvas
     id="mychart-dom-line"
-    style="width: 750rpx; height: 300rpx !important;"
     canvas-id="mychart-line"
     ec="{{ ec }}"
   />

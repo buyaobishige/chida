@@ -110,7 +110,14 @@ const initChart = (
 
 
 
+
+
+// stallList/stallList.js
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
     config,
     privateData,
@@ -123,13 +130,31 @@ Page({
     ec: {
       onInit: initChart,
     },
+    stallListData: [],
+    navList: ["菜馆", "水果"],
+    //TODO
+    frontActive: "",
+    backActive: "",
+    hide: ""
+
   },
-  //判断两个时间戳是否在同一天
+
   isAtSameDay(a: number, b: number) {
     return new Date(a).toDateString() === new Date(b).toDateString();
   },
+  /**
+   * 生命周期函数--监听页面加载
+   */
 
-  onLoad() {
+  onLoad(options) {
+    wx.request({
+      url: "https://lin.innenu.com/server/getRestaurantList.php",
+      success: (res) => {
+        this.setData({ stallListData: res.data });
+      }
+    });
+
+
     databaseSet = []
     dataX = [];
     dataY = [];
@@ -196,11 +221,6 @@ Page({
         dataY.push(...databaseSet.map(val => {
           return val.price
         }));
-        // const tmpY = [];
-        // tmpY.push(...dataY);
-        // const sortedY = tmpY.sort((element1, element2) => {
-        //   return element2 - element1;
-        // });
         this.setData({
           latest: dataX[dataX.length - 1],
           currentPrice: dataY[dataY.length - 1],
@@ -212,4 +232,71 @@ Page({
       }
     })
   },
-});
+  onTap() {
+    if (this.data.backActive == "") {
+      this.setData({ backActive: "backActive", frontActive: "frontActive", hide: "hide" })
+    } else {
+      this.setData({ backActive: "", frontActive: "" })
+      setTimeout(() => { this.setData({ hide: "" }) }, 400)
+    }
+  },
+  aminationFinished({ detail }) {
+    console.log(detail.current)
+    if (detail.current === 1) {
+      this.setData({ backActive: "backActive", frontActive: "frontActive" })
+      setTimeout(() => { this.setData({ hide: "hide" }) }, 400)
+    }
+    if (detail.current === 0) {
+      console.log(0)
+      this.setData({ backActive: "", frontActive: "" })
+    }
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: void function () {
+
+  }
+})

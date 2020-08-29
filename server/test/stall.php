@@ -13,7 +13,7 @@ if ($type === 'get') {
   // $foodList = $mysqli->query("SELECT * FROM stall WHERE stall.stall='$stall' RIGHT JOIN food ON food.stall=stall.stall");
   $foodList = $mysqli->query("SELECT * FROM `stall` JOIN `food` ON food.stall=stall.stall WHERE food.stall='$stall'");
   $stallInfo = $mysqli->query("SELECT * FROM `stall` WHERE stall.stall='$stall'");
-
+  $addviews = $mysqli->query("UPDATE restaurant SET views=views+1 WHERE restaurant='$restaurant'");
   // 食物列表 map
   $listMap = array();
 

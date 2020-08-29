@@ -34,7 +34,7 @@
             </view>
           </view>
           <view class="cardLine3">
-            <text classs="rDes">{{info.desc}}</text>
+            <text classs="rDes">{{info.des}}</text>
           </view>
         </view>
       </view>
@@ -61,7 +61,7 @@
                     <text class="text-cut">{{list.food}}</text>
                     <view class="cu-tag round bg-{{list.badgeColor}} sm">{{list.badge}}</view>
                   </view>
-                  <view wx:else class=" ">{{list.name}}</view>
+                  <view wx:else class=" ">{{list.food}}</view>
                   <view class="text-sm flex">
                     <text class="text-cut">{{list.desc}}</text>
                   </view>

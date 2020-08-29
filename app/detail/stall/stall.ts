@@ -7,7 +7,7 @@ interface FoodInfo {
   /** 菜品名称 */
   name: string;
   /** 菜品详情 */
-  desc: string;
+  des: string;
   /** 菜品图片 */
   src: string;
   /** 菜品价格 */
@@ -26,7 +26,7 @@ interface StallInfo {
   /** 档口名称 */
   name: string;
   /** 档口描述 */
-  desc: string;
+  des: string;
   /** 档口图片 */
   src: string;
   /** 档口位置 */
@@ -84,9 +84,10 @@ Page({
       this.privateData.stall = options.stall;
       this.setData({ openid: globalData.openid, orientation: options.stall || "general" });
       wx.request({
-        url: "https://lin.innenu.com/test/stall.php",
+        url: "https://lin.innenu.com/server/getRestaurant.php",
+        // url: "https://lin.innenu.com/test/stall.php",
         method: "POST",
-        data: { type: "get", stall: options.stall },
+        data: { type: "get", restaurant: options.stall },
         success: (res) => {
           const { info, foodList } = res.data as GetStallCallback;
           this.setData({ foodList, info });

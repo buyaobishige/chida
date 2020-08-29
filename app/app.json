@@ -1,43 +1,27 @@
 {
   "pages": [
-    "stallList/stallList",
     "tab/index/index",
-    "detail/stall/stall",
+    "fruit/stallList/stallList",
     "tab/card/card",
+    "detail/stall/stall",
     "tab/user/user",
     "detail/favor/favor",
     "detail/history/history",
     "detail/search/search",
     "detail/reply/reply",
     "test/notice",
-    "test/scrolltext"
+    "test/scrolltext",
+    "fruit/index/index",
+    "fruit/price/price",
+    "fruit/input/input"
   ],
-  "subPackages": [
-    {
-      "root": "fruit",
-      "pages": [
-        "index/index",
-        "price/price",
-        "input/input"
-      ]
-    }
-  ],
-  "preloadRule": {
-    "tab/index/index": {
-      "network": "all",
-      "packages": [
-        "fruit"
-      ]
-    }
-  },
   "tabBar": {
     "custom": false,
     "color": "#000",
     "selectedColor": "#f1c40f",
     "backgroundColor": "#fff",
     "position": "bottom",
-    "list": [
-      {
+    "list": [{
         "selectedIconPath": "icon/tab-page/home-selected.png",
         "iconPath": "icon/tab-page/home.png",
         "pagePath": "tab/index/index",

@@ -1,50 +1,59 @@
 <?php
 require_once('./info/mysql.php');
 require_once('./header/post-json.php');
-$restaurant = $_GET['restaurant'];
-// $restaurantName = "妈妈亲饺子馆";
 
-$result2 = $mysqli->query("UPDATE restaurant SET views=views+1 WHERE restaurant='$restaurant'");
-$result = $mysqli->query("SELECT * FROM food JOIN restaurant ON food.restaurant=restaurant.restaurant");
+// 获得传递数据
+$postData = json_decode(file_get_contents('php://input'));
 
-// $restaurant=$_GET['restaurant'];
+$type = $postData->type;
 
-$arr0 = array();
+if ($type === 'get') {
+  $restaurant = $postData->restaurant;
 
-while ($row = mysqli_fetch_array($result)) {
-  if ($restaurant == $row["restaurant"]) {
-    array_push($arr0, array(
-      "name" => $row["classification"],
-      "content" => array(
-        array(
-          "food" => $row["food"],
-          "src" => $row["src"],
-          "price" => $row["price"],
-          "badge" => $row["badge"],
-          "badgeColor" => $row["badgeColor"],
-          "description" => $row["description"],
-          "contact" => $row["contact"],
-          "locate" => $row["locate"],
-          "des" => $row["des"],
-          "img" => $row["img"],
-          "views"=>$row["views"],
-          "rate"=>$row["rate"],
-        ),
-      ),
+  // $foodList = $mysqli->query("SELECT * FROM restaurant WHERE restaurant.restaurant='$restaurant' RIGHT JOIN food ON food.restaurant=restaurant.restaurant");
+  $foodList = $mysqli->query("SELECT * FROM `restaurant` JOIN `food` ON food.restaurant=restaurant.restaurant WHERE food.restaurant='$restaurant'");
+  $restaurantInfo = $mysqli->query("SELECT * FROM `restaurant` WHERE restaurant.restaurant='$restaurant'");
+  $addviews = $mysqli->query("UPDATE restaurant SET views=views+1 WHERE restaurant='$restaurant'");
+  // 食物列表 map
+  $listMap = array();
+
+  while ($row = mysqli_fetch_array($foodList)) {
+    if (!$listMap[$row['classification']]) $listMap[$row['classification']] = array();
+
+    array_push($listMap[$row['classification']], array(
+      "food" => $row["food"],
+      "des" => $row["des"],
+      "src" => $row["src"],
+      "price" => floatval($row["price"])
     ));
   }
+
+  // 将 map 转换为数组
+  $output = array();
+
+  foreach ($listMap as $key => $value)
+    array_push($output, array(
+      "name" => $key,
+      "content" => $value
+    ));
+
+  $info = mysqli_fetch_array($restaurantInfo);
+
+  $result = array(
+    "info" => array(
+      "name" => $info["restaurant"],
+      "des" => $info["des"],
+      "src" => $info["src"],
+      "locale" => $info['locate'],
+      "contact" => $info['contact'],
+      "tags" => json_decode($info["tags"]),
+      "views" => intval($info['views']),
+      "rate" => $info['rate'],
+    ),
+    'foodList' => $output
+  );
+
+  echo json_encode($result, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 }
-$arr = $arr0;
-for ($i = 0; $i < sizeof($arr0); $i++) {
-  for ($j = 0; $j < sizeof($arr0); $j++) {
-    if ($i != $j) {
-      // echo sizeof($arr);
-      if ($arr[$i]["name"] == $arr0[$j]["name"]) {
-        // echo $arr[$i]["name"];
-        array_push($arr[$i]["content"], $arr0[$j]["content"][0]);
-        unset($arr[$j]);
-      }
-    }
-  }
-}
-echo json_encode($arr, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$mysqli->close();

@@ -41,8 +41,10 @@ Component({
     aminationFinish({ detail: { current } }: any) {
       currentSwipe = current;
       if (!this.properties.immediate) this.setData({ current });
+      this.triggerEvent("aminationFinished",{current},{})
     },
   },
+  
   options: {
     multipleSlots: true,
   },
