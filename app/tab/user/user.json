@@ -4,7 +4,7 @@
   "backgroundColorTop": "#f1c40f",
   "backgroundColorBottom": "#ffffff",
   "usingComponents": {
-    "foot": "/components/footer/footer",
-    "list": "/components/ex-list/list"
+    "footer": "/components/footer/footer",
+    "list": "/components/list/list"
   }
 }

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "fruit/stallList/stallList",
     "tab/index/index",
+    "fruit/stallList/stallList",
     "tab/card/card",
     "detail/stall/stall",
     "tab/user/user",

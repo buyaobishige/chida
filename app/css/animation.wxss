@@ -13,31 +13,29 @@
   opacity: 0 !important;
 }
 
-.moveDownIn,
-.moveDownOut,
-.moveUpIn,
-.moveUpOut {
+.move-left-in,
+.move-left-out,
+.move-right-in,
+.move-right-out,
+.move-down-in,
+.move-down-out,
+.move-up-in,
+.move-up-out {
   transition: all 0.8s !important;
 }
 
-.moveUpIn {
-  transform: translateY(-100%);
+.move-left-out {
+  transform: translateX(100vw);
 }
 
-.moveDownIn {
-  transform: translateY(100%);
+.move-right-out {
+  transform: translateX(-100vw);
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.move-down-out {
+  transform: translateY(-100vh);
 }
 
-.rotate {
-  animation: 9.5s linear 0s normal none infinite rotate;
+.move-up-out {
+  transform: translateY(100vh);
 }

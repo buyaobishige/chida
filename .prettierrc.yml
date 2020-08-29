@@ -22,7 +22,7 @@ jsxSingleQuote: false
 # 是否使用尾逗号，< none | es5(default) | all >
 trailingComma: es5
 
-# 对象大括号是否有空格，默认为 true，效果：{ foo: bar }
+# 对象大括号是否有空格，默认为 true，效果: { foo: bar }
 bracketSpacing: true
 
 # JSX Brackets 是否在同一行
@@ -37,7 +37,7 @@ arrowParens: always
 # 代码的解析引擎，默认为 babel，还有 typescript css json markdown vue html yaml 等
 # parser: typescript
 
-# Markdown 超长之后是否换行，默认 preserve
+# Markdown 超长之后是否换行
 proseWrap: preserve
 
 # 行末换行符 < lf(default) | crlf | cr | auto >

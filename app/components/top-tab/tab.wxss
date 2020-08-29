@@ -37,7 +37,7 @@
 .top-tabbar .indicator {
   position: relative;
   height: 10rpx;
-  background: rgb(205,127,50);
+  background: rgb(205,169,103);
   justify-self: left;
 }
 

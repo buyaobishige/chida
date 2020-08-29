@@ -4,6 +4,6 @@
   "backgroundColorTop": "#f1c40f",
   "backgroundColorBottom": "#ffffff",
   "usingComponents": {
-
+    "popup": "/components/popup/popup"
   }
 }

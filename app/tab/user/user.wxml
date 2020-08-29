@@ -69,4 +69,4 @@
     <view class="text">联系客服</view>
   </button>
 </view>
-<foot />
+<footer />
