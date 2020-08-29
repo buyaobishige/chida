@@ -1,0 +1,5 @@
+<view class="footer-wrapper">
+  <text wx:if="{{config.desc}}" decode>{{config.desc}}</text>
+  <view class="footer">吃，是世界上最幸福的事情</view>
+  <view class="copyright"> Copyright © 2019-2020 东北吃大</view>
+</view>

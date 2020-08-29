@@ -8,12 +8,12 @@ Component({
   },
   methods: {
     /** 导航到指定页面 */
-    navigate(event: WXEvent.Touch) {
+    navigate(event: WXEvent.Touch): void {
       wx.navigateTo({ url: event.currentTarget.dataset.url });
     },
 
     /** 控制选择器显隐 */
-    pickerTap(res: WXEvent.Touch) {
+    pickerTap(res: WXEvent.Touch): void {
       const {
         id,
         content: { visible: value },
@@ -23,7 +23,7 @@ Component({
     },
 
     /** 控制选择器改变 */
-    pickerChange(res: WXEvent.PickerChange) {
+    pickerChange(res: WXEvent.PickerChange): void {
       const { id, content } = this.getDetail(res);
 
       if (res.type === "change") {
@@ -31,9 +31,9 @@ Component({
 
         // 判断为多列选择器，遍历每一列更新页面数据、并存储选择器值
         if (Array.isArray(value)) {
-          value.forEach((curValue: string | number, index: number) => {
-            content.value[index] = content.pickerValue[index][Number(curValue)];
-            content.currentValue[index] = curValue;
+          value.forEach((x: string | number, y: number) => {
+            content.value[y] = content.pickerValue[y][Number(x)];
+            content.currentValue[y] = x;
           });
           wx.setStorageSync(content.key, value.join("-"));
 
@@ -52,14 +52,13 @@ Component({
     },
 
     /** 开关改变 */
-    switch(res: WXEvent.SwitchChange) {
+    switch(res: WXEvent.SwitchChange): void {
       const { id, content } = this.getDetail(res);
 
       // 更新页面数据
       this.setData(
         { [`config.content[${id}].status`]: res.detail.value },
         () => {
-          console.log(this.data.config);
           this.triggerEvent("change", {
             event: content.Switch,
             value: res.detail.value,
@@ -71,14 +70,14 @@ Component({
     },
 
     /** 触发按钮事件 */
-    button(res: WXEvent.Touch) {
+    button(res: WXEvent.Touch): void {
       const { content } = this.getDetail(res);
 
       this.triggerEvent("change", { event: content.button });
     },
 
     /** 控制滑块显隐 */
-    sliderTap(res: WXEvent.Touch) {
+    sliderTap(res: WXEvent.Touch): void {
       const { id, content } = this.getDetail(res);
 
       // 更新页面数据
@@ -86,7 +85,7 @@ Component({
     },
 
     /** 滑块改变 */
-    sliderChange(res: WXEvent.SliderChange) {
+    sliderChange(res: WXEvent.SliderChange): void {
       const { id, content } = this.getDetail(res);
       const { value } = res.detail;
 
@@ -102,8 +101,8 @@ Component({
     },
 
     /** 获得选择器位置与内容 */
-    getDetail(res: WXEvent.Base) {
-      const id = res.currentTarget.id || res.currentTarget.dataset.id;
+    getDetail({ currentTarget }: WXEvent.Base): { id: string; content: any } {
+      const id = currentTarget.id || currentTarget.dataset.id;
 
       return { id, content: this.data.config.content[id] };
     },
@@ -114,7 +113,7 @@ Component({
      *
      * @param detail 需要改变的键及其对应值
      */
-    change(detail: Record<string, any>) {
+    change(detail: Record<string, any>): void {
       if (detail) {
         const detail2: Record<string, any> = {};
 
@@ -125,10 +124,5 @@ Component({
         this.setData(detail2);
       }
     },
-  },
-
-  // QQ 及低版本微信兼容
-  options: {
-    styleIsolation: "apply-shared",
   },
 });

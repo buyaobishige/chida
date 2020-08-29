@@ -1,7 +1,7 @@
 <wxs src="./list.wxs" module="list" />
 <!-- 列表头部注释文字 -->
-<view wx:if="{{config.head !== false}}" class="commonhead"
-  >{{config.head}}</view
+<view wx:if="{{config.header !== false}}" class="list-header"
+  >{{config.header}}</view
 >
 <!-- 列表主体 -->
 <view class="list-wrapper">
@@ -57,6 +57,7 @@
         hover-stay-time="100"
         value="{{listItem.currentValue}}"
         range="{{listItem.pickerValue}}"
+        header-text="{{listItem.header || listItem.text}}"
         catch:change="pickerChange"
       >
         <view class="text">{{listItem.text}}</view>
@@ -84,7 +85,7 @@
       <!-- 普通文字段落与开关 -->
       <view wx:else id="{{index}}" class="list">
         <image wx:if="{{listItem.icon}}" class="icon" src="{{listItem.icon}}" />
-        <text class="text" decode selectable space="nbsp"
+        <text class="text" decode user-select space="nbsp"
           >{{listItem.text}}</text
         >
         <view class="desc">
@@ -92,7 +93,7 @@
           <switch
             wx:if="{{listItem.swiKey}}"
             checked="{{listItem.status}}"
-            color="{{color}}"
+            color="{{color || '#07c160'}}"
             data-id="{{index}}"
             catch:change="switch"
           />
@@ -146,4 +147,4 @@
   </block>
 </view>
 <!-- 列表尾部注释文字 -->
-<view wx:if="{{config.foot}}" class="commonfoot">{{config.foot}}</view>
+<view wx:if="{{config.footer}}" class="list-footer">{{config.footer}}</view>

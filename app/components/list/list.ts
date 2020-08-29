@@ -6,13 +6,8 @@ Component({
 
   methods: {
     /** 导航到指定页面 */
-    navigate(event: WXEvent.Touch) {
+    navigate(event: WXEvent.Touch): void {
       wx.navigateTo({ url: event.currentTarget.dataset.url });
     },
-  },
-
-  // QQ 及低版本微信兼容
-  options: {
-    styleIsolation: "shared",
   },
 });

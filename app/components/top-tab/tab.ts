@@ -32,6 +32,7 @@ Component({
     },
     // 设置指示条动画
     transition({ detail }) {
+      console.log(currentSwipe)
       this.setData({
         barleft:
           (detail.dx + globalData.info.screenWidth * currentSwipe) /

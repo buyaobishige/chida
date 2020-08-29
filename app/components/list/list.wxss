@@ -1,22 +1,28 @@
 /* list */
 
-.commonhead {
+.list-header {
+  max-width: var(--max-width);
+  min-height: 36px;
+  margin: 0 var(--horizontal-margin);
+  padding: 12px 15px 4px 15px;
+
   color: var(--text-color);
   text-align: left;
+  font-size: 19px;
+  font-weight: 500;
 }
 
-.grey .commonhead {
-  min-height: 37px;
-  margin: 0 auto;
+.grey .list-header {
   padding: 23px 15px 5px 15px;
-
   color: var(--dark-grey);
   font-size: 13px;
+  font-weight: 400;
 }
 
-.commonfoot {
+.list-footer {
+  max-width: var(--max-width);
   min-height: 16px;
-  margin: 0 auto;
+  margin: 0 15px;
   padding: 5px 15px 0 15px;
 
   color: var(--dark-grey);
@@ -26,50 +32,12 @@
 
 .list-wrapper {
   position: relative;
-  margin: 0 auto;
+
+  max-width: var(--max-width);
+  margin: 0 var(--horizontal-margin);
   background-color: var(--block-bgcolor);
-}
-
-.list-wrapper::after,
-.list-wrapper::before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  right: 0;
-
-  height: 1px;
-}
-
-.list-wrapper::after {
-  bottom: 0;
-  border-bottom: 1px solid var(--border-color);
-  transform: scaleY(0.4);
-  transform-origin: 0 100%;
-}
-
-.list-wrapper::before {
-  top: 0;
-  border-top: 1px solid var(--border-color);
-  transform: scaleY(0.4);
-  transform-origin: 0 0;
-}
-
-@media (min-width: 768px) {
-  .list-wrapper {
-    margin: 0 15px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .list-wrapper::after,
-  .list-wrapper::before {
-    border: none;
-  }
-
-  .commonfoot,
-  .grey .commonhead {
-    margin: 0 15px;
-  }
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .list-wrapper .list {
@@ -99,7 +67,8 @@
   color: var(--text-color);
   text-align: left;
   line-height: 1.5;
-  flex: 1;
+  word-break: break-word;
+  flex-grow: 1;
 }
 
 .list-wrapper .icon {
@@ -109,8 +78,36 @@
 }
 
 .list-wrapper .desc {
-  color: #999 !important;
+  max-width: 40%;
+
+  color: #8a8a8e;
   text-align: right;
+  white-space: nowrap;
+  flex-shrink: 1;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.list-wrapper .access {
+  position: relative;
+  padding-right: 15px;
+}
+
+.list-wrapper .access::after {
+  content: " ";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 2px;
+
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-width: 2px 2px 0 0;
+  border-style: solid;
+  border-color: var(--arrow-color);
+  transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 }
 
 .list-wrapper .divline {

@@ -24,27 +24,23 @@ Component({
       default: false,
     },
   },
-  data: {},
+
   methods: {
     // 用户确认
-    confirm() {
+    confirm(): void {
       this.triggerEvent("confirm");
     },
     // 用户取消
-    cancel() {
+    cancel(): void {
       this.triggerEvent("cancel");
     },
     // 用户点击关闭按钮
-    closeDialog() {
+    closeDialog(): void {
       this.triggerEvent("close");
     },
     // 用户点击更多按钮
-    more() {
+    more(): void {
       this.triggerEvent("more");
     },
-  },
-  options: {
-    addGlobalClass: true, // 兼容QQ
-    styleIsolation: "shared",
   },
 });

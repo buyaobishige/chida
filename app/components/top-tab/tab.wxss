@@ -13,7 +13,8 @@
   width: 100%;
   height: 4vh;
   /* background: #fcb69f; */
-  background: rgb(241,196,15);
+  background: white;
+  /* background: rgb(241,196,15); */
   flex-wrap: wrap;
   align-items: flex-start;
   transition: all 0.3s;
@@ -26,7 +27,7 @@
 }
 
 .tab-item-wrapper .tab-item {
-  color: white;
+  color: rgb(205,127,50);
 }
 
 .tab-item-wrapper .tab-item.active {
@@ -36,7 +37,7 @@
 .top-tabbar .indicator {
   position: relative;
   height: 10rpx;
-  background: white;
+  background: rgb(205,127,50);
   justify-self: left;
 }
 

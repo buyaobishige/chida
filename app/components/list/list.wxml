@@ -1,7 +1,6 @@
-<wxs src="./list.wxs" module="list" />
 <!-- 列表头部文字 -->
-<view wx:if="{{config.head !== false}}" class="commonhead"
-  >{{config.head}}</view
+<view wx:if="{{config.header !== false}}" class="list-header"
+  >{{config.header}}</view
 >
 <!-- 列表主体 -->
 <view class="list-wrapper">
@@ -20,12 +19,13 @@
       >
         <image wx:if="{{listItem.icon}}" class="icon" src="{{listItem.icon}}" />
         <view class="text">{{listItem.text}}</view>
-        <view class="desc access">{{listItem.desc}}</view>
+        <view class="desc">{{listItem.desc}}</view>
+        <view class="access" />
       </view>
       <!-- 普通文字段落 -->
       <view wx:else class="list">
         <image wx:if="{{listItem.icon}}" class="icon" src="{{listItem.icon}}" />
-        <text class="text" decode selectable space="nbsp"
+        <text class="text" decode user-select space="nbsp"
           >{{listItem.text}}</text
         >
         <view class="desc">{{listItem.desc}}</view>
@@ -36,4 +36,4 @@
   </block>
 </view>
 <!-- 列表尾部文字 -->
-<view wx:if="{{config.foot}}" class="commonfoot">{{config.foot}}</view>
+<view wx:if="{{config.footer}}" class="list-footer">{{config.footer}}</view>
