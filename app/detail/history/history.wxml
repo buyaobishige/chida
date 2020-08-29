@@ -1,2 +1,27 @@
-<!--detail/history/history.wxml-->
-<text>detail/history/history.wxml</text>
+<wxs src="../utils/tool.wxs" module="tool" />
+<view wx:if="{{foodList.length === 0}}" class="list-wrapper">
+  <view class="tip">当前无历史记录</view>
+</view>
+<view wx:else class="list-wrapper">
+  <view class="list-item" wx:for="{{foodList}}" wx:for-item="food">
+    <view class="flag">
+      <image src="/icon/{{tool.getFlag(food.locate)}}.png" />
+      <view>{{tool.getCampus(food.locate)}}</view>
+    </view>
+    <view class="price">
+      <text>¥</text>
+      {{food.price}}
+    </view>
+    <image mode="aspectFill" class="food-image" src="{{food.src}}" />
+    <view class="detail">
+      <view class="food">{{food.name}}</view>
+      <view class="tag-wrapper">
+        <view class="tag" wx:for="{{food.tags}}" wx:key="index">{{item}}</view>
+      </view>
+      <view class="desc">{{food.desc}}</view>
+      <navigator url="/detail/stall/stall?stall={{food.stall}}">
+        <text class="stall arrow">{{food.stall}}</text>
+      </navigator>
+    </view>
+  </view>
+</view>

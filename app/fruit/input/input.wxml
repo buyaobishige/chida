@@ -18,11 +18,15 @@
     <!-- <button class="btn" formType="submit">提交</button> -->
   </form>
 
-
   <view class="priceTable">
     <view class="line" wx:for="{{coreDataSet}}" wx:key="index">
       <view class="part1">
-        <input value="{{item.name}}" bindinput="bindInput" data-category="name" data-index="{{index}}" />
+        <input
+          value="{{item.name}}"
+          bindinput="bindInput"
+          data-category="name"
+          data-index="{{index}}"
+        />
       </view>
       <view class="part2">
         <view class="delBox" bindtap="delItem" data-index="{{index}}">
@@ -30,7 +34,13 @@
         </view>
       </view>
       <view class="part3">
-        <input type="digit" value="{{item.price}}" bindinput="bindInput" data-category="price" data-index="{{index}}" />
+        <input
+          type="digit"
+          value="{{item.price}}"
+          bindinput="bindInput"
+          data-category="price"
+          data-index="{{index}}"
+        />
       </view>
     </view>
     <button class="btn" bindtap="addLine">新增一行</button>

@@ -1,8 +1,8 @@
 /* css引入 */
-@import "css/colorui/animation.wxss";
-@import "css/colorui/icon.wxss";
-@import "css/common.wxss";
-@import "css/animation.wxss";
+@import "style/colorui/animation.wxss";
+@import "style/colorui/icon.wxss";
+@import "style/common.wxss";
+@import "style/animation.wxss";
 
 page {
   height: 100%;

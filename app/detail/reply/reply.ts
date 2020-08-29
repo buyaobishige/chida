@@ -87,7 +87,7 @@ Page({
         });
         let targetRemark: any;
         newData.forEach((item) => {
-          if (item.id == this.data.id) {targetRemark = item};
+          if (item.id == this.data.id) targetRemark = item;
         });
         (targetRemark.replyList || []).forEach((item: any) => {
           if (item.rzan_list) item.rzanList = JSON.parse(item.rzan_list);

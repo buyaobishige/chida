@@ -10,9 +10,14 @@
     <view class="box" bindtap="onTap">
       <view class="relative-box">
         <view class="front {{frontActive}}">
-            <view class="canvas-container">
-              <ec-canvas class="{{hide}}" id="mychart-dom-line-1" canvas-id="mychart-line-1" ec="{{ ec }}" />
-            </view>
+          <view class="canvas-container">
+            <ec-canvas
+              class="{{hide}}"
+              id="mychart-dom-line-1"
+              canvas-id="mychart-line-1"
+              ec="{{ ec }}"
+            />
+          </view>
         </view>
         <view class="back {{backActive}}">
           <view>历史最高价是：{{privateData.maxVal}}</view>

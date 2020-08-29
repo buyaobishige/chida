@@ -9,7 +9,7 @@ Page({
     /** 状态栏高度 */
     statusBarHeight: 20,
 
-    /** 卡片列表 */
+    /** 待显示的卡片列表 */
     cards: [] as FoodDetail[],
   },
 

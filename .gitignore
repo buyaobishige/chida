@@ -5,4 +5,4 @@ app/**/*.js
 app/**/*.js.map
 
 # echarts package
-!app/components/ec-canvas/echarts.js
+!app/fruit/ec-canvas/echarts.js

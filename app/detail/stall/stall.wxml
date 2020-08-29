@@ -5,16 +5,30 @@
         <image class="restaurantImg" src="{{info.src}}" mode="widthFix" />
       </view>
       <view class="introCard" style="position: relative;">
-        <image wx:if="{{info.contact}}" class="contact-image" src="/icon/lefttopBadge.png" />
+        <image
+          wx:if="{{info.contact}}"
+          class="contact-image"
+          src="/icon/lefttopBadge.png"
+        />
         <text wx:if="{{info.contact}}" class="contact-text">
           送餐
         </text>
-        <view hidden="{{!info.contact}}" class="contact" style="position: absolute; top: -90rpx; right: 50rpx;" catch:tap="copyContact">
+        <view
+          hidden="{{!info.contact}}"
+          class="contact"
+          style="position: absolute; top: -90rpx; right: 50rpx;"
+          catch:tap="copyContact"
+        >
           <view class="contactBox">
             <image style="width: 35rpx; height: 35rpx;" src="/icon/copy.png" />
           </view>
         </view>
-        <view hidden="{{!info.contact}}" class="contact" style="position: absolute; top: -90rpx; right: 120rpx;" catch:tap="phoneCall">
+        <view
+          hidden="{{!info.contact}}"
+          class="contact"
+          style="position: absolute; top: -90rpx; right: 120rpx;"
+          catch:tap="phoneCall"
+        >
           <view class="contactBox">
             <image style="width: 35rpx; height: 35rpx;" src="/icon/phone.png" />
           </view>
@@ -40,26 +54,57 @@
       </view>
       <view class="VerticalBox">
         <!-- 侧边栏 -->
-        <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}">
-          <view class="cu-item {{index === TabCur? 'text-color cur': ''}}" wx:for="{{foodList}}" wx:key="index" data-index="{{index}}" bindtap="tabSelect">
+        <scroll-view
+          class="VerticalNav nav"
+          scroll-y
+          scroll-with-animation
+          scroll-top="{{VerticalNavTop}}"
+        >
+          <view
+            class="cu-item {{index === TabCur? 'text-color cur': ''}}"
+            wx:for="{{foodList}}"
+            wx:key="index"
+            data-index="{{index}}"
+            bindtap="tabSelect"
+          >
             {{item.name}}
           </view>
         </scroll-view>
         <!-- 菜单项 -->
-        <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur}}">
-          <view class="padding" wx:for="{{foodList}}" wx:key="index" id="main-{{index}}">
+        <scroll-view
+          class="VerticalMain"
+          scroll-y
+          scroll-with-animation
+          scroll-into-view="main-{{MainCur}}"
+        >
+          <view
+            class="padding"
+            wx:for="{{foodList}}"
+            wx:key="index"
+            id="main-{{index}}"
+          >
             <view class="cu-bar solid-bottom bg-white">
               <view class="action">
                 <text class="cuIcon-title text-color" /> {{item.name}}
               </view>
             </view>
             <view class="cu-list menu-avatar">
-              <view class="cu-item" wx:for="{{item.content}}" wx:for-item="list">
-                <image class="cu-avatar {{list.round?'round':''}} lg" mode="aspectFill" src="{{list.src}}" />
+              <view
+                class="cu-item"
+                wx:for="{{item.content}}"
+                wx:for-item="list"
+              >
+                <image
+                  class="cu-avatar {{list.round?'round':''}} lg"
+                  mode="aspectFill"
+                  src="{{list.src}}"
+                />
                 <view class="content">
                   <view wx:if="{{list.badge}}" class=" ">
                     <text class="text-cut">{{list.food}}</text>
-                    <view class="cu-tag round bg-{{list.badgeColor}} sm">{{list.badge}}</view>
+                    <view class="cu-tag round bg-{{list.badgeColor}} sm"
+                      >{{list.badge}}</view
+                    >
                   </view>
                   <view wx:else class=" ">{{list.food}}</view>
                   <view class="text-sm flex">
@@ -80,14 +125,23 @@
     <view class="remarkContainer">
       <view class="score">
         <view style="">
-          <view style="font-size: 30px; color: #fcb69f;">得分:{{averageScore}}</view>
+          <view style="font-size: 30px; color: #fcb69f;"
+            >得分:{{averageScore}}</view
+          >
           <view>({{rateArr.length}}人已评)</view>
           <!-- todo -->
         </view>
       </view>
       <view class="ratingArea">
         <view class="starGroup1">
-          <image wx:for="{{[1,2,3,4,5]}}" wx:for-item="number" style="width: 50rpx; height: 50rpx;" src="/icon/star{{currentRate >= number? 'OK': ''}}.png" data-rating="{{number}}" catch:tap="onRate" />
+          <image
+            wx:for="{{[1,2,3,4,5]}}"
+            wx:for-item="number"
+            style="width: 50rpx; height: 50rpx;"
+            src="/icon/star{{currentRate >= number? 'OK': ''}}.png"
+            data-rating="{{number}}"
+            catch:tap="onRate"
+          />
         </view>
         <view class="sortBox">
           <view class="sortTxt" bindtap="sort" data-sortby="new">最新评论</view>
@@ -105,18 +159,36 @@
               <view class="line1">
                 <text class="userName">{{item.user}}</text>
                 <view class="starGroup1">
-                  <image wx:for="{{[1,2,3,4,5]}}" wx:for-item="number" src="/icon/star{{item.rate >= number? 'OK': ''}}.png" style="width: 15px; height: 15px; display: inline-block;" />
+                  <image
+                    wx:for="{{[1,2,3,4,5]}}"
+                    wx:for-item="number"
+                    src="/icon/star{{item.rate >= number? 'OK': ''}}.png"
+                    style="width: 15px; height: 15px; display: inline-block;"
+                  />
                 </view>
               </view>
-              <view class="line2" style="float: left; color: #888; font-size: 12px;">
+              <view
+                class="line2"
+                style="float: left; color: #888; font-size: 12px;"
+              >
                 <view class="date">{{item.formattedDate}}</view>
-                <view wx:if="{{item.special && (item.special==1||item.special==1||item.special==1)}}" class="cu-capsule">
+                <view
+                  wx:if="{{item.special && (item.special==1||item.special==1||item.special==1)}}"
+                  class="cu-capsule"
+                >
                   <view class="cu-tag bg-red">
-                    <image class="badgeImg" mode="aspectFill" src="/icon/dianzhu.png" />
+                    <image
+                      class="badgeImg"
+                      mode="aspectFill"
+                      src="/icon/dianzhu.png"
+                    />
                   </view>
                   <view class="cu-tag line-red">店主</view>
                 </view>
-                <view wx:if="{{item.special && (item.special[0] === '置顶'||item.special[1]=='置顶'||item.special[2]=='置顶')}}" class="bindtop">
+                <view
+                  wx:if="{{item.special && (item.special[0] === '置顶'||item.special[1]=='置顶'||item.special[2]=='置顶')}}"
+                  class="bindtop"
+                >
                   <view>置顶</view>
                 </view>
               </view>
@@ -128,24 +200,50 @@
           <view class="bigLine3">
             <view class="systemModelBox">
               <image class="systemModelIcon" src="/icon/cellphone.png"></image>
-              <view class="systemModel">{{item.systemModel? item.systemModel: '未知设备'}}</view>
+              <view class="systemModel"
+                >{{item.systemModel? item.systemModel: '未知设备'}}</view
+              >
             </view>
             <view class="btnBox">
-              <view wx:if="{{openid==item.openid}}" class="btn" data-commentid="{{item.id}}" bindtap="deleteComment">
+              <view
+                wx:if="{{openid==item.openid}}"
+                class="btn"
+                data-commentid="{{item.id}}"
+                bindtap="deleteComment"
+              >
                 <image src="/icon/delete.png" class="btnIcon"></image>
               </view>
               <view wx:else class="btn"></view>
-              <button id="zan" type="none" open-type="getUserInfo" data-id="{{item.id}}" data-func="zan" bindgetuserinfo="login">
+              <button
+                id="zan"
+                type="none"
+                open-type="getUserInfo"
+                data-id="{{item.id}}"
+                data-func="zan"
+                bindgetuserinfo="login"
+              >
                 <view class="btn zanBox">
-                  <image wx:if="{{item.zanOk}}" class="btnIcon" src="/icon/dianzanOK.png"></image>
-                  <image wx:else class="btnIcon" src="/icon/dianzan.png"></image>
+                  <image
+                    wx:if="{{item.zanOk}}"
+                    class="btnIcon"
+                    src="/icon/dianzanOK.png"
+                  ></image>
+                  <image
+                    wx:else
+                    class="btnIcon"
+                    src="/icon/dianzan.png"
+                  ></image>
                   <view class="zanNumber" wx:if="{{item.zanList.length>0}}">
                     {{item.zanList.length}}
                   </view>
                 </view>
               </button>
               <view class="btn replyIconBox">
-                <navigator class="navigator" hover-class="none" url="/detail/reply/reply?id={{item.id}}&orientation={{orientation}}">
+                <navigator
+                  class="navigator"
+                  hover-class="none"
+                  url="/detail/reply/reply?id={{item.id}}&orientation={{orientation}}"
+                >
                   <image src="/icon/reply.png" class="btnIcon"></image>
                   <view class="replyNumber" wx:if="{{item.replyList.length>0}}">
                     {{item.replyList.length}}
@@ -155,14 +253,26 @@
             </view>
           </view>
         </view>
-        <view wx:if="{{remarks.length==0}}" style="margin-top:50rpx">暂无评论，快来抢沙发！</view>
+        <view wx:if="{{remarks.length==0}}" style="margin-top: 50rpx;"
+          >暂无评论，快来抢沙发！</view
+        >
       </view>
       <view class="inputBox">
-        <input id="input" value="{{inputValue}}" bindinput="valueChange" placeholder="{{placeholder}}" />
+        <input
+          id="input"
+          value="{{inputValue}}"
+          bindinput="valueChange"
+          placeholder="{{placeholder}}"
+        />
         <button wx:if="{{isLogin}}" class="fabu-input" bindtap="submit">
           发布
         </button>
-        <button wx:else class="fabu-input" open-type="getUserInfo" bindgetuserinfo="login">
+        <button
+          wx:else
+          class="fabu-input"
+          open-type="getUserInfo"
+          bindgetuserinfo="login"
+        >
           免密授权登录
         </button>
       </view>

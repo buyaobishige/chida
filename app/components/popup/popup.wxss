@@ -1,4 +1,4 @@
-@import "../../css/common.wxss";
+@import "../../style/common.wxss";
 
 .popup-wrapper {
   position: absolute;

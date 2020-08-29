@@ -1,5 +1,5 @@
-@import '../../css/back-to-top.wxss';
-@import '../../css/food-list.wxss';
+@import '../../style/back-to-top.wxss';
+@import '../../style/food-list.wxss';
 
 page {
   /* background-color: rgb(245, 245, 245)； */

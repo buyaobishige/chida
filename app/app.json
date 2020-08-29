@@ -21,7 +21,8 @@
     "selectedColor": "#f1c40f",
     "backgroundColor": "#fff",
     "position": "bottom",
-    "list": [{
+    "list": [
+      {
         "selectedIconPath": "icon/tab-page/home-selected.png",
         "iconPath": "icon/tab-page/home.png",
         "pagePath": "tab/index/index",

@@ -3,11 +3,11 @@ const privateData = {
   urlSet: {
     0: "../input/input?market=东师果园",
     1: "../input/input?market=南苑",
-    2: "../input/input?market=北苑"
+    2: "../input/input?market=北苑",
   },
   // 中间变量，用于多次点击判定，可忽略
   count: {},
-}
+};
 Page({
   data: {
     /** 选择器当前选中项 */
@@ -95,7 +95,7 @@ Page({
   },
 
   tappingSwiperItem(e) {
-    const sequence = e.currentTarget.dataset.sequence;
+    const { sequence } = e.currentTarget.dataset;
     if (!privateData.count[sequence]) {
       privateData.count[sequence] = 1;
       setTimeout(() => {
@@ -103,10 +103,9 @@ Page({
       }, 2000);
     } else {
       privateData.count[sequence] += 1;
-      if (privateData.count[sequence] >= 4) {
-        wx.navigateTo({ url: privateData.urlSet[sequence] })
-      }
+      if (privateData.count[sequence] >= 4)
+        wx.navigateTo({ url: privateData.urlSet[sequence] });
     }
-    console.log(privateData.count)
-  }
+    console.log(privateData.count);
+  },
 });

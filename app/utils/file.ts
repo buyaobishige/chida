@@ -22,13 +22,16 @@ const fileManager = wx.getFileSystemManager();
 /** 用户文件夹路径 */
 const userPath = wx.env.USER_DATA_PATH;
 
+export const dirname = (path: string): string =>
+  path.split("/").slice(0, -1).join("/");
+
 /**
  * 删除文件或文件夹
  * @param path 要删除的文件或文件夹路径
  * @param isDir 要删除的是否是文件夹
  */
-export const Delete = (path: string, isDir?: boolean | undefined): void => {
-  if (isDir === undefined)
+export const remove = (path: string, type?: "dir" | "file"): void => {
+  if (!type)
     try {
       // 判断路径是否是文件，并执行对应删除操作
       if (
@@ -40,15 +43,15 @@ export const Delete = (path: string, isDir?: boolean | undefined): void => {
       else fileManager.rmdirSync(`${userPath}/${path}`, true);
     } catch (err) {
       // 调试
-      error(`删除${path}出错,错误为:`, err);
+      error(`删除 ${path} 出错,错误为:`, err);
     }
   // 是目录
-  else if (isDir)
+  else if (type === "dir")
     try {
       fileManager.rmdirSync(`${userPath}/${path}`, true);
     } catch (err) {
       // 调试
-      error(`删除${path}出错,错误为:`, err);
+      error(`删除 ${path} 出错,错误为:`, err);
     }
   // 是文件
   else
@@ -56,7 +59,7 @@ export const Delete = (path: string, isDir?: boolean | undefined): void => {
       fileManager.unlinkSync(`${userPath}/${path}`);
     } catch (err) {
       // 调试
-      error(`删除${path}出错,错误为:`, err);
+      error(`删除 ${path} 出错,错误为:`, err);
     }
 };
 
@@ -66,20 +69,30 @@ export const Delete = (path: string, isDir?: boolean | undefined): void => {
  * @param path 要查看的文件/文件夹路径
  * @returns true
  */
-const isFileExist = (path: string): boolean => {
+export const isFileExist = (path: string): boolean => {
   try {
     fileManager.statSync(`${userPath}/${path}`, false);
 
     return true;
   } catch (err) {
     // 调试
-    error(`${path}不存在`, err);
+    warn(`${path} 不存在`, err);
 
     return false;
   }
 };
 
-export const exist = isFileExist;
+export const isFile = (path: string): boolean =>
+  isFileExist(path) &&
+  (fileManager.statSync(
+    `${userPath}/${path}`
+  ) as WechatMiniprogram.Stats).isFile();
+
+export const isDir = (path: string): boolean =>
+  isFileExist(path) &&
+  (fileManager.statSync(
+    `${userPath}/${path}`
+  ) as WechatMiniprogram.Stats).isDirectory();
 
 /**
  * 列出目录下文件
@@ -91,12 +104,12 @@ export const listFile = (path: string): string[] => {
   try {
     const fileList = fileManager.readdirSync(`${userPath}/${path}`);
 
-    info(`${path}文件夹下文件为：`, fileList); // 调试
+    info(`${path} 文件夹下文件为: `, fileList); // 调试
 
     return fileList;
   } catch (err) {
     // 调试
-    error(`列出${path}文件夹下文件错误：`, err);
+    error(`列出 ${path} 文件夹下文件错误: `, err);
 
     return [];
   }
@@ -116,7 +129,7 @@ export const readFile = (
   try {
     return fileManager.readFileSync(`${userPath}/${path}`, encoding);
   } catch (err) {
-    warn(`${path}不存在`);
+    warn(`${path} 不存在`);
 
     return undefined;
   }
@@ -143,18 +156,18 @@ export const readJSON = (
     try {
       data = JSON.parse(fileContent as string);
 
-      debug(`读取 ${path}.json成功：`, data);
+      debug(`读取 ${path}.json 成功`);
     } catch (err) {
       data = undefined;
 
       // 调试
-      warn(`${path}解析失败`);
+      warn(`${path} 解析失败`);
     }
   } catch (err) {
     data = undefined;
 
     // 调试
-    warn(`${path}不存在`);
+    warn(`${path} 不存在`);
   }
 
   return data;
@@ -170,7 +183,7 @@ export const makeDir = (path: string, recursive = true): void => {
     fileManager.mkdirSync(`${userPath}/${path}`, recursive);
   } catch (err) {
     // 调试
-    info(`${path}目录已存在`, err);
+    info(`${path} 目录已存在`, err);
   }
 };
 
@@ -184,22 +197,20 @@ export const saveFile = (tempFilePath: string, path: string): void => {
     fileManager.saveFileSync(tempFilePath, `${userPath}/${path}`);
   } catch (err) {
     // 调试
-    error(`保存文件到${path}失败：`, err);
+    error(`保存文件到 ${path} 失败:`, err);
   }
 };
 
 /** 保存在线文件选项接口 */
 interface SaveOnlineFileOption {
   /** 在线文件路径 */
-  onlinePath: string;
+  url: string;
   /** 本地保存路径 */
-  savePath: string;
-  /** 本地保存文件名 */
-  saveName: string;
+  path?: string;
   /** 成功回调函数 */
   success?: (path: string) => void;
   /** 失败回调函数 */
-  fail?: (errMsg: WechatMiniprogram.GeneralCallbackResult) => void;
+  fail?: (errMsg: string | number) => void;
   /** 状态码错误回调函数 */
   error?: (statusCode: number) => void;
 }
@@ -210,29 +221,28 @@ interface SaveOnlineFileOption {
  * @param options 配置
  */
 export const saveOnlineFile = ({
-  onlinePath,
-  savePath,
-  saveName,
+  url,
+  path = url,
   success,
   fail,
-  error: errorFunc,
+  error: errorFunc = fail,
 }: SaveOnlineFileOption): void => {
-  makeDir(savePath);
+  makeDir(dirname(path));
   wx.downloadFile({
-    url: `https://${server}${onlinePath}`,
-    filePath: `${userPath}/${savePath}/${saveName}`,
+    url: `${server}${url}`,
+    filePath: `${userPath}/${path}`,
     success: (res) => {
       if (res.statusCode === 200) {
-        info(`保存 ${onlinePath} 成功`);
+        info(`保存 ${url} 成功`);
         if (success) success(res.tempFilePath);
       } else {
         if (errorFunc) errorFunc(res.statusCode);
-        warn(`下载${onlinePath}失败，状态码为${res.statusCode}`);
+        warn(`下载 ${url} 失败，状态码为 ${res.statusCode}`);
       }
     },
-    fail: (failMsg) => {
-      if (fail) fail(failMsg);
-      warn(`下载${onlinePath}失败，错误为`, failMsg);
+    fail: ({ errMsg }) => {
+      if (fail) fail(errMsg);
+      warn(`下载 ${url} 失败，错误为 ${errMsg}`);
     },
   });
 };
@@ -241,49 +251,122 @@ export const saveOnlineFile = ({
  * 写入文件
  *
  * @param path 写入文件的路径
- * @param fileName 写入文件的文件名
  * @param data 写入文件的数据
  * @param encoding 文件编码选项
  */
 export const writeFile = (
   path: string,
-  fileName: string,
   data: Record<string, any> | ArrayBuffer | string,
   encoding: FileEncoding = "utf-8"
 ): void => {
   const jsonString = JSON.stringify(data);
 
-  makeDir(path);
-  fileManager.writeFileSync(
-    `${userPath}/${path}/${fileName}`,
-    jsonString,
-    encoding
-  );
+  makeDir(dirname(path));
+  fileManager.writeFileSync(`${userPath}/${path}`, jsonString, encoding);
 };
 
 /**
  * 写入 JSON 文件
  *
  * @param path 写入文件的路径
- * @param fileName 写入文件的文件名
  * @param data 写入文件的数据
  * @param encoding 文件编码选项
  */
 export const writeJSON = (
   path: string,
-  fileName: string,
-  data: Record<string, any> | any[] | string | number,
+  data: Record<string, any>,
   encoding: FileEncoding = "utf-8"
 ): void => {
   const jsonString = JSON.stringify(data);
 
-  makeDir(path);
-  fileManager.writeFileSync(
-    `${userPath}/${path}/${fileName}.json`,
-    jsonString,
-    encoding
-  );
+  makeDir(dirname(path));
+  fileManager.writeFileSync(`${userPath}/${path}.json`, jsonString, encoding);
 };
+
+export interface SaveJSONOption {
+  url: string;
+  path?: string;
+  success?: () => void;
+  fail?: (errMsg: string | number) => void;
+  error?: (statusCode: number) => void;
+}
+
+export const saveJSON = ({
+  url,
+  path = url,
+  success,
+  fail,
+  error: errorFunc = fail,
+}: SaveJSONOption): void => {
+  makeDir(dirname(path));
+
+  wx.downloadFile({
+    url: `${server}${url}.json`,
+    filePath: `${userPath}/${path}.json`,
+    success: (res) => {
+      if (res.statusCode === 200) {
+        info(`保存 ${url}.json 成功`);
+        if (success) success();
+      } else {
+        error(`获取 ${url}.json 失败，状态码为 ${res.statusCode}`);
+        if (errorFunc) errorFunc(res.statusCode);
+      }
+    },
+    fail: ({ errMsg }) => {
+      error(`下载 ${url}.json 失败，错误为 ${errMsg}`);
+      if (fail) fail(errMsg);
+    },
+  });
+};
+
+export interface EnsureJSONOption {
+  path: string;
+  url?: string;
+  success?: () => void;
+  fail?: (errMsg: string | number) => void;
+  error?: (statusCode: number) => void;
+}
+
+export const ensureJSON = ({
+  path,
+  url = path,
+  success,
+  fail,
+  error: errorFunc = fail,
+}: EnsureJSONOption): void => {
+  if (!isFileExist(`${path}.json`)) {
+    info(`开始获取 ${url}.json`);
+
+    makeDir(dirname(path));
+
+    wx.downloadFile({
+      url: `${server}${url}.json`,
+      filePath: `${userPath}/${path}.json`,
+      success: (res) => {
+        if (res.statusCode === 200) {
+          info(`获取 ${url}.json 成功`);
+          if (success) success();
+        } else {
+          error(`获取 ${url}.json 失败，状态码为 ${res.statusCode}`);
+          if (errorFunc) errorFunc(res.statusCode);
+          remove(`${path}.json`);
+        }
+      },
+      fail: ({ errMsg }) => {
+        error(`下载 ${url}.json 失败，错误为 ${errMsg}`);
+        if (fail) fail(errMsg);
+      },
+    });
+  } else if (success) success();
+};
+
+export interface GetJSONOption {
+  path: string;
+  url?: string;
+  success?: (data: Record<string, any> | any[] | string) => void;
+  fail?: (errMsg: string | number) => void;
+  error?: (statusCode: number) => void;
+}
 
 /**
  * 获取 JSON
@@ -292,58 +375,23 @@ export const writeJSON = (
  * @param successFunc JSON 获取成功后的回调
  * @param failFunc JSON 获取失败后的回调
  */
-export const getJSON = (
-  path: string,
-  successFunc?: (data: any) => void,
-  failFunc?: () => void
-): void => {
-  const temp = path.split("/");
-  const fileName = temp.pop();
-  const folder = temp.join("/");
-
-  if (successFunc) {
-    let data = readJSON(path);
-
-    if (data) successFunc(data);
-    else {
-      makeDir(folder);
-
-      wx.downloadFile({
-        url: `https://${server}${path}.json`,
-        filePath: `${userPath}/${folder}/${fileName}.json`,
-        success: (res) => {
-          if (res.statusCode === 200) {
-            info(`保存 ${path}.json 成功`);
-
-            data = readJSON(path);
-
-            successFunc(data);
-          } else {
-            warn(`获取${path}.json失败，状态码为${res.statusCode}`);
-            if (failFunc) failFunc();
-          }
-        },
-        fail: (failMsg) => {
-          warn(`下载${path}.json失败，错误为`, failMsg);
-          if (failFunc) failFunc();
-        },
-      });
-    }
-  } else if (!isFileExist(`${path}.json`)) {
-    makeDir(folder);
-
-    wx.downloadFile({
-      url: `https://${server}${path}.json`,
-      filePath: `${userPath}/${folder}/${fileName}.json`,
-      success: (res) => {
-        if (res.statusCode === 200) info(`保存 ${path}.json 成功`);
-        else error(`获取${path}.json失败，状态码为${res.statusCode}`);
-      },
-      fail: (failMsg) => {
-        error(`下载${path}.json失败，错误为`, failMsg);
-      },
-    });
-  }
+export const getJSON = ({
+  path,
+  url = path,
+  success,
+  fail,
+  error: errorFunc = fail,
+}: GetJSONOption): void => {
+  ensureJSON({
+    url,
+    path,
+    success: () => {
+      const data = readJSON(path);
+      if (success) success(data);
+    },
+    fail,
+    error: errorFunc,
+  });
 };
 
 /**

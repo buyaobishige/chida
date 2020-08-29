@@ -82,7 +82,10 @@ Page({
   onLoad(options) {
     if (options.stall) {
       this.privateData.stall = options.stall;
-      this.setData({ openid: globalData.openid, orientation: options.stall || "general" });
+      this.setData({
+        openid: globalData.openid,
+        orientation: options.stall || "general",
+      });
       wx.request({
         url: "https://lin.innenu.com/server/getRestaurant.php",
         // url: "https://lin.innenu.com/test/stall.php",
@@ -92,7 +95,7 @@ Page({
           const { info, foodList } = res.data as GetStallCallback;
           this.setData({ foodList, info });
           this.refreshInfo();
-          console.log(this.data.info)
+          console.log(this.data.info);
         },
       });
     }
@@ -111,7 +114,7 @@ Page({
       data: { orientation: this.privateData.stall || "general" },
       // eslint-disable-next-line max-lines-per-function
       success: (res) => {
-        console.log(res)
+        console.log(res);
         const { data } = res as WX.RequestResult<any[]>;
         const rateDetail = (JSON.parse(data[0].rate) || []) as any[];
         console.log(data);
@@ -125,9 +128,7 @@ Page({
           let totalScore = 0;
 
           rateDetail.forEach((item) => {
-            if (item.rating != 0) {
-              totalScore += Number(item.rating);
-            }
+            if (item.rating != 0) totalScore += Number(item.rating);
           });
           // FIXME: 限制位数
           averageScore = (totalScore / rateDetail.length).toFixed(1);

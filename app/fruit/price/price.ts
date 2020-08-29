@@ -4,22 +4,21 @@ let dataX: any[] = [];
 let dataY: any[] = [];
 
 interface CoreDataSetItem {
-  timeStamp: number,
-  price: number,
+  timeStamp: number;
+  price: number;
 }
-
 
 const config = {
   // 是否补全没有价格数据的时间点
-  fillBlank: { fillBlank: false, minDays: 30 }
-}
+  fillBlank: { fillBlank: false, minDays: 30 },
+};
 
 const privateData = {
   maxVal: 0,
   minVal: 0,
   firstLoading: true,
-  option: null
-}
+  option: null,
+};
 let databaseSet: CoreDataSetItem[] = [];
 
 const initChart = (
@@ -59,56 +58,45 @@ const initChart = (
 
   for (let i = 0; i < 1000; i++) data.push(randomData());
 
-
-
-  if (privateData.firstLoading) {
-
+  if (privateData.firstLoading)
     setTimeout(() => {
       privateData.option = {
-        xAxis: { type: 'category', data: dataX },
+        xAxis: { type: "category", data: dataX },
         yAxis: {
-          type: "value"
+          type: "value",
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           formatter: "{b}\n价格:{c}元",
           // axisPointer:{
           //   axis:"x"
           // },
-
         },
-        series:
-        {
+        series: {
           data: dataY,
           type: "line",
           animation: false,
           symbolSize: 0,
           markLine: {
             symbol: "none",
-            data: [{
-              yAxis: privateData.minVal
-            }, {
-              yAxis: privateData.maxVal
-            }]
-          }
-        }
+            data: [
+              {
+                yAxis: privateData.minVal,
+              },
+              {
+                yAxis: privateData.maxVal,
+              },
+            ],
+          },
+        },
       };
-      chart.setOption(privateData.option); privateData.firstLoading = false
-    }, 1200)
-  } else {
-    chart.setOption(privateData.option)
-  }
+      chart.setOption(privateData.option);
+      privateData.firstLoading = false;
+    }, 1200);
+  else chart.setOption(privateData.option);
+
   return chart;
 };
-
-
-
-
-
-
-
-
-
 
 Page({
   data: {
@@ -130,58 +118,74 @@ Page({
   },
 
   onLoad() {
-    databaseSet = []
+    databaseSet = [];
     dataX = [];
     dataY = [];
     wx.request({
       url: "https://lin.innenu.com/server/fruitToolkit/getCurrentFruitInfo.php",
       method: "GET",
       data: {
-        market: this.data.market
+        market: this.data.market,
       },
-      success: res => {
+      success: (res) => {
         //处理原始数据
-        let raw = res.data as any[];
+        const raw = res.data as any[];
         //处理时间戳在同一天的数据，只保留最近的
         raw.forEach((item: any, index: number) => {
-          if (index < raw.length - 1) {
-            // console.log(this.isAtSameDay(Number(item.timeStamp), Number(raw[index + 1].timeStamp)))
-            if (this.isAtSameDay(Number(item.timeStamp), Number(raw[index + 1].timeStamp))) {
-              if (item.timeStamp > raw[index + 1].timeStamp) { raw[index + 1].duplicated = true }
-              if (item.timeStamp < raw[index + 1].timeStamp) { item.duplicated = true }
+          if (index < raw.length - 1)
+            if (
+              this.isAtSameDay(
+                Number(item.timeStamp),
+                Number(raw[index + 1].timeStamp)
+              )
+            ) {
+              // console.log(this.isAtSameDay(Number(item.timeStamp), Number(raw[index + 1].timeStamp)))
+              if (item.timeStamp > raw[index + 1].timeStamp)
+                raw[index + 1].duplicated = true;
+
+              if (item.timeStamp < raw[index + 1].timeStamp)
+                item.duplicated = true;
             }
-          }
         });
         raw.forEach((item: any, index: number) => {
-          JSON.parse(item.databaseSet).forEach(element => {
-            if (element.name === this.data.fruitName && !item.duplicated) {
+          JSON.parse(item.databaseSet).forEach((element) => {
+            if (element.name === this.data.fruitName && !item.duplicated)
               databaseSet.push({
                 timeStamp: Number(item.timeStamp),
-                price: element.price
-              })
-            }
+                price: element.price,
+              });
           });
-        })
+        });
 
         //end
-
-
 
         // 找出最大最小值，用于划markline
         privateData.maxVal = databaseSet[0].price;
         privateData.minVal = databaseSet[0].price;
-        databaseSet.forEach(item => {
-          if (item.price >= privateData.maxVal) { privateData.maxVal = item.price }
-          if (item.price < privateData.minVal) { privateData.minVal = item.price }
-        })
+        databaseSet.forEach((item) => {
+          if (item.price >= privateData.maxVal) privateData.maxVal = item.price;
+
+          if (item.price < privateData.minVal) privateData.minVal = item.price;
+        });
 
         // 如果 x 轴不足天数，则补
-        if (databaseSet.length < config.fillBlank.minDays && config.fillBlank.fillBlank)
-          for (let i = config.fillBlank.minDays - databaseSet.length + 1; i > 0; i--) {
+        if (
+          databaseSet.length < config.fillBlank.minDays &&
+          config.fillBlank.fillBlank
+        )
+          for (
+            let i = config.fillBlank.minDays - databaseSet.length + 1;
+            i > 0;
+            i--
+          ) {
             dataX.push(
               `${
-              new Date(databaseSet[0].timeStamp - 3600 * 24 * i * 1000).getMonth() + 1
-              }月${new Date(databaseSet[0].timeStamp - 3600 * 24 * i * 1000).getDate()}号`
+                new Date(
+                  databaseSet[0].timeStamp - 3600 * 24 * i * 1000
+                ).getMonth() + 1
+              }月${new Date(
+                databaseSet[0].timeStamp - 3600 * 24 * i * 1000
+              ).getDate()}号`
             );
             dataY.push(null);
           }
@@ -190,12 +194,17 @@ Page({
         databaseSet.reverse();
         dataX.push(
           ...databaseSet.map(
-            (val) => `${new Date(val.timeStamp).getMonth() + 1}月${new Date(val.timeStamp).getDate()}号`
+            (val) =>
+              `${new Date(val.timeStamp).getMonth() + 1}月${new Date(
+                val.timeStamp
+              ).getDate()}号`
           )
         );
-        dataY.push(...databaseSet.map(val => {
-          return val.price
-        }));
+        dataY.push(
+          ...databaseSet.map((val) => {
+            return val.price;
+          })
+        );
         // const tmpY = [];
         // tmpY.push(...dataY);
         // const sortedY = tmpY.sort((element1, element2) => {
@@ -205,11 +214,9 @@ Page({
           latest: dataX[dataX.length - 1],
           currentPrice: dataY[dataY.length - 1],
           privateData,
-          config
+          config,
         });
-
-
-      }
-    })
+      },
+    });
   },
 });

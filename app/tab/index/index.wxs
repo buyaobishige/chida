@@ -11,6 +11,7 @@ module.exports = {
     { type: "肉类", icon: "meat" },
     { type: "面食", icon: "flour" },
     { type: "水果", icon: "fruit", url: "/fruit/index/index" },
+    { type: "水果", icon: "fruit", url: "/fruit/stallList/stallList" },
   ],
   /** 轮播图片 */
   imgs: [

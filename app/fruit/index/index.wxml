@@ -1,4 +1,3 @@
-
 <swiper
   wx:if="{{currentIndex === 0}}"
   class="carousel"
@@ -29,8 +28,6 @@
     />
   </swiper-item>
 </swiper>
-
-
 
 <view class="location">
   <picker

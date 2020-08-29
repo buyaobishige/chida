@@ -1,6 +1,6 @@
 import { AppOption } from "../../app";
 const { globalData } = getApp<AppOption>();
-let currentSwipe: number=0;
+let currentSwipe = 0;
 
 Component({
   properties: {
@@ -32,7 +32,7 @@ Component({
     },
     // 设置指示条动画
     transition({ detail }) {
-      console.log(currentSwipe)
+      console.log(currentSwipe);
       this.setData({
         barleft:
           (detail.dx + globalData.info.screenWidth * currentSwipe) /
@@ -42,10 +42,10 @@ Component({
     aminationFinish({ detail: { current } }: any) {
       currentSwipe = current;
       if (!this.properties.immediate) this.setData({ current });
-      this.triggerEvent("aminationFinished",{current},{})
+      this.triggerEvent("aminationFinished", { current }, {});
     },
   },
-  
+
   options: {
     multipleSlots: true,
   },
