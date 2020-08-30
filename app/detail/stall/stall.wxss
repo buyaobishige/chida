@@ -1,3 +1,24 @@
+.topbg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.logoIcon {
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  margin-right: 12px;
+}
+
+.priceDigit {
+  font-size: 22px;
+  font-weight: 500;
+  font-family: Impact, Georgia, 'Times New Roman', Times,
+    serif;
+}
+
 .remarkcard {
   height: 57vh;
   /* overflow: scroll; */
