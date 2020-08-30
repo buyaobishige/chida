@@ -54,8 +54,12 @@ Page({
     floatIconBoxDisplay: false,
     popupConf: { cancel: false, final: "" },
     popupConf2: { cancel: false, title: "发表评论", confirm: false },
+    popupConf3: { cancel: false, title: "更多", confirm: false },
     popupDisplay: false,
     popupDisplay2: false,
+    popupDisplay3: false,
+    /** 选中的评论的id */
+    curCommentId: 0,
     /** 档口信息 */
     info: {} as StallInfo,
     /** 菜品列表 */
@@ -115,6 +119,12 @@ Page({
   openEditPop() {
     this.setData({ popupDisplay2: true });
   },
+  openMorePop(e) {
+    this.setData({
+      popupDisplay3: true,
+      curCommentId: e.currentTarget.dataset.commentid,
+    });
+  },
   onScroll(e) {
     if (e.detail.deltaY > 5) this.setData({ floatIconBoxDisplay: true });
 
@@ -129,6 +139,15 @@ Page({
   closePopup2() {
     this.setData({ popupDisplay2: false });
   },
+  closePopup3() {
+    this.setData({ popupDisplay3: false });
+  },
+  showFullName(e) {
+    wx.showToast({
+      title: e.currentTarget.dataset.item.user,
+      icon: "none",
+    });
+  },
 
   /** 刷新评论列表 */
   // eslint-disable-next-line max-lines-per-function
@@ -139,10 +158,8 @@ Page({
       data: { orientation: this.privateData.stall || "general" },
       // eslint-disable-next-line max-lines-per-function
       success: (res) => {
-        console.log(res);
         const { data } = res as WX.RequestResult<any[]>;
         const rateDetail = (JSON.parse(data[0].rate) || []) as any[];
-        console.log(data);
         let averageScore;
         this.privateData.comment = JSON.parse(JSON.stringify(data));
 
@@ -155,7 +172,6 @@ Page({
           rateDetail.forEach((item) => {
             if (item.rating != 0) totalScore += Number(item.rating);
           });
-          // FIXME: 限制位数
           averageScore = (totalScore / rateDetail.length).toFixed(1);
         }
 
@@ -219,6 +235,10 @@ Page({
             comments.push(item);
           }
         });
+        comments.forEach((item) => {
+          if (item.user.length > 6)
+            item.userShortName = item.user.slice(0, 5) + "...";
+        });
         this.setData({
           remarks: comments,
           // currentRate: this.privateData.currentRate,
@@ -243,41 +263,50 @@ Page({
     });
   },
 
-  // tabSelect(event: WXEvent.Touch) {
-  //   const { index } = event.currentTarget.dataset;
+  tabSelect(event: WXEvent.Touch) {
+    const { index } = event.currentTarget.dataset;
 
-  //   this.setData({
-  //     TabCur: index,
-  //     MainCur: index,
-  //     VerticalNavTop: (index - 1) * 50,
-  //   });
-  // },
+    this.setData({
+      TabCur: index,
+      MainCur: index,
+      VerticalNavTop: (index - 1) * 50,
+    });
+  },
 
   deleteComment(event: WXEvent.Touch) {
-    const commentId = event.currentTarget.dataset.commentid;
-    modal("删除评论", "请确认是否删除该评论？", () => {
-      const { rateDetail } = this.privateData;
-      const index = rateDetail.findIndex(
-        (rate) => rate.openid === globalData.openid
-      );
+    const commentId = this.data.curCommentId;
+    console.log(commentId);
+    modal(
+      "删除评论",
+      "请确认是否删除该评论？",
+      () => {
+        const { rateDetail } = this.privateData;
+        const index = rateDetail.findIndex(
+          (rate) => rate.openid === globalData.openid
+        );
 
-      // 数组中是否有你的评价
-      if (index !== -1) rateDetail.splice(index, 1);
+        // 数组中是否有你的评价
+        if (index !== -1) rateDetail.splice(index, 1);
 
-      wx.request({
-        url: "https://lin.innenu.com/server/remarksToolkit/deleteRemark.php",
+        wx.request({
+          url: "https://lin.innenu.com/server/remarksToolkit/deleteRemark.php",
 
-        data: {
-          id: commentId,
-          rate: rateDetail,
-        },
-        success: (resp) => {
-          this.refreshInfo();
-          console.log(resp);
-          tip("删除成功");
-        },
-      });
-    });
+          data: {
+            id: commentId,
+            rate: rateDetail,
+          },
+          success: (resp) => {
+            this.refreshInfo();
+            console.log(resp);
+            tip("删除成功");
+            this.setData({
+              popupDisplay3: false,
+            });
+          },
+        });
+      },
+      () => {}
+    );
   },
 
   sort(event: WXEvent.Touch) {

@@ -8,10 +8,13 @@ Page({
   data: {
     placeholder: "回复:",
     inputValue: "",
+    popupConf3: { cancel: false, title: "更多", confirm: false },
     id: 0,
     targetRemark: {} as any,
     isLogin: false,
     orientation: "",
+    curCommentId: 0,
+    openid: globalData.openid,
   },
 
   privateData: {
@@ -108,6 +111,22 @@ Page({
     });
   },
 
+  openMorePop(e) {
+    this.setData({
+      popupDisplay3: true,
+      curCommentId: e.currentTarget.dataset.commentid,
+    });
+  },
+  closePopup3() {
+    this.setData({ popupDisplay3: false });
+  },
+  showFullName(e) {
+    wx.showToast({
+      title: e.currentTarget.dataset.item.user,
+      icon: "none",
+    });
+  },
+
   valueChange(event: WXEvent.Input) {
     this.setData({
       inputValue: event.detail.value,
@@ -173,28 +192,33 @@ Page({
   },
 
   deleteComment(event: WXEvent.Touch) {
-    const commentId = event.currentTarget.dataset.commentid;
+    const commentId = this.data.curCommentId;
 
-    modal("删除评论", "请确认是否删除该评论？", () => {
-      wx.request({
-        url: "https://lin.innenu.com/server/remarksToolkit/deleteReply.php",
-        data: {
-          replyid: commentId,
-        },
-        success: (res) => {
-          console.log(res);
+    modal(
+      "删除评论",
+      "请确认是否删除该评论？",
+      () => {
+        wx.request({
+          url: "https://lin.innenu.com/server/remarksToolkit/deleteReply.php",
+          data: {
+            replyid: commentId,
+          },
+          success: (res) => {
+            console.log(res);
 
-          const { targetRemark } = this.data;
-          (targetRemark.replyList as any[]).forEach((item, index) => {
-            if (item.replyid === commentId)
-              targetRemark.replyList.splice(index, 1);
-          });
+            const { targetRemark } = this.data;
+            (targetRemark.replyList as any[]).forEach((item, index) => {
+              if (item.replyid === commentId)
+                targetRemark.replyList.splice(index, 1);
+            });
 
-          this.setData({ targetRemark });
-          tip("删除成功");
-        },
-      });
-    });
+            this.setData({ targetRemark });
+            tip("删除成功");
+          },
+        });
+      },
+      () => {}
+    );
   },
   reply(event: WXEvent.Touch) {
     const { ropenid } = event.currentTarget.dataset;

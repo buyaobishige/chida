@@ -1,3 +1,12 @@
+.moreIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.rightend {
+  width: 20px;
+}
+
 .topbg {
   display: flex;
   flex-direction: column;
@@ -568,6 +577,7 @@ view:first-child {
   width: 96rpx;
   height: 96rpx;
   font-size: 2em;
+  border-radius: 50%
 }
 
 .cu-avatar.xl {
@@ -805,7 +815,7 @@ view:first-child {
 }
 
 .inputBox .fabu-input {
-  background-color: #fcb69f;
+  background-color: #F1C40F;
   border-radius: 20px;
   color: white;
 }
@@ -815,6 +825,7 @@ view:first-child {
   padding: 10rpx;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-around;
 }
 
 .remarkcard .bigLine1 .badgeImg {
@@ -832,6 +843,7 @@ view:first-child {
 .remarkcard .bigLine2 .content {
   /* text-indent: 2em; */
   text-align: justify;
+  margin-bottom: 10rpx;
 }
 
 .remarkcard .bigLine3 .btnBox {
@@ -921,6 +933,8 @@ view:first-child {
   width: 60%;
   justify-content: flex-start;
   align-items: center;
+  font-size: 12px;
+  margin-left: 15rpx;
 }
 
 .remarkcard .bigLine3 .systemModelIcon {
@@ -1022,4 +1036,22 @@ view:first-child {
   width: 100%;
   margin: 0;
   justify-content: center;
+}
+
+ .bg-white {
+  border-radius: 10px 10px 0 0;
+  /* background-color: var(--white); */
+  /* color: var(--darkGray); */
+}
+
+.cu-list:last-child{
+  border-radius: 0 0 10px 10px;
+}
+
+
+.VerticalNav.nav .cu-item:last-child{
+  border-radius: 0 0 10px 10px ;
+}
+.VerticalNav.nav .cu-item:first-child{
+  border-radius: 10px 10px  0 0;
 }

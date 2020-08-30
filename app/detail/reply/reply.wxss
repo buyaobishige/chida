@@ -5,14 +5,14 @@
 
 .inputBox #input {
   width: 100%;
-  height: 80rpx;
+  height: 120rpx;
   margin-bottom: 20rpx;
   border: 2rpx dotted grey;
   border-radius: 15px;
 }
 
 .inputBox .fabu-input {
-  background-color: #fcb69f;
+  background-color: #F1C40F;
   border-radius: 20px;
   color: white;
 }
@@ -22,6 +22,7 @@
   padding: 10rpx;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-around;
 }
 
 .remarkcard .bigLine1 .badgeImg {
@@ -43,7 +44,6 @@
 
 .remarkcard .bigLine3 .btnBox {
   display: flex;
-
   width: 40%;
   height: 48rpx;
   justify-content: space-between;
@@ -104,12 +104,12 @@
   width: 100%;
   justify-content: center;
   align-items: flex-end;
+  background: white;
 }
 
 .remarkcard #zan {
   width: 33%;
   padding: 0;
-  background-color: #fff;
   border: none;
   border-radius: 0;
 }
@@ -126,6 +126,8 @@
   width: 60%;
   justify-content: flex-start;
   align-items: center;
+  font-size: 12px;
+  margin-left: 15rpx;
 }
 
 .remarkcard .bigLine3 .systemModelIcon {
@@ -187,6 +189,7 @@
 }
 
 .remarkcard .remarkcardItem {
+  background: #fff;
   margin: 10px 0 10px 0;
   padding: 5px;
   border-radius: 10px;
@@ -230,5 +233,50 @@
 }
 
 .remarkcard .remarkTop {
-  margin-top: 0;
+  background: #fff;
+  margin: 10px 0 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.moreIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.rightend {
+  width: 20px;
+}
+
+.popup-wrapper {
+  padding: 0 15px;
+}
+
+.popline {
+  box-shadow: 0 -2rpx 0rpx 0rpx #2d514c18;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 0
+}
+
+.popIcon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 12px
+}
+
+.placeholder {
+  width: 100%;
+  height: 4vh;
+  transition: all 0.3s;
+}
+
+.bg {
+  /* background: linear-gradient(to top,  rgb(255, 230, 130), rgb(252, 203, 10) 100%); */
+  /* background: linear-gradient(to top, #ffecd2 0%, #fcb69f 100%); */
+  background: rgb(245, 245, 245);
+  /* background: rgb(245, 245, 245); */
 }

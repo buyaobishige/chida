@@ -1,4 +1,8 @@
-<top-tab nav-list="{{navList}}" bindanimationFinishied="animationFinishied">
+<top-tab
+  nav-list="{{navList}}"
+  barHeight="150vh"
+  bindanimationFinishied="animationFinishied"
+>
   <view slot="page1">
     <view wx:for="{{stallListData}}" wx:key="index">
       <navigator url="/detail/stall/stall?stall={{item.name}}">
