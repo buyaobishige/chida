@@ -75,6 +75,14 @@
           "id": -1,
           "name": "fruit/stallList/stallList",
           "pathName": "fruit/stallList/stallList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 1,
+          "name": "stall",
+          "pathName": "detail/stall/stall",
+          "query": "stall=北苑基本餐",
           "scene": null
         }
       ]

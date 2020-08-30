@@ -1,30 +1,33 @@
-<view class="placeholder" />
-<view class="top-tabbar">
-  <view class="tab-item-wrapper">
-    <view
-      wx:for="{{navList}}"
-      wx:key="index"
-      class="tab-item {{index === current? 'active': ''}}"
-      style="width:{{100 / navList.length}}vw"
-      data-index="{{index}}"
-      catch:tap="changeTab"
-    >
-      {{item}}
+<view class="topTab">
+  <view class="placeholder" style="height:{{fixed=='fixed'?'4vh':'1vh'}}" />
+  <view class="top-tabbar" style="position:{{fixed}};">
+    <view class="tab-item-wrapper">
+      <view
+        wx:for="{{navList}}"
+        wx:key="index"
+        class="tab-item {{index === current? 'active': ''}}"
+        style="width:{{100 / navList.length/2}}vw"
+        data-index="{{index}}"
+        catch:tap="changeTab"
+      >
+        {{item}}
+      </view>
     </view>
+    <view
+      class="indicator"
+      style="left:{{barleft}};width:{{100 / navList.length/5}}%"
+    />
   </view>
-  <view
-    class="indicator"
-    style="left:{{barleft}}px;width:{{100 / navList.length}}vw"
-  />
+  <swiper
+    style="height:{{barHeight}};"
+    class="tab-page-wrapper"
+    current="{{current}}"
+    bindchange="change"
+    bindtransition="transition"
+    bindanimationfinish="aminationFinish"
+  >
+    <swiper-item class="tab-page" wx:for="{{navList}}" wx:key="index">
+      <slot name="page{{index + 1}}" />
+    </swiper-item>
+  </swiper>
 </view>
-<swiper
-  class="tab-page-wrapper"
-  current="{{current}}"
-  bindchange="change"
-  bindtransition="transition"
-  bindanimationfinish="aminationFinish"
->
-  <swiper-item class="tab-page" wx:for="{{navList}}" wx:key="index">
-    <slot name="page{{index + 1}}" />
-  </swiper-item>
-</swiper>

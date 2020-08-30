@@ -93,6 +93,8 @@ image {
   transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 }
 
+
+
 .loading-icon {
   display: inline-block;
   vertical-align: bottom;

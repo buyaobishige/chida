@@ -8,6 +8,14 @@ Component({
       type: Array,
       value: [],
     },
+    barPosition: {
+      type: String,
+      value: "fixed",
+    },
+    barHeight: {
+      type: String,
+      value: "96vh",
+    },
     /** 是否立即更改还是等动画完成之后再进行更改 */
     immediate: {
       type: Boolean,
@@ -16,8 +24,17 @@ Component({
   },
   data: {
     curNavItem: [],
-    barleft: 1,
+    barleft: "32.5%",
     current: 0,
+    fixed: "",
+  },
+  lifetimes: {
+    attached() {
+      this.setData({
+        fixed: this.properties.barPosition,
+        barHeight: this.properties.barHeight,
+      });
+    },
   },
   methods: {
     changeTab({
@@ -32,17 +49,19 @@ Component({
     },
     // 设置指示条动画
     transition({ detail }) {
-      console.log(currentSwipe);
       this.setData({
         barleft:
-          (detail.dx + globalData.info.screenWidth * currentSwipe) /
-          this.properties.navList.length,
+          String(
+            0.325 * globalData.info.screenWidth +
+              (detail.dx + globalData.info.screenWidth * currentSwipe) /
+                (2 * this.properties.navList.length)
+          ) + "px",
       });
     },
     aminationFinish({ detail: { current } }: any) {
       currentSwipe = current;
       if (!this.properties.immediate) this.setData({ current });
-      this.triggerEvent("aminationFinished", { current }, {});
+      this.triggerEvent("animationFinished", { current }, {});
     },
   },
 

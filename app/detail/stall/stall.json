@@ -1,7 +1,8 @@
 {
   "usingComponents": {
-    "top-tab": "/components/top-tab/tab"
+    "top-tab": "/components/top-tab/tab",
+    "popup": "/components/popup/popup"
   },
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark"
+  "backgroundTextStyle": "dark",
+  "navigationStyle": "custom"
 }

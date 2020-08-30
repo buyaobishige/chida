@@ -248,7 +248,7 @@ Page({
       }, 400);
     }
   },
-  aminationFinished({ detail }) {
+  animationFinished({ detail }) {
     console.log(detail.current);
     if (detail.current === 1) {
       this.setData({ backActive: "backActive", frontActive: "frontActive" });

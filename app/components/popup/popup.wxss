@@ -34,6 +34,7 @@
   overflow: hidden;
   transform: translateY(100%);
   transition: all 0.3s;
+  box-shadow: 0 -4rpx 8rpx 2rpx #2d514c18;
 }
 
 .popup-wrapper.show .popup {

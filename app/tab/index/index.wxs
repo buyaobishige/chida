@@ -4,14 +4,42 @@ var times = 0;
 module.exports = {
   /** 分类 */
   grid: [
-    { type: "饭菜", tag: "饭/菜", icon: "rice" },
-    { type: "汤面", tag: "面/粉", icon: "noodle" },
-    { type: "饮品", icon: "drink" },
-    { type: "粥", icon: "porridge" },
-    { type: "肉类", icon: "meat" },
-    { type: "面食", icon: "flour" },
-    { type: "水果", icon: "fruit", url: "/fruit/index/index" },
-    { type: "水果", icon: "fruit", url: "/fruit/stallList/stallList" },
+    {
+      type: "饭菜",
+      tag: "饭/菜",
+      icon: "rice",
+    },
+    {
+      type: "汤面",
+      tag: "面/粉",
+      icon: "noodle",
+    },
+    {
+      type: "饮品",
+      icon: "drink",
+    },
+    {
+      type: "粥",
+      icon: "porridge",
+    },
+    {
+      type: "肉类",
+      icon: "meat",
+    },
+    {
+      type: "面食",
+      icon: "flour",
+    },
+    {
+      type: "水果",
+      icon: "fruit",
+      url: "/fruit/index/index",
+    },
+    {
+      type: "水果",
+      icon: "fruit",
+      url: "/fruit/stallList/stallList",
+    },
   ],
   /** 轮播图片 */
   imgs: [
@@ -38,9 +66,10 @@ module.exports = {
   getDiceImage: function (value) {
     times += 1;
     return value === 0
-      ? "./icon/default.png"
-      : // add params to enforce refresh the image each time
-        "./icon/" + value + ".gif?times=" + times;
+      ? "./icon/default.png" // add params to enforce refresh the image each time
+      : "./icon/" + value + ".gif";
+    // "./icon/" + value + ".gif?times=" + times;
+    // "./icon/" + value + ".gif?" + Math.random()
   },
   /** 弹窗配置 */
   popupConfig: function (recommand, value) {

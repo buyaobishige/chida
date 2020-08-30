@@ -1,10 +1,90 @@
+.remarkcard {
+  height: 57vh;
+  /* overflow: scroll; */
+}
+
+.floatHiden {
+  transform: translate(0, 100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.floatShow {
+  transform: translate(0, 0);
+  opacity: 1;
+  transition: all .3s ease;
+}
+
+.floatIconBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F1C40F;
+  border-radius: 50%;
+  width: 90rpx;
+  height: 90rpx;
+  position: fixed;
+  right: 20rpx;
+  bottom: 50rpx;
+  padding: 18rpx;
+  box-shadow: 2px 2px 10px #f0f1f2;
+  overflow: hidden;
+}
+
+.floatIcon {
+  z-index: 100;
+  width: 100rpx;
+  height: 100rpx;
+  transition: 1s;
+}
+
+.popup-wrapper {
+  padding: 0 15px;
+}
+
+.popline {
+  box-shadow: 0 -2rpx 0rpx 0rpx #2d514c18;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 0
+}
+
+.popIcon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 12px
+}
+
+.arrow {
+  position: absolute;
+  right: 11vw;
+}
+
+.arrow::after {
+  width: 10px;
+  height: 10px;
+  top: auto;
+}
+
 #topPanel {
   height: 220px;
   overflow: hidden;
 }
 
+.myHr {
+  width: 90vw;
+  background: rgb(245, 245, 245);
+  height: 2px;
+  position: absolute;
+  left: -5vw;
+  top: 5vw;
+}
+
 .VerticalNav.nav {
-  width: 200rpx;
+  width: 190rpx;
+  margin-right: 10rpx;
   white-space: initial;
 }
 
@@ -62,7 +142,7 @@ view:first-child {
   width: 60rpx;
   border: 2rpx solid grey;
   border-radius: 50rpx;
-  box-shadow: 0 -4rpx 12rpx 0rpx #2d514c18;
+  box-shadow: 0 -4rpx 8rpx 0rpx #2d514c18;
   justify-content: center;
   align-items: center;
 }
@@ -538,17 +618,24 @@ view:first-child {
   /* background: linear-gradient(to top,  rgb(255, 230, 130), rgb(252, 203, 10) 100%); */
   /* background: linear-gradient(to top, #ffecd2 0%, #fcb69f 100%); */
   background: rgb(245, 245, 245);
+  /* background: rgb(245, 245, 245); */
+}
+
+.bg .greyBloack {
+  width: 100%;
+  height: 1vh;
 }
 
 .VerticalBox {
   display: flex;
+  /* height: 100%; */
   height: 60vh;
-  margin-top: -5vh;
+  /* margin-top: -5vh; */
 }
 
 .restaurantImgBox {
   width: 100%;
-  height: 26vh;
+  height: 200px;
   overflow: hidden;
 }
 
@@ -559,22 +646,22 @@ view:first-child {
 
 .introCard {
   display: flex;
-  min-height: 15vh;
+  /* min-height: 15vh; */
+  /* height: 100px; */
   justify-content: center;
 }
 
 .introCard .card {
   display: flex;
   width: 90%;
-  height: 100%;
-  margin-top: -100rpx;
+  height: 120px;
+  margin-top: -130rpx;
   padding: 5vw;
-  /* background: rgba(255, 255, 255, 0.95); */
   background: rgba(255, 255, 255, 1);
   border-radius: 20rpx;
-  box-shadow: 0 -4rpx 12rpx 0rpx #2d514c18;
+  box-shadow: 0 -4rpx 12rpx 8rpx #2d514c18;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -582,9 +669,6 @@ view:first-child {
   font-weight: 600;
 }
 
-swiper {
-  height: 96vh;
-}
 
 .remark {
   width: 100%;
@@ -593,39 +677,47 @@ swiper {
   /* background: rgba(0, 0, 0, 0.1); */
 }
 
-.bg .cardLine2 {
+.card .cardLine2 {
+  margin-top: 5vw;
+  height: 40px;
   display: flex;
+  align-items: center;
+  color: grey;
+  /* display: flex;
   width: 100%;
   color: #707070;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
-.bg .cardPart2 {
+.card .cardPart2 {
   display: flex;
   min-width: 25%;
   justify-content: flex-start;
   align-items: center;
 }
 
-.bg .cardPart1 {
+.card .cardPart1 {
   display: flex;
   min-width: 17%;
   justify-content: flex-end;
   align-items: center;
 }
 
-.bg .rView {
+.card .rView {
   margin: 0 15rpx;
 }
 
-.bg .cardIcon {
+.card .cardIcon {
   width: 35rpx;
   height: 35rpx;
 }
 
-.bg .cardLine1 {
+.card .cardLine1 {
   width: 100%;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
 }
 
 .topBar {
@@ -673,16 +765,19 @@ swiper {
 }
 
 .remarkContainerBox {
-  background: #E8B647;
+  background: rgb(245, 245, 245);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+}
+
+.inputBox {
+  padding: 20rpx 0;
 }
 
 .inputBox #input {
   width: 100%;
-  height: 80rpx;
+  height: 300rpx;
   margin-bottom: 20rpx;
   border: 2rpx dotted grey;
   border-radius: 15px;
@@ -751,10 +846,17 @@ swiper {
   font-weight: 500;
 }
 
-.remarkContainer .ratingArea .starGroup1 {
-  display: flex;
-  justify-content: center;
+.greyBox .starGroup1 {
   align-items: center;
+  display: flex;
+  height: 35px;
+}
+
+.line1 .starGroup1 {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  /* height: 35px; */
 }
 
 .remarkContainer .ratingArea .sortBox {
@@ -824,7 +926,7 @@ swiper {
 .remarkcard .bigLine1 .userName {
   margin-right: 12rpx;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 550;
 }
 
 .remarkcard .bigLine1 .right {
@@ -865,10 +967,6 @@ swiper {
   box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 }
 
-.remarkcard {
-  height: 55vh;
-  overflow: scroll;
-}
 
 .remarkcard .bigLine1 .line2 .bindtop {
   width: 80rpx;

@@ -50,12 +50,18 @@ interface GetStallCallback {
 Page({
   data: {
     navList: ["档口", "评论"],
-
+    /** 是否显示编辑按钮 */
+    floatIconBoxDisplay: false,
+    popupConf: { cancel: false, final: "" },
+    popupConf2: { cancel: false, title: "发表评论", confirm: false },
+    popupDisplay: false,
+    popupDisplay2: false,
     /** 档口信息 */
     info: {} as StallInfo,
     /** 菜品列表 */
     foodList: [] as FoodListDetail[],
-
+    TabCur: 0,
+    MainCur: 0,
     currentRate: 0,
     averageScore: 0,
     openid: "",
@@ -100,9 +106,28 @@ Page({
       });
     }
   },
-  onPullDownRefresh() {
-    this.refreshInfo();
-    wx.stopPullDownRefresh();
+  animationFinished(e) {
+    console.log(e);
+    if (e.detail.current == 0) this.setData({ floatIconBoxDisplay: false });
+
+    if (e.detail.current == 1) this.setData({ floatIconBoxDisplay: true });
+  },
+  openEditPop() {
+    this.setData({ popupDisplay2: true });
+  },
+  onScroll(e) {
+    if (e.detail.deltaY > 5) this.setData({ floatIconBoxDisplay: true });
+
+    if (e.detail.deltaY < -5) this.setData({ floatIconBoxDisplay: false });
+  },
+  openPop1() {
+    this.setData({ popupDisplay: true });
+  },
+  closePopup1() {
+    this.setData({ popupDisplay: false });
+  },
+  closePopup2() {
+    this.setData({ popupDisplay2: false });
   },
 
   /** 刷新评论列表 */
@@ -212,21 +237,21 @@ Page({
   copyContact() {
     wx.setClipboardData({
       data: this.data.info.contact,
-      success: () => {
-        tip("已复制店家手机 / 微信号");
-      },
+      // success: () => {
+      //   tip("已复制店家联系方式");
+      // },
     });
   },
 
-  tabSelect(event: WXEvent.Touch) {
-    const { index } = event.currentTarget.dataset;
+  // tabSelect(event: WXEvent.Touch) {
+  //   const { index } = event.currentTarget.dataset;
 
-    this.setData({
-      TabCur: index,
-      MainCur: index,
-      VerticalNavTop: (index - 1) * 50,
-    });
-  },
+  //   this.setData({
+  //     TabCur: index,
+  //     MainCur: index,
+  //     VerticalNavTop: (index - 1) * 50,
+  //   });
+  // },
 
   deleteComment(event: WXEvent.Touch) {
     const commentId = event.currentTarget.dataset.commentid;
@@ -242,7 +267,6 @@ Page({
       wx.request({
         url: "https://lin.innenu.com/server/remarksToolkit/deleteRemark.php",
 
-        // FIXME: 这是一个严重漏洞，这将使得用户可以任意删除其他人的评分
         data: {
           id: commentId,
           rate: rateDetail,
@@ -327,7 +351,11 @@ Page({
           rate: JSON.stringify(rateDetail),
         },
         success: (res) => {
-          console.log(res);
+          this.setData({ popupDisplay2: false });
+          wx.showToast({
+            title: "评论已发布！",
+            icon: "success",
+          });
           this.refreshInfo();
         },
       });
@@ -340,45 +368,4 @@ Page({
       currentRate: event.currentTarget.dataset.rating,
     });
   },
-
-  /*
-   * verticalMain(event: WXEvent.Touch) {
-   *   const { list } = this.data;
-   *   let tabHeight = 0;
-   */
-
-  /*
-   *   if (this.data.load) {
-   *     for (let i = 0; i < list.length; i++) {
-   *       const view = wx.createSelectorQuery().select(`#main-${list[i].id}`);
-   */
-
-  /*
-   *       view
-   *         // eslint-disable-next-line no-loop-func
-   *         .fields({ size: true }, (data) => {
-   *           list[i].top = tabHeight;
-   *           tabHeight += data.height;
-   *           list[i].bottom = tabHeight;
-   *         })
-   *         .exec();
-   *     }
-   */
-
-  /*
-   *     this.setData({ load: false, list });
-   *   }
-   */
-
-  //   const scrollTop = event.detail.scrollTop + 20;
-
-  /*
-   *   for (let i = 0; i < list.length; i++)
-   *     if (scrollTop > list[i].top && scrollTop < list[i].bottom)
-   *       this.setData({
-   *         VerticalNavTop: (list[i].id - 1) * 50,
-   *         TabCur: list[i].id
-   *       });
-   * }
-   */
 });
