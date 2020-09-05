@@ -1,0 +1,18 @@
+{
+  "樱桃": {
+    "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584698341230&di=467863137440a01344e10397b510d428&imgtype=0&src=http%3A%2F%2Fi2.download.fd.pchome.net%2Ft_600x1024%2Fg1%2FM00%2F12%2F0F%2FooYBAFaCF6WINuSpAAF5WnB_o8UAAC0xwC9VfMAAXly039.jpg"
+  },
+  "香蕉": {
+    "src": "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1987250258,1194853692&fm=26&gp=0.jpg",
+    "isWeighted": false
+  },
+  "葡萄": {
+    "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584698599626&di=39b9e0c283cee817a24d5081ee82e889&imgtype=0&src=http%3A%2F%2Fw.xinjiangnet.com.cn%2Fxjwzt%2F2013Aug%2Fjkzf%2Fzfcs%2F201308%2FW020130826578596096901.jpg"
+  },
+  "柚子": {
+    "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584698636900&di=21df1012b95493efb374d7ab0f6a859a&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201407%2F11%2F20140711115744_NdxNX.jpeg"
+  },
+  "general": {
+    "src": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3096234011,3029077797&fm=26&gp=0.jpg"
+  }
+}

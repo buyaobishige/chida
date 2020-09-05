@@ -1,7 +1,7 @@
 /** 初始距离 */
 var INIT_COORDINATE = 10;
 /** 判定距离 */
-var JUDGE_DISTANCE = 100;
+var JUDGE_DISTANCE = 130;
 
 /** 起始坐标 */
 var startCoordinate = INIT_COORDINATE;

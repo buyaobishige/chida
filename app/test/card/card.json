@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "backgroundColor": "#f1c40f",
+  "backgroundColorTop": "#f1c40f",
+  "backgroundColorBottom": "#f1c40f",
+  "usingComponents": {
+    "popup": "/components/popup/popup"
+  }
+}

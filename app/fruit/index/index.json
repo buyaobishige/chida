@@ -1,6 +1,8 @@
 {
-  "navigationBarTitleText": "水果",
+  "navigationBarTitleText": "东师果园",
   "usingComponents": {
-    "ec-canvas": "../ec-canvas/ec-canvas"
+    "ec-canvas": "../ec-canvas/ec-canvas",
+    "top-tab": "/components/top-tab/tab",
+    "popup": "/components/popup/popup"
   }
 }

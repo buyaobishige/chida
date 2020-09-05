@@ -30,7 +30,7 @@
   display: block;
 
   width: 359rpx;
-  height: 250px;
+  /* height: 250px; */
   margin: 8rpx;
   background-color: white;
   border-radius: 5px;
@@ -60,7 +60,8 @@
 }
 
 .nav .price {
-  float: left;
+  display: flex;
+  justify-content: center;
   color: rgb(168, 168, 168);
   font-size: 13px;
 }
@@ -81,4 +82,536 @@
   float: right;
   width: 20px;
   height: 20px;
+}
+
+.moreIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.rightend {
+  width: 20px;
+}
+
+.topbg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.logoIcon {
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  margin-right: 12px;
+}
+
+.priceDigit {
+  font-size: 22px;
+  font-weight: 500;
+  font-family: Impact, Georgia, 'Times New Roman', Times,
+    serif;
+}
+
+.remarkcard {
+  /* height: 80vh; */
+  /* overflow: scroll; */
+}
+
+.floatHiden {
+  transform: translate(0, 100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.floatShow {
+  transform: translate(0, 0);
+  opacity: 1;
+  transition: all .3s ease;
+}
+
+.floatIconBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F1C40F;
+  border-radius: 50%;
+  width: 90rpx;
+  height: 90rpx;
+  position: fixed;
+  right: 20rpx;
+  bottom: 50rpx;
+  padding: 18rpx;
+  box-shadow: 2px 2px 10px #f0f1f2;
+  overflow: hidden;
+}
+
+.floatIcon {
+  z-index: 100;
+  width: 100rpx;
+  height: 100rpx;
+  transition: 1s;
+}
+
+.popup-wrapper {
+  padding: 0 15px;
+}
+
+.popline {
+  box-shadow: 0 -2rpx 0rpx 0rpx #2d514c18;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 0
+}
+
+.popIcon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 12px
+}
+
+.arrow {
+  position: absolute;
+  right: 11vw;
+}
+
+.arrow::after {
+  width: 10px;
+  height: 10px;
+  top: auto;
+}
+
+#topPanel {
+  height: 220px;
+  overflow: hidden;
+}
+
+.myHr {
+  width: 90vw;
+  background: rgb(245, 245, 245);
+  height: 2px;
+  position: absolute;
+  left: -5vw;
+  top: 5vw;
+}
+
+.VerticalNav.nav {
+  width: 190rpx;
+  margin-right: 10rpx;
+  white-space: initial;
+}
+
+.VerticalNav.nav .cu-item {
+  position: relative;
+  width: 90%;
+  height: 55px;
+  margin: 0;
+  background-color: white;
+  border: none;
+  text-align: center;
+}
+
+
+.VerticalBox {
+  display: flex;
+  /* height: 100%; */
+  height: 60vh;
+  /* margin-top: -5vh; */
+}
+
+.restaurantImgBox {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.restaurantImg {
+  width: 100%;
+  height: 100%;
+}
+
+.introCard {
+  display: flex;
+  /* min-height: 15vh; */
+  /* height: 100px; */
+  justify-content: center;
+}
+
+.introCard .card {
+  display: flex;
+  width: 90%;
+  height: 120px;
+  margin-top: -130rpx;
+  padding: 5vw;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 20rpx;
+  box-shadow: 0 -4rpx 12rpx 8rpx #2d514c18;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.introCard .rName {
+  font-weight: 600;
+}
+
+
+.remark {
+  width: 100%;
+  height: 100%;
+  /* background: rgba(245, 245, 245, 1); */
+  /* background: rgba(0, 0, 0, 0.1); */
+}
+
+.card .cardLine2 {
+  margin-top: 5vw;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  color: grey;
+  /* display: flex;
+  width: 100%;
+  color: #707070;
+  justify-content: center;
+  align-items: center; */
+}
+
+.card .cardPart2 {
+  display: flex;
+  min-width: 25%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card .cardPart1 {
+  display: flex;
+  min-width: 17%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.card .rView {
+  margin: 0 15rpx;
+}
+
+.card .cardIcon {
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.card .cardLine1 {
+  width: 100%;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+}
+
+.topBar {
+  display: flex;
+  /* background-image: linear-gradient(to top, #ffecd2 0%, #fcb69f 100%); */
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  height: 4vh;
+  background: #fcb69f;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  transition: all 0.3s;
+}
+
+.placeholder {
+  width: 100%;
+  height: 4vh;
+  transition: all 0.3s;
+}
+
+.topBar .ctrlBtn {
+  display: flex;
+  width: 50%;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.9);
+  border-left: 2rpx solid grey;
+  border-right: 2rpx solid grey;
+  color: gray;
+  justify-content: center;
+  align-items: center;
+}
+
+.topBar .cur {
+  height: 100%;
+  border-top: 4rpx solid #F1C40F;
+  color: #F1C40F;
+  font-weight: 600;
+}
+
+.remarkContainer {
+  padding: 0 3.5%;
+  width: 100vw;
+}
+
+.remarkContainerBox {
+  /* background: rgb(245, 245, 245); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputBox {
+  padding: 20rpx 0;
+}
+
+.inputBox #input {
+  width: 100%;
+  height: 300rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx dotted grey;
+  border-radius: 15px;
+}
+
+.inputBox .fabu-input {
+  background-color: #F1C40F;
+  border-radius: 20px;
+  color: white;
+}
+
+.remarkcard .bigLine1 {
+  display: flex;
+  padding: 10rpx;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.remarkcard .bigLine1 .badgeImg {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.remarkcard .bigLine2 {
+  width: 100%;
+  margin-bottom: 10rpx;
+  padding: 0 2%;
+  text-align: left;
+}
+
+.remarkcard .bigLine2 .content {
+  /* text-indent: 2em; */
+  text-align: justify;
+  margin-bottom: 10rpx;
+}
+
+.remarkcard .bigLine3 .btnBox {
+  display: flex;
+  width: 40%;
+  height: 48rpx;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remarkcard .bigLine3 .btnIcon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.remarkcard .bigLine3 .replyIconBox {
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.remarkcard .bigLine3 .btn {
+  width: 33.3%;
+  height: 40rpx;
+}
+
+.remarkcard .bigLine3 .zanNumber {
+  display: flex;
+  height: 100%;
+  padding-top: 5rpx;
+  color: silver;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.greyBox .starGroup1 {
+  align-items: center;
+  display: flex;
+  height: 35px;
+}
+
+.line1 .starGroup1 {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  /* height: 35px; */
+}
+
+.remarkContainer .ratingArea .sortBox {
+  display: flex;
+  height: 42rpx;
+  margin-top: 20rpx;
+  color: #707070;
+  font-size: 26rpx;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.remarkContainer .ratingArea .sortBox .separator {
+  margin: 0 15rpx;
+}
+
+.remarkcard .bigLine3 .zanBox {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.remarkcard #zan {
+  width: 33%;
+  padding: 0;
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+}
+
+.remarkcard .bigLine3 {
+  display: flex;
+  height: 50rpx;
+  color: silver;
+  justify-content: flex-end;
+}
+
+.remarkcard .bigLine3 .systemModelBox {
+  display: flex;
+  width: 60%;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 12px;
+  margin-left: 15rpx;
+}
+
+.remarkcard .bigLine3 .systemModelIcon {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.remarkcard .bigLine3 .systemModel {
+  display: flex;
+  align-items: center;
+}
+
+.remarkcard .bigLine1 .touxiang {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 5px;
+  border-radius: 100%;
+}
+
+.remarkcard .bigLine1 .date {
+  margin-right: 12rpx;
+}
+
+.remarkcard .bigLine1 .userName {
+  margin-right: 12rpx;
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.remarkcard .bigLine1 .right {
+  width: 70%;
+  margin-left: 15rpx;
+}
+
+.remarkcard .bigLine1 .line1 {
+  display: flex;
+  width: 100%;
+}
+
+.remarkcard .bigLine1 .line2 {
+  display: flex;
+  width: 100%;
+}
+
+.remarkcard .score {
+  width: 750rpx;
+  height: 100px;
+  margin: 0 -5%;
+  /* background-color: rgb(243, 243, 243); */
+}
+
+.remarkcard #reply {
+  display: inline-block;
+  width: 100px;
+  height: 20px;
+  border: 1px gray solid;
+  border-radius: 13px;
+}
+
+.remarkcard .remarkcardItem {
+  background: #fff;
+  margin: 10px 0 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+}
+
+
+.remarkcard .bigLine1 .line2 .bindtop {
+  width: 80rpx;
+  height: 34rpx;
+  background: #F1C40F;
+  border-radius: 10rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.remarkcard .cu-capsule {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 15rpx;
+  border: #F1C40F solid 0.5px;
+}
+
+.remarkcard .cu-tag {
+  display: flex;
+  width: 48rpx;
+  height: 34rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.remarkcard .bg-red {
+  background-color: #F1C40F;
+}
+
+.navigator {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  justify-content: center;
+}
+
+.bg-white {
+  border-radius: 10px 10px 0 0;
+  /* background-color: var(--white); */
+  /* color: var(--darkGray); */
+}
+
+.cu-list:last-child {
+  border-radius: 0 0 10px 10px;
+  margin-bottom: 10rpx;
+}
+
+
+.VerticalNav.nav .cu-item:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.VerticalNav.nav .cu-item:first-child {
+  border-radius: 10px 10px 0 0;
 }

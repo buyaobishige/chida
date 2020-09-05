@@ -1,12 +1,12 @@
 <view class="topTab">
-  <view class="placeholder" style="height:{{fixed=='fixed'?'4vh':'1vh'}}" />
+  <view class="placeholder" style="height:{{fixed=='fixed'?'4vh':'1vh'}};padding:{{heightx2}}"/>
   <view class="top-tabbar" style="position:{{fixed}};">
     <view class="tab-item-wrapper">
       <view
         wx:for="{{navList}}"
         wx:key="index"
         class="tab-item {{index === current? 'active': ''}}"
-        style="width:{{100 / navList.length/2}}vw"
+        style="width:{{100 / navList.length/2}}vw;font-size:{{fontsize}};"
         data-index="{{index}}"
         catch:tap="changeTab"
       >

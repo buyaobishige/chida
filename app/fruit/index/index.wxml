@@ -1,35 +1,4 @@
-<swiper
-  wx:if="{{currentIndex === 0}}"
-  class="carousel"
-  autoplay
-  circular
-  duration="500"
-  indicator-dots
-  interval="5000"
->
-  <swiper-item wx:for="{{swiperList}}" wx:key="url">
-    <image
-      wx:if="{{item.type ==='image'}}"
-      src="{{item.url}}"
-      mode="aspectFill"
-      style="width: 750rpx;"
-      data-sequence="{{index}}"
-      bindtap="tappingSwiperItem"
-    />
-    <video
-      wx:elif="{{item.type === 'video'}}"
-      src="{{item.url}}"
-      autoplay
-      loop
-      muted
-      show-play-btn="{{false}}"
-      controls="{{false}}"
-      objectFit="cover"
-    />
-  </swiper-item>
-</swiper>
-
-<view class="location">
+<!-- <view class="location">
   <picker
     value="{{currentIndex}}"
     range="{{pickerValue}}"
@@ -38,21 +7,177 @@
     <image src="/fruit/icon/location.png" />
     <text>{{pickerValue[currentIndex]}}</text>
   </picker>
-</view>
-<view class="card-wrapper">
-  <view wx:for="{{fruit}}" class="card" hover-class="hover">
-    <navigator class="nav" url="/fruit/price/price">
-      降价
+</view> -->
+<!-- <image class="icon-heart" src="/fruit/icon/heart.svg" /> -->
+<!-- 降价
       <text class="bignum">¥0</text>
-      <text class="smallnum">.93</text>
-      <image src="{{item.src}}" class="icon" mode="aspectFill" />
-      <view class="text">{{item.name}}</view>
-      <view class="price">
-        <text class="bignum">¥{{item.price}}</text>
-        <text class="smallnum">{{item.decimal}}</text>
-        (/500g)
+      <text class="smallnum">.93</text> -->
+<top-tab nav-list='{{navlist}}' heightx2="13px" fontsize="17px" barHeight="94vh" bindanimationFinished="animationFinished">
+  <view slot="page1">
+    <view style="overflow:scroll;height:94vh">
+      <swiper wx:if="{{currentIndex === 0}}" class="carousel" autoplay circular duration="500" indicator-dots
+        interval="5000">
+        <swiper-item wx:for="{{swiperList}}" wx:key="url">
+          <image wx:if="{{item.type ==='image'}}" src="{{item.url}}" mode="aspectFill" style="width: 750rpx;"
+            data-sequence="{{index}}" bindtap="tappingSwiperItem" />
+          <video wx:elif="{{item.type === 'video'}}" src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}"
+            controls="{{false}}" objectFit="cover" />
+        </swiper-item>
+      </swiper>
+
+
+      <view class="card-wrapper">
+        <view wx:for="{{fruit}}" class="card" hover-class="hover">
+          <navigator class="nav" url="/fruit/price/price?fruit={{item.name}}">
+
+            <image src="{{item.src}}" class="icon" mode="widthFix" />
+            <view class="text">{{item.name}}</view>
+            <view class="price">
+              <text class="bignum">¥{{item.price}}.</text>
+              <text class="smallnum">{{item.decimal}}</text>
+              <text wx:if="{{item.isWeighted}}">(/500g)</text>
+              <text wx:else>(/份)</text>
+            </view>
+          </navigator>
+        </view>
       </view>
-      <image class="icon-heart" src="/fruit/icon/heart.svg" />
-    </navigator>
+    </view>
   </view>
+
+  
+  <view class="remarkContainerBox" slot="page2">
+      <view class="remarkContainer">
+        <view class="ratingArea">
+          <view class="sortBox">
+            <view class="sortTxt" bindtap="sort" data-sortby="new">最新评论</view>
+            <view class="sortTxt separator">|</view>
+            <view class="sortTxt" bindtap="sort" data-sortby="pop">点赞最多</view>
+          </view>
+        </view>
+        <scroll-view class="remarkcard" scroll-y bindscroll="onScroll">
+          <view class="remarkcardItem" wx:for="{{remarks}}" wx:key="index">
+            <view class="bigLine1">
+              <view class="left">
+                <image src="{{item.avatarUrl}}" class="touxiang" />
+              </view>
+              <view class="right">
+                <view class="line1">
+                  <text class="userName" data-item="{{item}}"
+                    bindtap="showFullName">{{item.userShortName||item.user}}</text>
+                  <view class="starGroup1">
+                    <image wx:for="{{[1,2,3,4,5]}}" wx:for-item="number"
+                      src="./icons/star{{item.rate >= number? 'OK': ''}}.png"
+                      style="width: 15px; height: 15px; display: inline-block;" />
+                  </view>
+                </view>
+                <view class="line2" style="float: left; color: #888; font-size: 12px;">
+                  <view class="date">{{item.formattedDate}}</view>
+                  <view wx:if="{{item.special && (item.special==1||item.special==1||item.special==1)}}"
+                    class="cu-capsule">
+                    <view class="cu-tag bg-red">
+                      <image class="badgeImg" mode="aspectFill" src="./icons/dianzhu.png" />
+                    </view>
+                    <view class="cu-tag line-red">店主</view>
+                  </view>
+                  <view
+                    wx:if="{{item.special && (item.special[0] === '置顶'||item.special[1]=='置顶'||item.special[2]=='置顶')}}"
+                    class="bindtop">
+                    <view>置顶</view>
+                  </view>
+                </view>
+              </view>
+              <view class="rightend">
+                <image wx:if="{{openid==item.openid}}" data-commentid="{{item.id}}" src="./icons/more.png"
+                  bindtap="openMorePop" class="moreIcon"></image>
+              </view>
+            </view>
+            <view class="bigLine2">
+              <view class="content">{{item.content}}</view>
+            </view>
+            <view class="bigLine3">
+              <view class="systemModelBox">
+                <image class="systemModelIcon" src="./icons/cellphone.png"></image>
+                <view class="systemModel">{{item.systemModel? item.systemModel: '未知设备'}}</view>
+              </view>
+              <view class="btnBox">
+                <view class="btn"></view>
+                <button id="zan" type="none" open-type="getUserInfo" data-id="{{item.id}}" data-func="zan"
+                  bindgetuserinfo="login">
+                  <view class="btn zanBox">
+                    <image wx:if="{{item.zanOk}}" class="btnIcon" src="./icons/dianzanOK.png"></image>
+                    <image wx:else class="btnIcon" src="./icons/dianzan.png"></image>
+                    <view class="zanNumber" wx:if="{{item.zanList.length>0}}">
+                      {{item.zanList.length}}
+                    </view>
+                  </view>
+                </button>
+                <view class="btn replyIconBox">
+                  <navigator class="navigator" hover-class="none"
+                    url="/detail/reply/reply?id={{item.id}}&orientation={{market}}">
+                    <image src="./icons/reply.png" class="btnIcon"></image>
+                    <view class="replyNumber" wx:if="{{item.replyList.length>0}}">
+                      {{item.replyList.length}}
+                    </view>
+                  </navigator>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{remarks.length==0}}" style="margin-top: 50rpx;">暂无评论，快来抢沙发！</view>
+        </scroll-view>
+      </view>
+    </view>
+</top-tab>
+<popup config="{{popupConf2}}" show="{{popupDisplay2}}" catch:confirm="closePopup" catch:close="closePopup2">
+  <view class="popup-wrapper">
+    <view class="greyBox" wx:if="{{isLogin}}">
+      <view class="starGroup1">
+        <text>请轻触打分：</text>
+        <image wx:for="{{[1,2,3,4,5]}}" wx:for-item="number" style="width: 50rpx; height: 50rpx;"
+          src="./icons/star{{currentRate >= number? 'OK': ''}}.png" data-rating="{{number}}" catch:tap="onRate" />
+      </view>
+    </view>
+    <view class="inputBox">
+      <textarea maxlength="500" wx:if="{{isLogin}}" id="input" value="{{inputValue}}" bindinput="valueChange"
+        placeholder="{{placeholder}}" />
+      <button wx:if="{{isLogin}}" class="fabu-input" bindtap="submit">
+        发布
+      </button>
+      <view
+        style='padding-top:{{isLogin?"0":"100rpx"}};padding-bottom:{{isLogin?"50rpx":"150rpx"}}'
+      >
+        <button
+          wx:if="{{!isLogin}}"
+          class="fabu-input"
+          open-type="getUserInfo"
+          bindgetuserinfo="login"
+        >
+          免密授权登录
+        </button>
+      </view>
+    </view>
+  </view>
+</popup>
+
+<popup
+  config="{{popupConf3}}"
+  show="{{popupDisplay3}}"
+  catch:confirm="closePopup3"
+  catch:close="closePopup3"
+>
+  <view class="popup-wrapper">
+    <!-- <view wx:if="{{openid==item.openid}}" class="btn" data-commentid="{{item.id}}" bindtap="deleteComment">
+                  <image src="./icons/delete.png" class="btnIcon"></image>
+                </view> -->
+    <view class="popline" bindtap="deleteComment">
+      <image mode="widthFix" class="popIcon" src="./icons/delete.png"></image
+      >删除此条评论
+      <text class="arrow" style="width: 5px; height: 5px;"></text>
+    </view>
+    <view class="placeholder"></view>
+  </view>
+</popup>  
+
+<view class="floatIconBox {{floatIconBoxDisplay==false?'floatHiden':'floatShow'}}">
+  <image class="floatIcon" src="./icons/edit.svg" catch:tap="openEditPop"></image>
 </view>

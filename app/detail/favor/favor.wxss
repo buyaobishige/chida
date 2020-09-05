@@ -1,6 +1,21 @@
 @import '../../style/back-to-top.wxss';
 @import '../../style/food-list.wxss';
 
+.list-wrapper .add {
+  position: absolute;
+  right: 45rpx;
+  bottom: 26rpx;
+}
+.list-wrapper .del {
+  position: absolute;
+  right: 10rpx;
+  bottom: 26rpx;
+}
+
+.list-wrapper {
+  margin-top: 24px;
+}
+
 page {
   background-color: var(--accent-color);
 }
@@ -25,16 +40,25 @@ page {
   height: 44px;
 }
 
-.navbar .toggle {
+.navbar .toggleInnerBox {
+  justify-content: center;
+  align-items: center;
   display: flex;
-  font-size: 16px;
+  width: 50px;
+  height: 22px;
+}
+
+.navbar .toggle {
+
+  display: flex;
+  font-size: 15px;
   justify-content: center;
   align-items: center;
 }
 
 .navbar .arrow-icon {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   margin-left: 6px;
 }
 
@@ -66,14 +90,23 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 22px;
+}
+
+.button-wrapper {
+  background: #F1C40F;
+  z-index: 100;
+  position: fixed;
+  width: 100vw;
+  top: 44px;
+  height: 24px;
+  display: flex;
 }
 
 .button-wrapper .button {
-  display: inline-flex;
-
-  width: 50%;
-
-  line-height: 2;
+  padding: 4px 0;
+  display: flex;
+  width: 50vw;
   justify-content: center;
   align-items: center;
 }

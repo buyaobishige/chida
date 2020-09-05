@@ -4,6 +4,7 @@ import { tip } from "../../utils/wx";
 const { globalData } = getApp<AppOption>();
 
 Page({
+  onShareAppMessage(){ },
   data: {
     /** 菜品推荐 */
     recommand: [] as FoodDetail[],

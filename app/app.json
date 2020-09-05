@@ -1,19 +1,18 @@
 {
   "pages": [
     "tab/index/index",
-    "fruit/stallList/stallList",
+    "detail/favor/favor",
     "tab/card/card",
     "detail/stall/stall",
     "tab/user/user",
-    "detail/favor/favor",
     "detail/history/history",
     "detail/search/search",
     "detail/reply/reply",
     "test/notice",
-    "test/scrolltext",
     "fruit/index/index",
     "fruit/price/price",
-    "fruit/input/input"
+    "fruit/input/input",
+    "fruit/stallList/stallList"
   ],
   "tabBar": {
     "custom": false,
@@ -48,7 +47,8 @@
     "navigationBarTitleText": "东北吃大",
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#f1c40f",
-    "onReachBottomDistance": 20
+    "onReachBottomDistance": 20,
+    "withShareTicket": true
   },
   "networkTimeout": {
     "request": 5000,

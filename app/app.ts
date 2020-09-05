@@ -20,6 +20,8 @@ export interface FoodDetail {
   score: number;
   /** 标签 */
   tags: string[];
+  /**是否已被添加到收藏夹 */
+  liked?: boolean
 }
 
 /** 全局数据 */
@@ -28,13 +30,17 @@ export interface GlobalData {
   openid: string;
   /** 用户收藏夹是否请求完成 */
   favorRequest: boolean;
-  /** 用户收藏夹 */
-  favorList: FoodDetail[];
   /** 收藏夹 ID 列表 */
-  favorIDList: number[];
+  likesFoodIDList: Number[];
+  /** 用户收藏夹 */
+  likesFoodList: FoodDetail[];
+  /**食物总列表 */
+  foodList: FoodDetail[]
+  /**不喜欢的食物ID */
+  dislikesFoodIDList: Number[];
 
-  /** 食物列表 */
-  foodList: FoodDetail[];
+  /** 不喜欢的食物ID列表 */
+  dislikesFoodList: FoodDetail[];
 
   /** 设备信息 */
   info: WechatMiniprogram.GetSystemInfoSyncResult;
@@ -61,8 +67,10 @@ App<AppOption>({
   globalData: {
     openid: "",
     favorRequest: false,
-    favorList: [],
-    favorIDList: [],
+    likesFoodIDList: [],
+    likesFoodList: [],
+    dislikesFoodIDList: [],
+    dislikesFoodList: [],
     foodList: [],
     env: "wx",
     history: [],
@@ -100,21 +108,43 @@ App<AppOption>({
 
   /** 获取收藏夹 */
   getFavor(openid: string) {
+    const that = this;
     wx.request({
-      url: "https://lin.innenu.com/test/favor.php",
-      method: "POST",
-      data: { type: "get", openid },
+      url: "https://lin.innenu.com/server/getUser.php",
+      method: "GET",
+      data: { openid },
       success: (res) => {
+        that.globalData.likesFoodList = []
+        that.globalData.dislikesFoodList = []
         if (res.statusCode === 200) {
-          this.globalData.favorRequest = true;
-          this.globalData.favorIDList = res.data as number[];
-          this.globalData.favorList = this.globalData.favorIDList.map((id) =>
-            this.globalData.foodList.find((food) => food.id === id)
-          ) as FoodDetail[];
+          that.globalData.favorRequest = true;
+          that.globalData.likesFoodIDList = JSON.parse((res.data[0].likes));
+          that.globalData.dislikesFoodIDList = JSON.parse((res.data[0].dislikes));
+ 
+          that.globalData.dislikesFoodIDList.forEach((id) => {
+            that.globalData.foodList.forEach((food) => {
+              if (food.id === id) {
+                food.disliked = true;
+                that.globalData.dislikesFoodList.push(food)
+              } else {
+                food.disliked = false;
+              }
+            })
+          })
+          this.globalData.likesFoodIDList.forEach((id) => {
+            this.globalData.foodList.forEach((food) => {
+              if (food.id === id) {
+                food.liked = true;
+                this.globalData.likesFoodList.push(food)
+              } else {
+                food.liked = false;
+              }
+            })
+          })
 
           message.emit("favor");
-        }
+        }console.log(that.globalData)
       },
     });
-  },
+  }
 });

@@ -1,7 +1,7 @@
 import { modal, tip } from "../../utils/wx";
 import { AppOption } from "../../app";
 const { globalData } = getApp<AppOption>();
-
+let locate = {};
 /** 菜品信息 */
 interface FoodInfo {
   /** 菜品名称 */
@@ -73,6 +73,7 @@ Page({
     inputValue: "",
     remarks: [] as any[],
     isLogin: false,
+    VerticalNavTop: 0
   },
 
   privateData: {
@@ -105,11 +106,84 @@ Page({
           const { info, foodList } = res.data as GetStallCallback;
           this.setData({ foodList, info });
           this.refreshInfo();
-          console.log(this.data.info);
+          // console.log(123)
+          locate = {};
+          let qu = wx.createSelectorQuery();
+          qu.selectAll(".myMainItem").boundingClientRect();
+          qu.selectViewport().scrollOffset()
+          qu.exec(res => {
+            res[0].forEach((item, index) => {
+              locate[item.id] = item.top - res[0][0].top
+            })
+            console.log(locate)
+          })
         },
       });
     }
+
+
   },
+
+
+  openPop1() {
+    this.setData({ popupDisplay: true });
+  },
+  closePopup1() {
+    this.setData({ popupDisplay: false });
+  },
+
+
+
+  phoneCall() {
+    wx.makePhoneCall({ phoneNumber: this.data.info.contact });
+  },
+
+  copyContact() {
+    wx.setClipboardData({
+      data: this.data.info.contact,
+      // success: () => {
+      //   tip("已复制店家联系方式");
+      // },
+    });
+  },
+  onReachBottom() {
+    console.log("bottom")
+    let arr = [];
+    for (let key in locate) {
+      let s = String(key);
+      let l = s.length - 1;
+      arr.push(s[l])
+    }
+    arr.sort();
+    console.log((arr[arr.length - 1]))
+    this.setData({
+      TabCur: Number(arr[arr.length - 1]),
+    });
+  },
+  mainScroll(e) {
+    for (let key in locate) {
+      if ((Math.round(locate[key] / 80) * 80) == Math.round(e.detail.scrollTop / 80) * 80) {
+        let s = String(key);
+        let l = s.length - 1;
+        this.setData({
+          TabCur: Number(s[l]),
+        });
+      }
+    }
+
+  },
+  tabSelect(event: WXEvent.Touch) {
+    const { index } = event.currentTarget.dataset;
+
+    this.setData({
+      TabCur: index,
+      MainCur: index,
+    });
+  },
+
+
+  //=============评论模块=====================
+
   animationFinished(e) {
     console.log(e);
     if (e.detail.current == 0) this.setData({ floatIconBoxDisplay: false });
@@ -125,17 +199,6 @@ Page({
       curCommentId: e.currentTarget.dataset.commentid,
     });
   },
-  onScroll(e) {
-    if (e.detail.deltaY > 5) this.setData({ floatIconBoxDisplay: true });
-
-    if (e.detail.deltaY < -5) this.setData({ floatIconBoxDisplay: false });
-  },
-  openPop1() {
-    this.setData({ popupDisplay: true });
-  },
-  closePopup1() {
-    this.setData({ popupDisplay: false });
-  },
   closePopup2() {
     this.setData({ popupDisplay2: false });
   },
@@ -149,6 +212,12 @@ Page({
     });
   },
 
+  // 滑动一段距离后显示编辑评论按钮
+  onScroll(e) {
+    if (e.detail.deltaY > 5) this.setData({ floatIconBoxDisplay: true });
+
+    if (e.detail.deltaY < -5) this.setData({ floatIconBoxDisplay: false });
+  },
   /** 刷新评论列表 */
   // eslint-disable-next-line max-lines-per-function
   refreshInfo() {
@@ -250,29 +319,6 @@ Page({
     });
   },
 
-  phoneCall() {
-    wx.makePhoneCall({ phoneNumber: this.data.info.contact });
-  },
-
-  copyContact() {
-    wx.setClipboardData({
-      data: this.data.info.contact,
-      // success: () => {
-      //   tip("已复制店家联系方式");
-      // },
-    });
-  },
-
-  tabSelect(event: WXEvent.Touch) {
-    const { index } = event.currentTarget.dataset;
-
-    this.setData({
-      TabCur: index,
-      MainCur: index,
-      VerticalNavTop: (index - 1) * 50,
-    });
-  },
-
   deleteComment(event: WXEvent.Touch) {
     const commentId = this.data.curCommentId;
     console.log(commentId);
@@ -305,7 +351,7 @@ Page({
           },
         });
       },
-      () => {}
+      () => { }
     );
   },
 

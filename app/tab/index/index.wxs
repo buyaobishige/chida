@@ -36,8 +36,8 @@ module.exports = {
       url: "/fruit/index/index",
     },
     {
-      type: "水果",
-      icon: "fruit",
+      type: "餐馆",
+      icon: "stall",
       url: "/fruit/stallList/stallList",
     },
   ],

@@ -29,7 +29,7 @@
 }
 
 .tab-item-wrapper .tab-item {
-  color: rgb(164, 145, 235);
+  color:#F1C40F;
   width: 50%;
 }
 
@@ -40,7 +40,7 @@
 .top-tabbar .indicator {
   position: relative;
   height: 10rpx;
-  background: rgb(164, 145, 235);
+  background:#F1C40F;
   /* justify-self: left; */
 }
 

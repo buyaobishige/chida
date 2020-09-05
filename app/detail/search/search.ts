@@ -1,5 +1,6 @@
 import { AppOption, FoodDetail } from "../../app";
 import { message } from "../../utils/message";
+import { tip } from "../../utils/wx";
 const { globalData } = getApp<AppOption>();
 
 Page({

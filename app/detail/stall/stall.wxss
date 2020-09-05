@@ -140,7 +140,7 @@
   width: 8rpx;
   height: 55rpx;
   margin: auto;
-  background-color: rgb(164, 145, 235);
+  background-color: #F1C40F;
   border-radius: 10rpx 0 0 10rpx;
 }
 
@@ -182,7 +182,7 @@ view:first-child {
 }
 
 .text-color {
-  color: rgb(164, 145, 235);
+  color: #F1C40F;
 }
 
 .cu-list+.cu-list {
@@ -785,8 +785,8 @@ view:first-child {
 
 .topBar .cur {
   height: 100%;
-  border-top: 4rpx solid rgb(164, 145, 235);
-  color: rgb(164, 145, 235);
+  border-top: 4rpx solid #F1C40F;
+  color: #F1C40F;
   font-weight: 600;
 }
 
@@ -1006,7 +1006,7 @@ view:first-child {
 .remarkcard .bigLine1 .line2 .bindtop {
   width: 80rpx;
   height: 34rpx;
-  background: rgb(164, 145, 235);
+  background: #F1C40F;
   border-radius: 10rpx;
   color: white;
   font-weight: 600;
@@ -1016,7 +1016,7 @@ view:first-child {
   display: inline-flex;
   vertical-align: middle;
   margin-right: 15rpx;
-  border: rgb(164, 145, 235) solid 0.5px;
+  border: #F1C40F solid 0.5px;
 }
 
 .remarkcard .cu-tag {
@@ -1028,7 +1028,7 @@ view:first-child {
 }
 
 .remarkcard .bg-red {
-  background-color: rgb(164, 145, 235);
+  background-color: #F1C40F;
 }
 
 .navigator {
@@ -1046,6 +1046,7 @@ view:first-child {
 
 .cu-list:last-child{
   border-radius: 0 0 10px 10px;
+  margin-bottom: 10rpx;
 }
 
 

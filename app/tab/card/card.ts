@@ -9,7 +9,7 @@ Page({
     /** 状态栏高度 */
     statusBarHeight: 20,
 
-    /** 待显示的卡片列表 */
+    /** 卡片列表 */
     cards: [] as FoodDetail[],
   },
 
@@ -50,8 +50,10 @@ Page({
     this.privateData.cards = globalData.foodList.filter(
       // 既不在收藏夹也不在不喜欢列表
       (food) =>
-        !dislikes.includes(food.id) && !globalData.favorIDList.includes(food.id)
+        !dislikes.includes(food.id) && !globalData.likesFoodIDList.includes(food.id)
     );
+    //随机排列数组
+    this.privateData.cards.sort(() => { return Math.random() - 0.5 })
 
     return this.privateData.cards.length > 5
       ? this.privateData.cards.slice(0, 5)
@@ -66,7 +68,7 @@ Page({
       if (item) this.data.cards.push(item);
 
       this.setData({ cards: this.data.cards });
-    }, 300);
+    }, 500);
   },
 
   /** 喜欢 */
@@ -77,12 +79,12 @@ Page({
     const { id } = card;
 
     // 添加到用户收藏夹
-    globalData.favorList.push(card);
-    globalData.favorIDList.push(id);
+    globalData.likesFoodList.push(card);
+    globalData.likesFoodIDList.push(id);
     wx.request({
-      url: "https://lin.innenu.com/test/favor.php",
-      method: "POST",
-      data: { type: "add", openid: globalData.openid, id },
+      url: "https://lin.innenu.com/server/updateUser.php",
+      method: "GET",
+      data: { openid: globalData.openid, likes: globalData.likesFoodIDList, dslikes: globalData.dislikesFoodIDList },
       success: (res) => {
         if (res.statusCode === 200 && res.data) console.log("添加成功");
       },
@@ -106,13 +108,36 @@ Page({
 
   /** 不喜欢 */
   dislike() {
-    console.log("dislike", this.data.cards[0]);
-    const { id } = this.data.cards[0];
 
-    // TODO: 保存到服务器
-    this.privateData.dislikes.push(id);
-    wx.setStorageSync("dislikeList", this.privateData.dislikes);
+    console.log("dislike", this.data.cards[0]);
+
+    const card = this.data.cards[0];
+    const { id } = card;
+
+    // 添加到用户收藏夹
+    globalData.dislikesFoodList.push(card);
+    globalData.dislikesFoodIDList.push(id);
+    wx.request({
+      url: "https://lin.innenu.com/server/updateUser.php",
+      method: "GET",
+      data: { openid: globalData.openid, dislikes: globalData.dislikesFoodIDList, dslikes: globalData.dislikesFoodIDList },
+      success: (res) => {
+        if (res.statusCode === 200 && res.data) console.log("添加成功");
+      },
+      fail: (err) => {
+        console.error(err);
+      },
+    });
 
     this.removeCard();
+    console.log("dislike", this.data.cards[0]);
+    // const { id } = this.data.cards[0];
+
+    // TODO: 保存到服务器
+
+    // this.privateData.dislikes.push(id);
+    // wx.setStorageSync("dislikeList", this.privateData.dislikes);
+
+    // this.removeCard();
   },
 });

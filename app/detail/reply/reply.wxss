@@ -199,7 +199,7 @@
 .remarkcard .bigLine1 .line2 .bindtop {
   width: 80rpx;
   height: 34rpx;
-  background: rgb(164, 145, 235);
+  background: #F1C40F;
   border-radius: 10rpx;
 
   color: white;
@@ -210,7 +210,7 @@
   display: inline-flex;
   vertical-align: middle;
   margin-right: 15rpx;
-  border: rgb(164, 145, 235) solid 0.5px;
+  border: #F1C40F solid 0.5px;
 }
 
 .remarkcard .cu-tag {
@@ -223,7 +223,7 @@
 }
 
 .remarkcard .bg-red {
-  background-color: rgb(164, 145, 235);
+  background-color: #F1C40F;
 }
 
 .contentList {

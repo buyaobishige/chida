@@ -212,7 +212,7 @@ Page({
                 targetRemark.replyList.splice(index, 1);
             });
 
-            this.setData({ targetRemark });
+            this.setData({ targetRemark,popupDisplay3:false });
             tip("删除成功");
           },
         });

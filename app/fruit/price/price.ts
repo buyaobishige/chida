@@ -1,5 +1,5 @@
 import * as echarts from "../ec-canvas/echarts";
-
+let chart;
 let dataX: any[] = [];
 let dataY: any[] = [];
 
@@ -7,6 +7,7 @@ interface CoreDataSetItem {
   timeStamp: number;
   price: number;
 }
+let databaseSet: CoreDataSetItem[] = [];
 
 const config = {
   // 是否补全没有价格数据的时间点
@@ -19,7 +20,6 @@ const privateData = {
   firstLoading: true,
   option: null,
 };
-let databaseSet: CoreDataSetItem[] = [];
 
 const initChart = (
   canvas: any,
@@ -28,7 +28,7 @@ const initChart = (
   dpr: number
   // eslint-disable-next-line max-params
 ): any => {
-  const chart = echarts.init(canvas, null, {
+  chart = echarts.init(canvas, null, {
     width,
     height,
     devicePixelRatio: dpr,
@@ -98,6 +98,10 @@ const initChart = (
   return chart;
 };
 
+
+
+
+
 Page({
   data: {
     config,
@@ -117,7 +121,10 @@ Page({
     return new Date(a).toDateString() === new Date(b).toDateString();
   },
 
-  onLoad() {
+  onLoad(opt) {
+    this.setData({
+      fruitName: opt.fruit,
+    })
     databaseSet = [];
     dataX = [];
     dataY = [];
@@ -180,9 +187,9 @@ Page({
           ) {
             dataX.push(
               `${
-                new Date(
-                  databaseSet[0].timeStamp - 3600 * 24 * i * 1000
-                ).getMonth() + 1
+              new Date(
+                databaseSet[0].timeStamp - 3600 * 24 * i * 1000
+              ).getMonth() + 1
               }月${new Date(
                 databaseSet[0].timeStamp - 3600 * 24 * i * 1000
               ).getDate()}号`
@@ -205,17 +212,44 @@ Page({
             return val.price;
           })
         );
-        // const tmpY = [];
-        // tmpY.push(...dataY);
-        // const sortedY = tmpY.sort((element1, element2) => {
-        //   return element2 - element1;
-        // });
         this.setData({
           latest: dataX[dataX.length - 1],
           currentPrice: dataY[dataY.length - 1],
           privateData,
           config,
         });
+        privateData.option = {
+          xAxis: { type: "category", data: dataX },
+          yAxis: {
+            type: "value",
+          },
+          tooltip: {
+            trigger: "axis",
+            formatter: "{b}\n价格:{c}元",
+            // axisPointer:{
+            //   axis:"x"
+            // },
+          },
+          series: {
+            data: dataY,
+            type: "line",
+            animation: false,
+            symbolSize: 0,
+            markLine: {
+              symbol: "none",
+              data: [
+                {
+                  yAxis: privateData.minVal,
+                },
+                {
+                  yAxis: privateData.maxVal,
+                },
+              ],
+            },
+          },
+        };
+
+        chart.setOption(privateData.option)
       },
     });
   },

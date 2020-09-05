@@ -1,35 +1,31 @@
-<view class="placeholder" />
+<wxs src="../utils/tool.wxs" module="tool" />
+<view id="topAnchor" class="placeholder" />
 <view class="navbar">
-  <picker
-    class="toggle"
-    value="{{placeIndex}}"
-    range="{{placeValue}}"
-    bindchange="pickerChange"
-  >
+  <picker class="toggle" value="{{placeIndex}}" range="{{placeValue}}" bindchange="pickerChange">
     <text>{{placeValue[placeIndex]}}</text>
     <image class="arrow-icon" src="/icon/arrow-down.svg" />
   </picker>
   <view class="search">
-    <input
-      confirm-type="search"
-      focus="{{search}}"
-      placeholder="搜索菜品"
-      bindconfirm="confirm"
-    />
+    <input confirm-type="search" focus="{{search}}" placeholder="搜索菜品" bindconfirm="confirm" />
     <icon type="search" size="20" color="#000" />
   </view>
 </view>
-<view class="button-wrapper">
-  <view class="button" hover-class="hover" catch:tap="add">
-    <image src="./icon/add.svg" />
-    <text>添加</text>
-  </view>
-  <view class="button" hover-class="hover" catch:tap="edit">
-    <image src="./icon/edit.svg" />
-    <text>编辑</text>
+<view class="fixed-block">
+  <view class="button-wrapper">
+    <view class="button" hover-class="hover" catch:tap="add">
+      <image src="./icon/add.svg" />
+      <text>添加</text>
+    </view>
+    <view class="button" hover-class="hover" wx:if="{{editModel}}" catch:tap="finish">
+      <text>完成</text>
+    </view>
+    <view class="button" hover-class="hover" wx:else catch:tap="edit">
+      <image src="./icon/edit.svg" />
+      <text>编辑</text>
+    </view>
   </view>
 </view>
-<block wx:if="{{favorList.length === 0}}">
+<block wx:if="{{likesFoodList.length === 0}}">
   <view wx:if="{{inited}}" class="empty-tip">无结果</view>
   <view wx:else class="loading-wrapper">
     <image class="loading-icon" src="/icon/loading.svg" />
@@ -37,25 +33,19 @@
   </view>
 </block>
 <view wx:else class="list-wrapper">
-  <view class="list-item" wx:for="{{favorList}}" wx:key="id" wx:for-item="food">
+  <view class="list-item" wx:for="{{likesFoodList}}" wx:key="index" wx:for-item="food">
     <view class="flag">
       <image src="/icon/{{tool.getFlag(food.locate)}}.png" />
       <view>{{tool.getCampus(food.locate)}}</view>
     </view>
-    <button
-      wx:if="{{pick}}"
-      class="add"
-      type="primary"
-      size="mini"
-      data-id="{{food.id}}"
-      catch:tap="addRecommand"
-    >
-      选择
-    </button>
-    <view class="price" wx:else>
+    
+    <switch color="#797979" class="del" size="mini" type="primary" wx:if="{{editModel}}" bindchange="delItem" data-index="{{food.id}}">
+      删除</switch>
+    <view wx:else class="price" >
       <text>¥</text>
       {{food.price}}
     </view>
+    
     <image mode="aspectFill" class="food-image" src="{{food.src}}" />
     <view class="detail">
       <view class="food">{{food.name}}</view>
@@ -69,16 +59,11 @@
     </view>
   </view>
 </view>
-<block wx:if="{{favorList.length >= 10}}">
+<block wx:if="{{likesFoodList.length >= 10}}">
   <view wx:if="{{reachBottom}}" class="bottom-tip">我也是有底线的</view>
   <view wx:else class="loading-wrapper">
     <image class="loading-icon" src="/icon/loading.svg" />
     <text>加载中...</text>
   </view>
 </block>
-<image
-  id="backToTop"
-  class="{{backToTop? 'show': 'hide'}}"
-  src="/icon/backToTop.svg"
-  catch:tap="scrollTop"
-/>
+<image id="backToTop" class="{{backToTop? 'show': 'hide'}}" src="/icon/backToTop.svg" catch:tap="scrollTop" />

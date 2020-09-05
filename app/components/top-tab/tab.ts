@@ -8,6 +8,14 @@ Component({
       type: Array,
       value: [],
     },
+    fontsize:{
+      type:String,
+      value:"auto"
+    },
+    heightx2:{
+      type:String,
+      value:"auto"
+    },
     barPosition: {
       type: String,
       value: "fixed",
@@ -23,7 +31,7 @@ Component({
     },
   },
   data: {
-    curNavItem: [],
+     curNavItem: [],
     barleft: "32.5%",
     current: 0,
     fixed: "",

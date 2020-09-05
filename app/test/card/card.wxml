@@ -1,0 +1,48 @@
+<wxs src="./card.wxs" module="card" />
+<view class="page1" slot="page1">
+  <view wx:if="{{locked}}" class="model" />
+  <view class="title" style="padding-top: {{statusBarHeight + 5}}px;">挑选你心仪的菜品</view>
+  <view class="card-wrapper">
+    <view wx:for="{{cards}}" wx:key="id" class="card card{{index}}" style="left: 0; z-index: {{5 - index}};"
+      catch:touchstart="{{card.onSwipeStart}}" catch:touchmove="{{card.onSwiping}}" catch:touchend="{{card.judgeCard}}">
+      <image class="pic" mode="aspectFill" src="{{item.src}}">
+        <view class="name">{{item.name}}</view>
+      </image>
+      <image class="like-icon" src="./icon/like.svg" />
+      <image class="dislike-icon" src="./icon/dislike.svg" />
+    </view>
+
+  </view>
+  <view class="action-wrapper">
+    <view wx:for="{{['dislike','later','detail','like']}}" wx:key="*this" class="icon-wrapper" hover-class="hover"
+      catch:tap="{{card[item]}}">
+      <image class="icon {{item}}" src="./icon/{{item}}.svg" />
+    </view>
+  </view>
+</view>
+
+<popup config="{{popupConf}}" show="{{popupDisplay}}" catch:confirm="closePopup" catch:close="closePopup">
+  <view class="popup-wrapper">
+
+    <view class="detail">
+      <view class="popline">
+        <image mode="widthFix" class="popIcon" src="./icon/tag.svg"></image>
+        <view class="tag-wrapper">
+          <view wx:for="{{cardDetail.tags}}" wx:for-item="tag" wx:key="index" class="tag">{{tag}}</view>
+        </view>
+      </view>
+      <view class="popline">
+        <image mode="widthFix" class="popIcon" src="./icon/desc.svg"></image>{{cardDetail.desc}}
+      </view>
+      <view class="popline">
+        <image mode="widthFix" class="popIcon" src="./icon/price.svg"></image>{{cardDetail.price}}元
+      </view>
+      <navigator url="/detail/stall/stall?stall={{cardDetail.stall}}">
+        <view class="popline">
+          <image mode="widthFix" class="popIcon" src="./icon/stall.svg"></image>{{cardDetail.stall}}
+          <text class="arrow" style="width: 5px; height: 5px;"></text>
+          </view>
+        </navigator>
+    </view>
+  </view>
+</popup>
