@@ -1,1 +1,38 @@
 /* fruit/stallList/stallList.wxss */
+button{
+  background: #F1C40F;
+}
+.stallItem{
+  border-bottom: 0.5px solid grey;
+  width: 100%;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  padding:10px 3%;
+}
+.name{
+  font-size: 18px;
+}
+.pic{
+width:25vw;
+height:25vw;
+border-radius: 50%;
+}
+.left1{
+  width:25%;
+}
+.left2{
+  margin-left: 3%;
+  display: flex;
+  width:45%;
+  flex-wrap: wrap;
+}
+.left2 .left2content{
+  width: 100%;
+}
+.left3{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width:25%;
+}

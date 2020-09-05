@@ -1,2 +1,19 @@
-<!--fruit/stallList/stallList.wxml-->
-<text>fruit/stallList/stallList.wxml</text>
+<view class="stallList">
+  <view class="stallItem" wx:for="{{stallListData}}" wx:key="index">
+    <view class="left1">
+      <image class="pic" mode="aspectFit" src="{{item.src}}"></image>
+    </view>
+    <view class="left2">
+      <view class="name left2content">{{item.name}}</view>
+      <!-- <view>{{item.locate}}</view> -->
+      <view class="left2content">{{item.des}}</view>
+    </view>
+    <view class="left3">
+      <navigator url="/detail/stall/stall?stall={{item.name}}">
+        <button color="#F1C40F" size="mini">查看</button>
+      </navigator>
+
+    </view>
+
+  </view>
+</view>

@@ -1,18 +1,33 @@
 // fruit/stallList/stallList.js
+interface stallDetail {
+  name: string,
+  locate: string,
+  /**picture */
+  src: string,
+  /**descrition */
+  des: string,
+  /**评分数组 */
+  rate: string,
+}
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    stallListData:[] as stallDetail[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.request({
+      url: "https://lin.innenu.com/server/getRestaurantList.php",
+      success: (res) => {
+        this.setData({ stallListData: res.data });
+      },
+    });
   },
 
   /**

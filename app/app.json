@@ -1,6 +1,7 @@
 {
   "pages": [
     "tab/index/index",
+    "fruit/stallList/stallList",
     "detail/favor/favor",
     "tab/card/card",
     "detail/stall/stall",
@@ -11,8 +12,7 @@
     "test/notice",
     "fruit/index/index",
     "fruit/price/price",
-    "fruit/input/input",
-    "fruit/stallList/stallList"
+    "fruit/input/input"
   ],
   "tabBar": {
     "custom": false,

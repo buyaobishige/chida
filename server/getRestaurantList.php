@@ -9,7 +9,12 @@ $arr = array();
 while ($row = mysqli_fetch_array($result)) {
 
   array_push($arr, array(
-    "name" => $row["restaurant"]
+    "name" => $row["restaurant"],
+    "locate" => $row["locate"],
+    "src" => $row["src"],
+    "des" => $row["des"],
+    "rate" => $row["rate"],
+
   ));
 }
 echo json_encode($arr, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
