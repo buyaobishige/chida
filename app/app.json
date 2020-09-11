@@ -1,11 +1,11 @@
 {
   "pages": [
     "tab/index/index",
-    "fruit/stallList/stallList",
+    "tab/user/user",
     "detail/favor/favor",
+    "fruit/stallList/stallList",
     "tab/card/card",
     "detail/stall/stall",
-    "tab/user/user",
     "detail/history/history",
     "detail/search/search",
     "detail/reply/reply",

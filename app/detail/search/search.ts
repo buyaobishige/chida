@@ -9,8 +9,8 @@ Page({
     inited: false,
     /** 是否是搜索模式 (用于判断搜索框是否聚焦) */
     search: false,
-    /** 是否是选择模式 */
-    pick: false,
+    // /** 是否是选择模式 */
+    // pick: false,
     /** 地点索引值 */
     placeIndex: 0,
     /** 地点选择器列表 */
@@ -21,6 +21,7 @@ Page({
     backToTop: false,
     /** 是否到底 */
     reachBottom: false,
+    from: ""
   },
 
   privateData: {
@@ -35,6 +36,9 @@ Page({
   },
 
   onLoad(options) {
+    this.setData({
+      from: options.from
+    })
     if (globalData.foodList.length > 0) this.init(options);
     // 进行监听
     else message.on("foodList", () => this.init(options), true);
@@ -45,12 +49,12 @@ Page({
     // 是否限制了标签
     const foodList = options.tag
       ? // 根据标签过滤菜品列表
-        globalData.foodList.filter(
-          // tags 可能为 null
-          (item) => item.tags && item.tags.some((tag) => tag === options.tag)
-        )
+      globalData.foodList.filter(
+        // tags 可能为 null
+        (item) => item.tags && item.tags.some((tag) => tag === options.tag)
+      )
       : // 全部菜品列表
-        globalData.foodList;
+      globalData.foodList;
 
     // 生成北苑和南苑的食物列表
     this.privateData.nanYuan = foodList.filter(
@@ -68,7 +72,7 @@ Page({
       inited: true,
       search: Boolean(options.search),
       foodList: this.generateFoodList(),
-      pick: Boolean(options.pick),
+      // pick: Boolean(options.pick),
     });
   },
 
@@ -77,8 +81,8 @@ Page({
     return pickerIndex === 0
       ? this.privateData.all
       : pickerIndex === 1
-      ? this.privateData.beiYuan
-      : this.privateData.nanYuan;
+        ? this.privateData.beiYuan
+        : this.privateData.nanYuan;
   },
 
   /** 生成最初的菜品列表 */
@@ -106,11 +110,11 @@ Page({
     this.privateData.foodList =
       value === ""
         ? // 如果为空直接返回该分类全部菜品
-          this.getFoodList(this.data.placeIndex)
+        this.getFoodList(this.data.placeIndex)
         : // 检测匹配
-          this.getFoodList(this.data.placeIndex).filter((item) =>
-            item.name.includes(value)
-          );
+        this.getFoodList(this.data.placeIndex).filter((item) =>
+          item.name.includes(value)
+        );
 
     this.setData({ reachBottom: false, foodList: this.generateFoodList() });
     this.scrollTop();

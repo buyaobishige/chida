@@ -23,6 +23,7 @@ Page({
   privateData: {
     dislikesFoodList: [] as FoodDetail[],
     copyID: null,
+    discopyID:null,
     arr: [],
     counter: 10,
     /** 南苑的收藏夹列表 */
@@ -36,21 +37,20 @@ Page({
   },
 
   onLoad() {
-    
-    if (globalData.favorRequest) this.init();
-    // 监听自定义推荐选择
-    else message.on("favor", () => this.init(), true);
+    this.init()
   },
   /** 初始化列表 */
   init() {
-    globalData.favorRequest = false;
-    getFavor(globalData.openid);
-    let intId = setInterval(() => {
+    const that=this;
+
+    //   console.log(  globalData.likesFoodList)
+    // console.log(  globalData.likesFoodIDList)
+    // wx.showLoading({ title: "玩命加载中..." })
+    let intId = setTimeout(() => {
       if (globalData.favorRequest) {
-        this.privateData.copyID = globalData.likesFoodIDList;
-        this.privateData.disCopyID = globalData.dislikesFoodIDList;
-        this.privateData.beiYuan=[];
-        this.privateData.nanYuan=[];
+        console.log(123)
+        this.privateData.beiYuan = [];
+        this.privateData.nanYuan = [];
         // 生成北苑和南苑的收藏夹列表
         globalData.likesFoodList.forEach(item => {
           if (item.locate === "北苑一楼" || item.locate === "北苑二楼") {
@@ -60,6 +60,8 @@ Page({
             this.privateData.nanYuan.push(item)
           }
         })
+        this.privateData.copyID = globalData.likesFoodIDList
+        this.privateData.discopyID = globalData.dislikesFoodIDList
         this.privateData.dislikesFoodList = globalData.dislikesFoodList
         // console.log(this.privateData.beiYuan)
         // 写入搜索范围
@@ -71,15 +73,22 @@ Page({
         else {
           b = a
         }
-        console.log(b)
+        let likesFoodList;
+        console.log(that.data.placeIndex)
+        if(that.data.placeIndex!=3){
+          likesFoodList=globalData.likesFoodList
+        }else{
+          likesFoodList=globalData.dislikesFoodList
+        }
         this.setData({
           inited: true,
-          likesFoodList: globalData.likesFoodList
+          likesFoodList
         });
 
-        clearInterval(intId)
+        // clearInterval(intId)
       }
-    }, 100)
+      // wx.hideLoading()
+    }, 600)
   },
 
   // /** 生成最初的收藏列表 */
@@ -129,7 +138,8 @@ Page({
 
   /** 添加菜品 */
   add() {
-    wx.navigateTo({ url: "/detail/search/search?pick=true" });
+    let that = this;
+    wx.navigateTo({ url: "/detail/search/search?pick=true&from=favor" });
 
     // 监听自定义推荐选择
     message.on(
@@ -138,17 +148,21 @@ Page({
         const { id } = food;
 
         // 添加到用户收藏夹
+        food.liked = true;
         globalData.likesFoodList.push(food);
         globalData.likesFoodIDList.push(id);
+        // console.log(globalData.likesFoodList)
 
         wx.request({
           url: "https://lin.innenu.com/server/updateUser.php",
           method: "GET",
-          data: { openid: globalData.openid, likes: globalData.likesFoodIDList, dislikes: globalData.likesFoodIDList },
+          data: { openid: globalData.openid, likes: globalData.likesFoodIDList, dislikes: globalData.dislikesFoodIDList },
           success: (res) => {
-            // console.log(res)
+            console.log(res)
             if (res.statusCode === 200 && res.data) console.log("添加成功");
-            this.init()
+            getFavor(globalData.openid);
+            globalData.favorRequest = false;
+            that.init()
           },
           fail: (err) => {
             console.error(err);
@@ -193,7 +207,7 @@ Page({
   delItem(e) {
     let copyID;
     if (this.data.placeIndex == 3) {
-      copyID = this.privateData.disCopyID;
+      copyID = this.privateData.discopyID;
     } else {
       copyID = this.privateData.copyID;
     }
@@ -211,10 +225,11 @@ Page({
         }
       })
     }
-console.log(copyID)
+    console.log(copyID)
   },
   /**完成编辑 */
   finish() {
+    console.log(this.privateData)
     if (this.data.placeIndex == 3) {
       let that = this;
       wx.showModal({
@@ -222,9 +237,11 @@ console.log(copyID)
         content: "要保存修改吗？",
         success(res) {
           if (res.confirm) {
-            let arr = that.privateData.disCopyID.filter(item => {
+            //去掉所有带del的元素
+            let arr = that.privateData.discopyID.filter(item => {
               if (Number(item[0])) { return item }
             })
+            console.log(arr)
             wx.request({
               url: "https://lin.innenu.com/server/updateUser.php",
               data: {
@@ -237,6 +254,8 @@ console.log(copyID)
                 that.setData({
                   editModel: false
                 })
+                getFavor(globalData.openid);
+                globalData.favorRequest = false;
                 that.init()
               }
             })
@@ -271,6 +290,8 @@ console.log(copyID)
                 that.setData({
                   editModel: false
                 })
+                getFavor(globalData.openid);
+                globalData.favorRequest = false;
                 that.init()
               }
             })

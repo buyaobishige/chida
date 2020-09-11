@@ -10,7 +10,7 @@
       <navigator
         class="search"
         hover-class="none"
-        url="/detail/search/search?search=true"
+        url="/detail/search/search?search=true&from=index"
       >
         <icon color="#000" size="20" type="search" />搜索菜品
       </navigator>

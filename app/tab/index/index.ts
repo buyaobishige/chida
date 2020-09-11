@@ -4,7 +4,7 @@ import { tip } from "../../utils/wx";
 const { globalData } = getApp<AppOption>();
 
 Page({
-  onShareAppMessage(){ },
+  onShareAppMessage() { },
   data: {
     /** 菜品推荐 */
     recommand: [] as FoodDetail[],
@@ -36,7 +36,7 @@ Page({
 
     // 获取每日推荐
     wx.request({
-      url: "https://lin.innenu.com/test/getRecommend.php",
+      url: "https://lin.innenu.com/server/getRecommend.php",
       success: (res) => {
         this.privateData.recommand = res.data as FoodDetail[];
         this.setData({ recommand: res.data as FoodDetail[] });
@@ -121,17 +121,15 @@ Page({
     },
   }: WXEvent.Touch) {
     wx.navigateTo({
-      url: `/detail/search/search?pick=true`,
+      url: `/detail/search/search?from=dice`,
     });
-
+    // todo: 收集用户数据
     // 监听自定义推荐选择
     message.on(
       "pickFood",
       (food: FoodDetail) => {
-        // TODO: Improve here, upload data to the server
         const { recommand } = this.data;
-
-        recommand[index] = food;
+        recommand[index - 1] = food;
         this.setData({ recommand });
         wx.setStorageSync("recommand", recommand);
       },

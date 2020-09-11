@@ -83,9 +83,10 @@ App<AppOption>({
 
     // TODO: Add version code
     wx.request({
-      url: "https://lin.innenu.com/test/getFoodList.php",
-      method: "POST",
+      url: "https://lin.innenu.com/server/getFoodList.php",
+      method: "GET",
       success: (res) => {
+        // console.log(res)
         if (res.statusCode === 200)
           this.globalData.foodList = res.data as FoodDetail[];
 
@@ -118,9 +119,9 @@ App<AppOption>({
         that.globalData.dislikesFoodList = []
         if (res.statusCode === 200) {
           that.globalData.favorRequest = true;
-          that.globalData.likesFoodIDList = JSON.parse((res.data[0].likes));
-          that.globalData.dislikesFoodIDList = JSON.parse((res.data[0].dislikes));
- 
+          console.log((res.data[0].likes))
+          that.globalData.likesFoodIDList = JSON.parse(res.data[0].likes);
+          that.globalData.dislikesFoodIDList = JSON.parse(res.data[0].dislikes);
           that.globalData.dislikesFoodIDList.forEach((id) => {
             that.globalData.foodList.forEach((food) => {
               if (food.id === id) {
@@ -131,19 +132,18 @@ App<AppOption>({
               }
             })
           })
-          this.globalData.likesFoodIDList.forEach((id) => {
-            this.globalData.foodList.forEach((food) => {
+          console.log(that.globalData.likesFoodIDList)
+          that.globalData.likesFoodIDList.forEach((id) => {
+            that.globalData.foodList.forEach((food) => {
               if (food.id === id) {
                 food.liked = true;
-                this.globalData.likesFoodList.push(food)
-              } else {
-                food.liked = false;
-              }
+                that.globalData.likesFoodList.push(food)
+              } 
             })
           })
-
           message.emit("favor");
-        }console.log(that.globalData)
+        }
+        console.log(that.globalData.likesFoodList)
       },
     });
   }

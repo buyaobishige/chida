@@ -40,7 +40,7 @@
     </view>
     
     <switch color="#797979" class="del" size="mini" type="primary" wx:if="{{editModel}}" bindchange="delItem" data-index="{{food.id}}">
-      删除</switch>
+      滑动删除</switch>
     <view wx:else class="price" >
       <text>¥</text>
       {{food.price}}
