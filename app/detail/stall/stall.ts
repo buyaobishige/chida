@@ -49,6 +49,7 @@ interface GetStallCallback {
 
 Page({
   data: {
+    env:globalData.env,
     navList: ["档口", "评论"],
     /** 是否显示编辑按钮 */
     floatIconBoxDisplay: false,
@@ -75,7 +76,9 @@ Page({
     isLogin: false,
     VerticalNavTop: 0
   },
-
+  onShow() {
+    this.refreshInfo()
+  },
   privateData: {
     /** 档口名称 */
     stall: "",
@@ -180,7 +183,9 @@ Page({
       MainCur: index,
     });
   },
-
+  backTo() {
+    wx.navigateBack()
+  },
 
   //=============评论模块=====================
 
@@ -279,9 +284,9 @@ Page({
             });
 
           // 解析评论数 FIXME: Is it equal to `index !== data.length -1` ?
-          if (index < data.length - 1)
+          if (index < data.length - 1) {
             if (item.id === data[index + 1].id) {
-              if (data[index - this.privateData.count].replyList.length > 0)
+              if ( data[index - this.privateData.count].replyList.length > 0)
                 data[index - this.privateData.count].replyList.pop();
 
               data[index - this.privateData.count].replyList.push(
@@ -291,7 +296,8 @@ Page({
                 this.privateData.comment[index + 1].replys
               );
               this.privateData.count += 1;
-            } else this.privateData.count = 0;
+            }
+          } else this.privateData.count = 0;
         });
 
         // 评论去重
@@ -315,6 +321,7 @@ Page({
           averageScore,
         });
         // }
+
       },
     });
   },

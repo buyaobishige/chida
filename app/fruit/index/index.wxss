@@ -21,11 +21,19 @@
 }
 
 /* 瀑布流卡片 */
-.card-wrapper {
+.card-wrapper-box{
   display: flex;
-  flex-wrap: wrap;
+  width:100%;
 }
-
+.card-wrapper {
+  /* display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; */
+  width:50%;
+}
+.card-wrapper .card{
+  height: initial;
+}
 .card-wrapper .card .nav {
   display: block;
 

@@ -131,7 +131,7 @@
                 <view class="btn zanBox">
                   <!-- todo -->
                   <image
-                    wx:if="{{item.rzanList && item.rzanList.length > 0}}"
+                    wx:if="{{item.rzanList && item.rzanOk}}"
                     class="btnIcon"
                     src="../stall/icons/dianzanOK.png"
                   />

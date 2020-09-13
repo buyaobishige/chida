@@ -30,7 +30,7 @@
       </view>
       <view class="part2">
         <view class="delBox" bindtap="delItem" data-index="{{index}}">
-          <image src="/icon/delete.png" class="delIcon"></image>
+          <image src="./icon/delete.png" class="delIcon"></image>
         </view>
       </view>
       <view class="part3">

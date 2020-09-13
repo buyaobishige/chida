@@ -5,16 +5,17 @@
   },
   "setting": {
     "urlCheck": false,
-    "es6": false,
+    "es6": true,
     "enhance": true,
-    "postcss": true,
+    "postcss": false,
     "minified": true,
     "newFeature": true,
     "coverView": true,
     "nodeModules": true,
-    "autoAudits": false,
+    "autoAudits": true,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
+    "uglifyFileName": true,
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
@@ -30,12 +31,13 @@
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": []
+    "packNpmRelationList": [],
+    "remoteDebugLogEnable": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.1",
   "appid": "wxf4c24973a4322578",
-  "projectname": "东北吃大",
+  "projectname": "%E4%B8%9C%E5%8C%97%E5%90%83%E5%A4%A7",
   "debugOptions": {
     "hidedInDevtools": []
   },
@@ -47,6 +49,7 @@
     "beforePreview": "",
     "beforeUpload": ""
   },
+  "qqappid": "1110071558",
   "condition": {
     "search": {
       "current": -1,
@@ -83,6 +86,12 @@
           "name": "stall",
           "pathName": "detail/stall/stall",
           "query": "stall=北苑基本餐",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "fruit/index/index",
+          "pathName": "fruit/index/index",
           "scene": null
         }
       ]

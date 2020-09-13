@@ -21,7 +21,9 @@ Page({
     backToTop: false,
     /** 是否到底 */
     reachBottom: false,
-    from: ""
+    from: "",
+    /**新增的收藏项 */
+    newFavor: {}
   },
 
   privateData: {
@@ -33,9 +35,52 @@ Page({
     foodList: [] as FoodDetail[],
     /** 符合该分类的全部列表 */
     all: [] as FoodDetail[],
+    newFavor: {}
   },
 
+  addFavor(e) {
+    const that = this;
+    let thatFood;
+    const { id } = e.currentTarget.dataset;
+    for (const food of globalData.foodList)
+    if (food.id === id) {
+      thatFood = food
+      break;
+    }
+    if (thatFood.liked) { 
+      wx.showToast({
+        title:"请到收藏夹界面进行删除操作！",
+        icon:"none",
+        duration:2000
+      })
+    } else {
+      this.privateData.newFavor[id] = true;
+      this.setData({
+        newFavor: this.privateData.newFavor
+      })
+
+      // 添加到用户收藏夹
+      thatFood.liked = true;
+      globalData.likesFoodList.push(thatFood);
+      globalData.likesFoodIDList.push(id);
+      // console.log(globalData.likesFoodList)
+
+      wx.request({
+        url: "https://lin.innenu.com/server/updateUser.php",
+        method: "GET",
+        data: { openid: globalData.openid, likes: globalData.likesFoodIDList, dislikes: globalData.dislikesFoodIDList },
+        success: (res) => {
+          console.log(res)
+          if (res.statusCode === 200 && res.data) console.log("添加成功");
+        },
+        fail: (err) => {
+          console.error(err);
+        },
+      });
+    }
+  },
   onLoad(options) {
+    console.log(options)
     this.setData({
       from: options.from
     })

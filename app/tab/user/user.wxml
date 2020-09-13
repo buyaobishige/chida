@@ -41,6 +41,7 @@
     hover-stay-time="100"
     open-type="feedback"
     plain
+    wx:if="{{env=='wx'}}"
   >
     <image class="icon" src="/tab/user/icon/bug.svg" />
     <view class="text">bug反馈</view>

@@ -1,3 +1,6 @@
+<view class="backImgBox" catch:tap="backTo">
+<image class="backImg" src="/icon/back.svg"></image>
+</view>
 <view class="bg topbg">
   <view class="restaurantImgBox">
     <image class="restaurantImg" src="{{info.src}}" mode="widthFix" />
@@ -27,7 +30,7 @@
           <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}">
             <view class="cu-item {{index === TabCur? 'text-color cur': ''}}" wx:for="{{foodList}}" wx:key="index"
               data-index="{{index}}" bindtap="tabSelect">
-              {{item.name}}
+              {{item.name[0]}}{{item.name[1]}}{{item.name[2]||''}}
             </view>
           </scroll-view>
           <!-- 菜单项 -->
@@ -125,7 +128,7 @@
                 <view wx:else class="btn"></view> -->
                 <button id="zan" type="none" open-type="getUserInfo" data-id="{{item.id}}" data-func="zan"
                   bindgetuserinfo="login">
-                  <view class="btn zanBox">
+                  <view class="btn zanBox {{env}}zanBox">
                     <image wx:if="{{item.zanOk}}" class="btnIcon" src="./icons/dianzanOK.png"></image>
                     <image wx:else class="btnIcon" src="./icons/dianzan.png"></image>
                     <view class="zanNumber" wx:if="{{item.zanList.length>0}}">

@@ -108,13 +108,14 @@ App<AppOption>({
   },
 
   /** 获取收藏夹 */
-  getFavor(openid: string) {
+  getFavor(openid: string) {  
     const that = this;
     wx.request({
       url: "https://lin.innenu.com/server/getUser.php",
       method: "GET",
       data: { openid },
       success: (res) => {
+        console.log(res)
         that.globalData.likesFoodList = []
         that.globalData.dislikesFoodList = []
         if (res.statusCode === 200) {

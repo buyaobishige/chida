@@ -4,9 +4,9 @@
 <view class="navbar">
   <picker class="toggle" value="{{placeIndex}}" range="{{placeValue}}" bindchange="pickerChange">
     <view class="toggleInnerBox">
-    <text style="width:40px">{{placeValue[placeIndex]}}</text>
-    <image class="arrow-icon" src="/icon/arrow-down.svg" />
-  </view>
+      <text style="width:40px">{{placeValue[placeIndex]}}</text>
+      <image class="arrow-icon" src="/icon/arrow-down.svg" />
+    </view>
   </picker>
   <view class="search">
     <input confirm-type="search" focus="{{search}}" placeholder="搜索菜品" bindconfirm="confirm" />
@@ -26,12 +26,16 @@
       <image src="/icon/{{tool.getFlag(food.locate)}}.png" />
       <view>{{tool.getCampus(food.locate)}}</view>
     </view>
-    <button wx:if="{{(from=='favor'&&!food.liked)||from=='dice'}}" class="add" size="mini" type="primary" data-id="{{food.id}}" catch:tap="pick">
+    <button wx:if="{{(from=='favor'&&!food.liked)||from=='dice'}}" class="add" size="mini" type="primary"
+      data-id="{{food.id}}" catch:tap="pick">
       选择
     </button>
     <view class="price" wx:else>
       <text>¥</text>
       {{food.price}}
+      <view class="addToFavor" catch:tap="addFavor" data-id="{{food.id}}">
+        <image src="/icon/favor{{(food.liked||newFavor[food.id])?'ed':''}}.svg"></image>
+      </view>
     </view>
     <image mode="aspectFill" class="food-image" src="{{food.src}}" />
     <view class="detail">

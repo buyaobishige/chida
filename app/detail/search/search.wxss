@@ -74,7 +74,16 @@ page {
   right: 45rpx;
   bottom: 26rpx;
 }
-
+.addToFavor image{
+  width: 22px;
+  height: 22px;
+  bottom: 40px;
+  right: 2px;
+  position: absolute;
+}
+.addToFavor{
+  position: relative;
+}
 .list-wrapper .addImg {
   width: 60rpx;
   height: 60rpx;

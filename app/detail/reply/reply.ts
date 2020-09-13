@@ -41,19 +41,18 @@ Page({
 
         // deep copy
         this.privateData.dataBackUp = JSON.parse(JSON.stringify(data));
-
         data.forEach((item, index) => {
           // 解析赞
           if (!item.replyList) item.replyList = [];
 
           if (item.zan_list) {
             const arr = JSON.parse(item.zan_list);
-            if (item.zan_list && arr.includes(globalData.openid))
-              item.zanOk = true;
-            else item.zanOk = false;
+            // if (item.zan_list && arr.includes(globalData.openid))
+            // item.zanOk = true;
+            // else item.zanOk = false;
 
             item.zanList = arr;
-            item.zanNum = item.zanList.length;
+            // item.zanNum = item.zanList.length;
           }
 
           // 解析时间戳
@@ -64,7 +63,7 @@ Page({
           item.formattedDate = `${year}年${month}月${day}日`;
 
           // 解析评论
-          if (index + 1 < data.length)
+          if (index < data.length - 1) {
             if (item.id === data[index + 1].id) {
               if (data[index - this.privateData.count].replyList.length > 0)
                 data[index - this.privateData.count].replyList.pop();
@@ -77,38 +76,42 @@ Page({
               );
               this.privateData.count += 1;
             } else this.privateData.count = 0;
-        });
-        // 评论去重
-        const newData: any[] = [];
-        const idArray: string[] = [];
-        console.log(data);
-        data.forEach((item) => {
-          if (!idArray.includes(item.id)) {
-            idArray.push(item.id);
-            newData.push(item);
-          }
-        });
-        let targetRemark: any;
-        newData.forEach((item) => {
-          if (item.id == this.data.id) targetRemark = item;
-        });
-        (targetRemark.replyList || []).forEach((item: any) => {
-          if (item.rzan_list) item.rzanList = JSON.parse(item.rzan_list);
-
-          // 解析时间戳
-          const timeStamp = new Date(Number(item.rdate) * 1000);
-          const year = timeStamp.getFullYear();
-          const month = timeStamp.getMonth() + 1;
-          const day = timeStamp.getDate();
-          item.formattedDate = `${year}年${month}月${day}日`;
-        });
-        this.setData({
-          targetRemark,
-          openid: globalData.openid,
-        });
-        console.log(targetRemark);
-      },
-    });
+          };
+          // 评论去重
+          const newData: any[] = [];
+          const idArray: string[] = [];
+          data.forEach((item) => {
+            if (!idArray.includes(item.id)) {
+              idArray.push(item.id);
+              newData.push(item);
+            }
+          });
+          let targetRemark: any;
+          newData.forEach((item) => {
+            if (item.id == this.data.id) targetRemark = item;
+          });
+          (targetRemark.replyList || []).forEach((item: any) => {
+            if (item.rzan_list) item.rzanList = JSON.parse(item.rzan_list);
+            if (item.rzanList && item.rzanList.includes(globalData.openid)){
+              item.rzanOk = true;
+            }
+            // 解析时间戳
+            const timeStamp = new Date(Number(item.rdate) * 1000);
+            const year = timeStamp.getFullYear();
+            const month = timeStamp.getMonth() + 1;
+            const day = timeStamp.getDate();
+            item.formattedDate = `${year}年${month}月${day}日`;
+          });
+          //解析评论点赞
+          this.setData({
+            targetRemark,
+            openid: globalData.openid,
+          });
+          console.log(targetRemark);
+        })
+        this.privateData.count = 0;
+      }
+    })
   },
 
   openMorePop(e) {
@@ -133,26 +136,27 @@ Page({
     });
   },
   submit() {
-    if (this.data.inputValue.length > 3) {
+    const that = this;
+    if (that.data.inputValue.length > 3) {
       wx.request({
         url:
           "https://lin.innenu.com/server/remarksToolkit/addRemarkToReplys.php",
         data: {
-          rat: this.privateData.at || null,
-          rid: this.data.id,
-          ruser: this.privateData.user,
+          rat: that.privateData.at || null,
+          rid: that.data.id,
+          ruser: that.privateData.user,
           rsystemModel: globalData.info.brand,
           ropenid: globalData.openid,
-          ravatarUrl: this.privateData.avatarUrl,
-          rcontent: placeholder + this.data.inputValue,
-          rorientation: this.data.orientation || "general",
+          ravatarUrl: that.privateData.avatarUrl,
+          rcontent: placeholder + that.data.inputValue,
+          rorientation: that.data.orientation || "general",
         },
         success: (res) => {
           console.log(res);
-          this.refreshInfo();
+          that.refreshInfo();
         },
       });
-      this.setData({
+      that.setData({
         inputValue: "",
       });
     } else tip("请输入3个以上字符");
@@ -212,12 +216,12 @@ Page({
                 targetRemark.replyList.splice(index, 1);
             });
 
-            this.setData({ targetRemark,popupDisplay3:false });
+            this.setData({ targetRemark, popupDisplay3: false });
             tip("删除成功");
           },
         });
       },
-      () => {}
+      () => { }
     );
   },
   reply(event: WXEvent.Touch) {

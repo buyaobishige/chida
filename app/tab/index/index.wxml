@@ -10,7 +10,7 @@
       <navigator
         class="search"
         hover-class="none"
-        url="/detail/search/search?search=true&from=index"
+        url="/detail/search/search?search=true&from=search"
       >
         <icon color="#000" size="20" type="search" />搜索菜品
       </navigator>
@@ -24,7 +24,7 @@
             wx:key="*this"
             class="tag"
             hover-class="none"
-            url="/detail/search/search?tag={{tag}}"
+            url="/detail/search/search?from=search&tag={{tag}}"
           >
             {{tag}}
           </navigator>

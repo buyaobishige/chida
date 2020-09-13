@@ -4,6 +4,7 @@ const { globalData } = getApp<AppOption>();
 
 Page({
   data: {
+    env:"",
     /** 当前是否登录 */
     isLogin: false,
     /** 随机展示的提示 */
@@ -36,6 +37,9 @@ Page({
   },
 
   onLoad() {
+    this.setData({
+      env:globalData.env
+    })
     const randomTip = this.privateData.tips[Math.floor(Math.random() * 3)];
 
     if (wx.getStorageSync("getinfo"))
